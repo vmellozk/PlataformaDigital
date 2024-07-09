@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minha Loja Online</title>
+  <link rel="stylesheet" href="css/loja.css">
+</head>
+<body>
+  <!-- Barra de Navegação -->
+  <nav class="navbar">
+    <div class="container">
+      <h1 class="logo">Minha Loja</h1>
+      <ul class="nav-links">
+        <li><a href="#">Início</a></li>
+        <li><a href="#">Produtos</a></li>
+        <li><a href="#">Categorias</a></li>
+        <li><a href="#">Contato</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Conteúdo Principal -->
+  <div class="container">
+    <!-- Filtros e Categorias -->
+    <aside class="filters">
+      <h2>Filtros</h2>
+      <form>
+        <div class="filter-group">
+          <label for="categoria">Categoria:</label>
+          <select id="categoria">
+            <option value="todos">Todos</option>
+            <option value="eletronicos">Eletrônicos</option>
+            <option value="moveis">Móveis</option>
+            <!-- Adicionar mais opções conforme necessário -->
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label for="regiao">Região:</label>
+          <select id="regiao">
+            <option value="todas">Todas</option>
+            <option value="norte">Norte</option>
+            <option value="sul">Sul</option>
+            <!-- Adicionar mais opções conforme necessário -->
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="experiencia">Tempo de Experiência:</label>
+          <select id="experiencia">
+            <option value="qualquer">Qualquer</option>
+            <option value="menos1ano">Menos de 1 ano</option>
+            <option value="1a3anos">1 a 3 anos</option>
+            <option value="mais3anos">Mais de 3 anos</option>
+            <!-- Adicionar mais opções conforme necessário -->
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="preco">Preço:</label>
+          <input type="range" id="preco" name="preco" min="0" max="1000" step="10" value="0">
+          <output for="preco">R$ 0</output>
+        </div>
+
+        <button type="submit">Filtrar</button>
+      </form>
+    </aside>
+
+    <!-- Cards de Produtos -->
+    <section class="products">
+      <!-- Exemplo de um card de produto -->
+      <div class="product-card">
+        <img src="produto1.jpg" alt="Produto 1">
+        <div class="product-info">
+          <h3>Nome do Produto 1</h3>
+          <p>Descrição breve do Produto 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum at imperdiet libero.</p>
+          <div class="product-footer">
+            <span class="product-price">R$ 299,90</span>
+            <button class="buy-button">Comprar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exemplo de outro card de produto -->
+      <div class="product-card">
+        <img src="produto2.jpg" alt="Produto 2">
+        <div class="product-info">
+          <h3>Nome do Produto 2</h3>
+          <p>Descrição breve do Produto 2. Morbi sed justo sed neque vestibulum tristique sed at orci.</p>
+          <div class="product-footer">
+            <span class="product-price">R$ 199,90</span>
+            <button class="buy-button">Comprar</button>
+          </div>
+        </div>
+
+      <!-- Adicionar mais cards conforme necessário -->
+    </section>
+
+    <script src="js/loja.js"></script>
+
+</body>
+</html>

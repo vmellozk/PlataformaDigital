@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil do Usuário</title>
+    <link rel="stylesheet" href="css/perfil.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#">Início</a></li>
+                <li><a href="#">Comprar</a></li>
+                <li><a href="#">Vender</a></li>
+                <li><a href="#">Perfil</a></li>
+                <li><a href="#">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-pic-container">
+                    <img src="profile-pic.jpg" alt="Foto do Usuário" class="profile-pic">
+                    <button class="btn change-pic-btn" onclick="openModal('changePicModal')">Trocar Foto</button>
+                </div>
+                <div class="profile-info">
+                    <h1 id="username">Nome do Usuário</h1>
+                    <p id="user-description" class="description">Descrição breve do usuário. Pode incluir interesses, especialidades ou uma biografia curta.</p>
+                </div>
+                <div class="profile-actions">
+                    <button class="btn" onclick="openModal('editProfileModal')">Editar Perfil</button>
+                    <button class="btn">Mensagens</button>
+                    <button class="btn">Configurações</button>
+                </div>
+            </div>
+            <div class="profile-content">
+                <h2>Produtos à Venda</h2>
+                <div class="product-card">
+                    <img src="product1.jpg" alt="Produto 1">
+                    <h3>Produto 1</h3>
+                    <p>Descrição do Produto 1</p>
+                    <p class="price">R$ 100,00</p>
+                    <button class="btn">Comprar</button>
+                </div>
+                <div class="product-card">
+                    <img src="product2.jpg" alt="Produto 2">
+                    <h3>Produto 2</h3>
+                    <p>Descrição do Produto 2</p>
+                    <p class="price">R$ 200,00</p>
+                    <button class="btn">Comprar</button>
+                </div>
+                <!-- Adicione mais cartões de produtos conforme necessário -->
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Perfil do Usuário. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Modals -->
+    <div id="editProfileModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('editProfileModal')">&times;</span>
+            <h2>Editar Perfil</h2>
+            <form id="editProfileForm">
+                <label for="edit-username">Nome:</label>
+                <input type="text" id="edit-username" name="username" value="Nome do Usuário">
+                <label for="edit-description">Descrição:</label>
+                <textarea id="edit-description" name="description">Descrição breve do usuário. Pode incluir interesses, especialidades ou uma biografia curta.</textarea>
+                <button type="submit" class="btn">Salvar Alterações</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="changePicModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('changePicModal')">&times;</span>
+            <h2>Trocar Foto do Perfil</h2>
+            <form id="changePicForm">
+                <label for="profile-pic-upload">Escolha uma nova foto:</label>
+                <input type="file" id="profile-pic-upload" name="profile-pic">
+                <button type="submit" class="btn">Atualizar Foto</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/perfil.js"></script>
+
+</body>
+</html>

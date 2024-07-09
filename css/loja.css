@@ -1,0 +1,196 @@
+/* Estilo para o corpo e fontes */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  /* Estilo para a barra de navegação */
+  .navbar {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+  }
+  
+  .navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navbar .logo {
+    margin: 0;
+    font-size: 1.8rem;
+  }
+  
+  .navbar .nav-links {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  
+  .navbar .nav-links li {
+    margin-right: 20px;
+  }
+  
+  .navbar .nav-links li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+  }
+  
+  .navbar .nav-links li a:hover {
+    color: #f2f2f2;
+  }
+  
+  /* Estilo para o conteúdo principal */
+  .container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  /* Estilo para os filtros */
+  .filters {
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  
+  .filters h2 {
+    font-size: 1.4rem;
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
+  
+  .filters form {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .filters .filter-group {
+    margin-bottom: 15px;
+    flex: 1 1 calc(50% - 10px); /* Dois filtros por linha */
+  }
+  
+  .filters .filter-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .filters .filter-group select,
+  .filters .filter-group input[type="range"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .filters .filter-group input[type="range"] {
+    width: calc(100% - 50px);
+  }
+  
+  .filters .filter-group output {
+    display: inline-block;
+    width: 50px;
+    text-align: center;
+    margin-left: 5px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .filters button {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .filters button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Estilo para os cards de produtos */
+  .products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .product-card {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .product-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .product-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .product-info {
+    padding: 10px 0;
+    text-align: center;
+  }
+  
+  .product-info h3 {
+    font-size: 1.3rem;
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  
+  .product-info p {
+    color: #666;
+    font-size: 0.95rem;
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
+  
+  .product-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .product-price {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .buy-button {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .buy-button:hover {
+    background-color: #45a049;
+  }
+  

@@ -57,6 +57,7 @@ header {
 /* */
 .nav{
     display: flex;
+    list-style-type: none; /* para subir com a bolinha do lado do NAV */
 }
 
 /*  */
@@ -131,7 +132,7 @@ span {
 
 /* */
 .areaatuacao-item:hover {
-    transform: scale(1.035);
+    transform: scale(1.085);
 }
 
 /* */
@@ -139,6 +140,7 @@ span {
     border-radius: 15px;
     margin: 1.1rem;
     width: calc(12% + 18rem);
+    margin-top: 2rem;
 }
 
 /* */
@@ -167,18 +169,17 @@ span {
     font-size: 1.2rem;
     color: #ffffff;
     padding: 10px 15px;
-    border: 2px solid #ffffff;
-    border-radius: 25px;
+
 }
 
 /* */
 .btn:hover {
-    background-color: var(--color-02);
+    color: var(--color-02);
 }
 
 /* */
 .areaatuacao-buttons {
-    margin-top: 1.5rem;
+    margin-top: 0.5rem;
     margin-bottom: 1rem;
     font-size: 1rem;
 }
@@ -210,7 +211,7 @@ span {
     margin: 0 auto;
     padding: 20px;
     box-sizing: border-box;
-    margin-top: 12rem;
+    margin-top: -1rem;
 }
 
 /* */
@@ -256,6 +257,165 @@ span {
 /* */
 .aboutus:hover {
     transform: scale(1.08);
+}
+
+/* */
+.produtos {
+    padding: 2rem;
+    text-align: center;
+    margin-top: 7.9rem;
+}
+
+/* */
+.produtos-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 95%;
+    margin: 0 auto;
+}
+
+/* */
+.produtos-item:hover {
+    transform: scale(1.035);
+}
+
+/* */
+.produtos-item {
+    border-radius: 15px;
+    margin: 1.1rem;
+    width: calc(12% + 18rem);
+    margin-top: 2rem;
+}
+
+/* */
+.produtos-item img {
+    width: 80%;
+    position: relative;
+    overflow: hidden;
+}
+
+/* */
+.produtos-content p{
+    margin-top: 1.2rem;
+}
+
+/* */
+.produtos-buttons {
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+/* */
+.produtos-buttons a {
+    text-decoration: none;
+    padding: 5px 16px;
+    border: 2px solid var(--bg-color-01);
+    border-radius: 0px;
+    display: inline-block;
+}
+
+/* */
+.comprar {
+    text-decoration: none;
+    font-size: 1.2rem;
+    color: #ffffff;
+    padding: 10px 15px;
+}
+
+/* */
+.comprar:hover {
+    background-color: var(--color-02);
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: var(--color-02); /* Cor de fundo para o retângulo */
+    padding: 20px;
+    margin-top: 17rem;
+}
+
+.contact-info {
+    width: 30%; /* Largura da seção de informações de contato */
+    padding: 20px;
+    margin-right: 20px; /* Espaçamento entre as seções */
+    color: #000000; /* Texto preto */
+    font-size: 1.11rem;
+}
+
+.contact-info h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #000000; /* Texto preto */
+}
+
+.contact-info p {
+    margin-bottom: 20px; /* Ajuste o espaço entre os parágrafos conforme necessário */
+}
+
+.contact-form {
+    width: 60%; /* Largura da seção do formulário de contato */
+    padding: 20px;
+}
+
+.contact-form h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #000000; /* Texto preto */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    color: #000000; /* Texto preto */
+    font-size: 0.9rem;
+}
+
+label {
+    font-weight: bold;
+    color: #000000; /* Texto preto */
+}
+
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 10px; /* Reduzi o padding para compactar os campos */
+    margin-bottom: 10px; /* Espaçamento entre os campos */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50; /* Cor de fundo do botão enviar */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049; /* Cor de fundo do botão enviar ao passar o mouse */
+}
+
+.social-icons {
+    font-size: 3rem;
+}
+
+.social-icons a {
+    color: var(--color-00);
+}
+
+.social-icons a:hover {
+    color: var(--bg-color-01);
+    transition: color 0.4s ease;
 }
 
 /* */
