@@ -333,7 +333,7 @@ span {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    background-color: var(--color-02); /* Cor de fundo para o retângulo */
+    background-color: #252525; /* Cor de fundo para o retângulo */
     padding: 20px;
     margin-top: 17rem;
 }
@@ -342,14 +342,14 @@ span {
     width: 30%; /* Largura da seção de informações de contato */
     padding: 20px;
     margin-right: 20px; /* Espaçamento entre as seções */
-    color: #000000; /* Texto preto */
+    color: #ffffff; /* Texto preto */
     font-size: 1.11rem;
 }
 
 .contact-info h2 {
     font-size: 1.5em;
     margin-bottom: 10px;
-    color: #000000; /* Texto preto */
+    color: #ffffff; /* Texto preto */
 }
 
 .contact-info p {
@@ -364,19 +364,19 @@ span {
 .contact-form h2 {
     font-size: 1.5em;
     margin-bottom: 10px;
-    color: #000000; /* Texto preto */
+    color: #ffffff; /* Texto preto */
 }
 
 form {
     display: flex;
     flex-direction: column;
-    color: #000000; /* Texto preto */
+    color: #ffffff; /* Texto preto */
     font-size: 0.9rem;
 }
 
 label {
     font-weight: bold;
-    color: #000000; /* Texto preto */
+    color: #ffffff; /* Texto preto */
 }
 
 input[type="text"],
@@ -410,11 +410,11 @@ input[type="submit"]:hover {
 }
 
 .social-icons a {
-    color: var(--color-00);
+    color: var(--text-color);
 }
 
 .social-icons a:hover {
-    color: var(--bg-color-01);
+    color: var(--color-02);
     transition: color 0.4s ease;
 }
 
