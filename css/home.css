@@ -293,6 +293,7 @@ span {
     width: 80%;
     position: relative;
     overflow: hidden;
+    box-shadow: 11px 0 5px 2px #202020d5;
 }
 
 /* */
