@@ -1,65 +1,122 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil do Usuário</title>
+    <title>Seja Premium!</title>
+    <!-- Ícones Box-->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Referência ao Arquivo CSS -->
     <link rel="stylesheet" href="css/perfil.css">
 </head>
 <body>
+    <!-- Barra de Navegação-->
     <header>
+        <a href="home.html" class="logo">Prática Sênior</a>
+
         <nav>
-            <ul>
-                <li><a href="#">Início</a></li>
-                <li><a href="#">Comprar</a></li>
-                <li><a href="#">Vender</a></li>
-                <li><a href="#">Perfil</a></li>
-                <li><a href="#">Contato</a></li>
+            <ul class="nav">
+                <a href="#home">Início</a>
+                <li><a href="loja.html">Loja Sênior</a></li>
+                <li><a href="#compras">Quero Vender</a></li>
+                <a href="home.html#produtos">Nossos Produtos</a>
+                <a href="home.html#contact">Contato</a>
             </ul>
         </nav>
     </header>
-    <main>
+    <!-- /Barra de Navegação-->
+
+    <!-- Perfil -->
+    <section>
         <div class="profile-container">
             <div class="profile-header">
                 <div class="profile-pic-container">
                     <img src="profile-pic.jpg" alt="Foto do Usuário" class="profile-pic">
                     <button class="btn change-pic-btn" onclick="openModal('changePicModal')">Trocar Foto</button>
                 </div>
+
                 <div class="profile-info">
                     <h1 id="username">Nome do Usuário</h1>
-                    <p id="user-description" class="description">Descrição breve do usuário. Pode incluir interesses, especialidades ou uma biografia curta.</p>
+                    <p id="user-description" class="description">Descrição breve do usuário. Pode incluir interesses, especialidades ou uma biografia curta, especialidades ou uma biografia curta, especialidades ou uma biografia curta, especialidades ou uma biografia curta, especialidades ou uma biografia curta.</p>
                 </div>
+
                 <div class="profile-actions">
                     <button class="btn" onclick="openModal('editProfileModal')">Editar Perfil</button>
-                    <button class="btn">Mensagens</button>
-                    <button class="btn">Configurações</button>
                 </div>
             </div>
-            <div class="profile-content">
-                <h2>Produtos à Venda</h2>
-                <div class="product-card">
-                    <img src="product1.jpg" alt="Produto 1">
-                    <h3>Produto 1</h3>
-                    <p>Descrição do Produto 1</p>
-                    <p class="price">R$ 100,00</p>
-                    <button class="btn">Comprar</button>
+
+            <!-- Detalhes do usuário -->
+            <div class="profile-details">
+                <div class="info-item">
+                    <label>Data de Nascimento:</label>
+                    <p>DD/MM/AAAA</p>
                 </div>
-                <div class="product-card">
-                    <img src="product2.jpg" alt="Produto 2">
-                    <h3>Produto 2</h3>
-                    <p>Descrição do Produto 2</p>
-                    <p class="price">R$ 200,00</p>
-                    <button class="btn">Comprar</button>
+                <div class="info-item">
+                    <label>Cartão Cadastrado:</label>
+                    <p>**** **** **** 1234</p>
                 </div>
-                <!-- Adicione mais cartões de produtos conforme necessário -->
+                <div class="info-item">
+                    <label>Nome Completo:</label>
+                    <p>Nome Sobrenome</p>
+                </div>
+                <div class="info-item">
+                    <label>Documentos:</label>
+                    <p>CPF: 123.456.789-00</p>
+                </div>
+                <div class="info-item">
+                    <label>Localização:</label>
+                    <p>Cidade, Estado - CEP: 12345-678</p>
+                </div>
+                <div class="info-item">
+                    <label>Email:</label>
+                    <p>usuario@example.com</p>
+                </div>
+                <div class="info-item">
+                    <label>Redes Sociais:</label>
+                    <p>Instagram: @usuario</p>
+                </div>
+            </div>
+            <!-- /Detalhes do usuário -->
+        </div>
+    </section>
+    <!-- /Perfil -->
+
+    <!-- Cards de Produtos -->
+    <section class="products-container">
+        <div class="products">
+
+        <!-- Produto 1 -->
+        <div class="product-card">
+            <img src="img/produto.png" alt="Produto 1">
+            <div class="product-info">
+            <h3>Nome do Produto 1</h3>
+            <p>Descrição breve do Produto 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum at imperdiet libero.</p>
+            <div class="product-footer">
+                <span class="product-price">R$ 299,90</span>
+                <button class="buy-button">Editar</button>
+            </div>
             </div>
         </div>
-    </main>
-    <footer>
-        <p>&copy; 2024 Perfil do Usuário. Todos os direitos reservados.</p>
-    </footer>
+        <!-- /Produto 1 -->
 
-    <!-- Modals -->
+        <!-- Produto 2 -->
+        <div class="product-card">
+            <img src="img/produto.png" alt="Produto 1">
+            <div class="product-info">
+            <h3>Nome do Produto 1</h3>
+            <p>Descrição breve do Produto 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum at imperdiet libero.</p>
+            <div class="product-footer">
+                <span class="product-price">R$ 299,90</span>
+                <button class="buy-button">Editar</button>
+            </div>
+            </div>
+        </div>
+        <!-- /Produto 2 -->
+    </section>
+    <!-- /Cards de Produtos -->
+
+
+    <!-- Modal -->
     <div id="editProfileModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('editProfileModal')">&times;</span>
@@ -73,7 +130,9 @@
             </form>
         </div>
     </div>
+    <!-- /Modal -->
 
+    <!-- Modal -->
     <div id="changePicModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('changePicModal')">&times;</span>
@@ -85,6 +144,11 @@
             </form>
         </div>
     </div>
+    <!-- /Modal -->
+
+    <footer>
+        <p>Copyright &copy; 2024 by &lt;/devxxctor.&gt; All rights Reserved</p>
+    </footer>
 
     <script src="js/perfil.js"></script>
 
