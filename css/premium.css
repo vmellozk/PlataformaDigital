@@ -65,7 +65,7 @@ header {
 
 /* */
 .nav a:hover {
-    color: var(--color-02);
+    color: #0077ff;
 }
 
 /*  */
@@ -74,7 +74,7 @@ header {
 }
 
 .logo:hover {
-    color: var(--color-02);
+    color: #0077ff;
 }
 
 
@@ -134,7 +134,7 @@ header {
 .testimonial-info img {
     width: 60px; /* Tamanho da imagem */
     height: 60px; /* Tamanho da imagem */
-    border-radius: 100%; /* Deixa a imagem redonda */
+    border-radius: 500%; /* Deixa a imagem redonda */
     margin-bottom: 10px; /* Espaçamento abaixo da imagem */
 }
 
@@ -143,6 +143,25 @@ header {
     color: var(--bg-color-01);
 }
 
+.profile-link {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-link i {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+    color: #0056b3;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.profile-link:hover i {
+    opacity: 1;
+}
 
 .features, .testimonials, .payment {
     margin-bottom: 40px;

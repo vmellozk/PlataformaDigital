@@ -60,7 +60,7 @@ header {
 }
 
 .nav a:hover {
-  color: var(--color-02);
+  color: #0077ff;
 }
 
 .logo {
@@ -68,7 +68,7 @@ header {
 }
 
 .logo:hover {
-  color: var(--color-02);
+  color: #0077ff;
 }
 
 /* Container para o conteúdo principal */

@@ -3,7 +3,7 @@
 
 /* Definição de valores padrões para utilização em todo o código */
 :root {
-    --main-color: #0c0c0c;
+    --main-color: #0e0d0d;
     --text-color: #FFFAFA;
     --bg-color-01: #f0f0f0;
     --bg-color-02: #00eeff;
@@ -70,7 +70,7 @@ header {
 
 /* */
 .nav a:hover {
-    color: var(--color-02);
+    color: #0077ff;
 }
 
 /*  */
@@ -146,9 +146,10 @@ span {
 /* */
 .areaatuacao-item img {
     width: 100%;
-    border-radius: 25px 25px 25px 25px;
+    border-radius: 15px 15px 15px 15px;
     position: relative;
     overflow: hidden;
+    box-shadow: 11px 0 15px 2px #000000;
 }
 
 /* */
@@ -198,7 +199,7 @@ span {
 /* */
 .video-container video {
     width: 100%;
-    box-shadow: 0 -10px 50px -10px #494949;
+    box-shadow: 11px 0 15px 2px #000000;
     border-radius: 25px;
 }
 
@@ -293,7 +294,7 @@ span {
     width: 80%;
     position: relative;
     overflow: hidden;
-    box-shadow: 11px 0 5px 2px #202020d5;
+    box-shadow: 11px 0 15px 2px #000000;
 }
 
 /* */
@@ -312,8 +313,7 @@ span {
 .produtos-buttons a {
     text-decoration: none;
     padding: 5px 16px;
-    border: 2px solid var(--bg-color-01);
-    border-radius: 0px;
+    border-radius: 5px;
     display: inline-block;
 }
 
@@ -323,11 +323,12 @@ span {
     font-size: 1.2rem;
     color: #ffffff;
     padding: 10px 15px;
+    background-color: #45a049;
 }
 
 /* */
 .comprar:hover {
-    background-color: var(--color-02);
+background-color: #b31363;
 }
 
 .container {
@@ -337,6 +338,7 @@ span {
     background-color: #252525; /* Cor de fundo para o retângulo */
     padding: 20px;
     margin-top: 17rem;
+    box-shadow: 11px 0 15px 2px #000000;
 }
 
 .contact-info {
@@ -415,7 +417,7 @@ input[type="submit"]:hover {
 }
 
 .social-icons a:hover {
-    color: var(--color-02);
+    color: #0077ff;
     transition: color 0.4s ease;
 }
 
