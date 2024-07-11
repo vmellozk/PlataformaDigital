@@ -24,6 +24,7 @@ document.getElementById('editProfileForm').addEventListener('submit', function(e
     const location = document.getElementById('edit-location').value;
     const email = document.getElementById('edit-email').value;
     const social = document.getElementById('edit-social').value;
+    const tipocadastro = document.getElementById('edit-tipocadastro').value;
 
     // Atualiza os elementos no perfil com os novos valores
     document.getElementById('username').innerText = username;
@@ -35,6 +36,7 @@ document.getElementById('editProfileForm').addEventListener('submit', function(e
     document.getElementById('location').innerText = location;
     document.getElementById('email').innerText = email;
     document.getElementById('social').innerText = social;
+    document.getElementById('tipocadastro').innerText = tipocadastro;
 
     // Após atualizar o perfil, a função closeModal é chamada para fechar o modal de edição de perfil de acordo com o ID da linha 122.
     closeModal('editProfileModal');
