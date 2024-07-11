@@ -49,31 +49,31 @@
             <div class="profile-details">
                 <div class="info-item">
                     <label>Data de Nascimento:</label>
-                    <p>DD/MM/AAAA</p>
+                    <p id="birthdate">DD/MM/AAAA</p>
                 </div>
                 <div class="info-item">
                     <label>Cartão Cadastrado:</label>
-                    <p>**** **** **** 1234</p>
+                    <p id="card">**** **** **** 1234</p>
                 </div>
                 <div class="info-item">
                     <label>Nome Completo:</label>
-                    <p>Nome Sobrenome</p>
+                    <p id="fullname">Nome Sobrenome</p>
                 </div>
                 <div class="info-item">
                     <label>Documentos:</label>
-                    <p>CPF: 123.456.789-00</p>
+                    <p id="documents">CPF: 123.456.789-00</p>
                 </div>
                 <div class="info-item">
                     <label>Localização:</label>
-                    <p>Cidade, Estado - CEP: 12345-678</p>
+                    <p id="location">Cidade, Estado - CEP: 12345-678</p>
                 </div>
                 <div class="info-item">
                     <label>Email:</label>
-                    <p>usuario@example.com</p>
+                    <p id="email">usuario@example.com</p>
                 </div>
                 <div class="info-item">
                     <label>Redes Sociais:</label>
-                    <p>Instagram: @usuario</p>
+                    <p id="social">Instagram: @usuario</p>
                 </div>
             </div>
             <!-- /Detalhes do usuário -->
@@ -116,7 +116,7 @@
     <!-- /Cards de Produtos -->
 
 
-    <!-- Modal -->
+    <!-- Modal de edição de perfil -->
     <div id="editProfileModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('editProfileModal')">&times;</span>
@@ -124,13 +124,36 @@
             <form id="editProfileForm">
                 <label for="edit-username">Nome:</label>
                 <input type="text" id="edit-username" name="username" value="Nome do Usuário">
+
                 <label for="edit-description">Descrição:</label>
-                <textarea id="edit-description" name="description">Descrição breve do usuário. Pode incluir interesses, especialidades ou uma biografia curta.</textarea>
+                <textarea id="edit-description" name="description">Descrição breve do usuário. Pode incluir interesses, especialidades ou uma biografia curta, especialidades ou uma biografia curta, especialidades ou uma biografia curta, especialidades ou uma biografia curta, especialidades ou uma biografia curta.</textarea>
+
+                <label for="edit-birthdate">Data de Nascimento:</label>
+                <input type="text" id="edit-birthdate" name="birthdate" value="DD/MM/AAAA">
+
+                <label for="edit-card">Cartão Cadastrado:</label>
+                <input type="text" id="edit-card" name="card" value="**** **** **** 1234">
+
+                <label for="edit-fullname">Nome Completo:</label>
+                <input type="text" id="edit-fullname" name="fullname" value="Nome Sobrenome">
+
+                <label for="edit-documents">Documentos:</label>
+                <input type="text" id="edit-documents" name="documents" value="CPF: 123.456.789-00">
+
+                <label for="edit-location">Localização:</label>
+                <input type="text" id="edit-location" name="location" value="Cidade, Estado - CEP: 12345-678">
+
+                <label for="edit-email">Email:</label>
+                <input type="email" id="edit-email" name="email" value="usuario@example.com">
+
+                <label for="edit-social">Redes Sociais:</label>
+                <input type="text" id="edit-social" name="social" value="Instagram: @usuario">
+
                 <button type="submit" class="btn">Salvar Alterações</button>
             </form>
         </div>
     </div>
-    <!-- /Modal -->
+    <!-- /Modal de edição de perfil -->
 
     <!-- Modal -->
     <div id="changePicModal" class="modal">
