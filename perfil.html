@@ -31,7 +31,7 @@
         <div class="profile-container">
             <div class="profile-header">
                 <div class="profile-pic-container">
-                    <img src="profile-pic.jpg" alt="Sem Foto" class="profile-pic">
+                    <img src="profile-pic.jpg" alt="Sua Foto" class="profile-pic">
                 </div>
                 <div class="profile-info">
                     <h1 id="username">Primeiro Nome</h1>
@@ -130,38 +130,48 @@
             <h2>Editar Perfil</h2>
             <form id="editProfileForm">
                 <label for="edit-username">Nome:</label>
-                <input type="text" id="edit-username" name="username" maxlength="12" value="Primeiro Nome">
+                <input type="text" id="edit-username" name="username" maxlength="12" placeholder="Primeiro Nome">
+                <p id="usernamecharCounter">12 caracteres restantes</p>
 
                 <label for="edit-picture">Foto de Perfil:</label>
                 <img id="selected-pic-preview" class="selected-pic-preview" src="#" alt="Pré-visualização" style="display: none;">
                 <button type="button" class="btn change-pic-btn" onclick="openModal('changePicModal')">Trocar Foto</button>
 
                 <label for="edit-description">Descrição:</label>
-                <textarea id="edit-description" maxlength="250" name="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam pariatur similique, veritatis doloremque earum architecto atque dolores ipsam, itaque illum et cupiditate? Nisi, laboriosam rem dolorum similique maiores ipsa facere. Vero enim reprehenderit hic quisquam et error, reiciendis modi mollitia.</textarea>
+                <textarea id="edit-description" maxlength="250" name="description" placeholder="Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam pariatur similique, veritatis doloremque earum architecto atque dolores ipsam, itaque illum et cupiditate? Nisi, laboriosam rem dolorum similique maiores ipsa facere. Vero enim reprehenderit hic quisquam et error, reiciendis modi mollitia."></textarea>
+                <p id="descriptioncharCounter">250 caracteres restantes</p>
 
                 <label for="edit-birthdate">Data de Nascimento:</label>
-                <input type="text" id="edit-birthdate" maxlength="10" name="birthdate" value="DD/MM/AAAA">
+                <input type="text" id="edit-birthdate" maxlength="10" name="birthdate" placeholder="DD/MM/AAAA">
+                <p id="birthdatecharCounter">10 caracteres restantes</p>
 
                 <label for="edit-card">Cartão Cadastrado:</label>
-                <input type="text" id="edit-card" maxlength="19" name="card" value="**** **** **** 1234">
+                <input type="text" id="edit-card" maxlength="19" name="card" placeholder="**** **** **** 1234">
+                <p id="cardcharCounter">19 caracteres restantes</p>
 
                 <label for="edit-fullname">Nome Completo:</label>
-                <input type="text" id="edit-fullname" maxlength="40" name="fullname" value="Nome Sobrenome Completo">
+                <input type="text" id="edit-fullname" maxlength="40" name="fullname" placeholder="Nome Sobrenome Completo">
+                <p id="fullnamecharCounter">40 caracteres restantes</p>
 
                 <label for="edit-tipocadastro">Cadastro:</label>
-                <input type="text" id="edit-tipocadastro" maxlength="10" name="tipocadastro" value="Vendedor">
+                <input type="text" id="edit-tipocadastro" maxlength="10" name="tipocadastro" placeholder="Vendedor">
+                <p id="cadastrocharCounter">10 caracteres restantes</p>
 
                 <label for="edit-documents">Documentos:</label>
-                <input type="text" id="edit-documents" maxlength="14" name="documents" value="123.456.789-00">
+                <input type="text" id="edit-documents" maxlength="14" name="documents" placeholder="123.456.789-00">
+                <p id="documentscharCounter">14 caracteres restantes</p>
 
                 <label for="edit-location">Localização:</label>
-                <input type="text" id="edit-location" maxlength="20" name="location" value="Niterói, RJ">
+                <input type="text" id="edit-location" maxlength="20" name="location" placeholder="Niterói, RJ">
+                <p id="locationcharCounter">20 caracteres restantes</p>
 
                 <label for="edit-email">Email:</label>
-                <input type="email" id="edit-email" maxlength="30" name="email" value="usuario@example.com">
+                <input type="email" id="edit-email" maxlength="30" name="email" placeholder="usuario@example.com">
+                <p id="emailcharCounter">30 caracteres restantes</p>
 
                 <label for="edit-social">Redes Sociais:</label>
-                <input type="text" id="edit-social" maxlength="15" name="social" value="@usuario">
+                <input type="text" id="edit-social" maxlength="15" name="social" placeholder="@usuario">
+                <p id="socialcharCounter">15 caracteres restantes</p>
 
                 <button type="submit" class="btn">Salvar Alterações</button>
             </form>

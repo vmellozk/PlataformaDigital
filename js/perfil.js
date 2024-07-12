@@ -87,3 +87,35 @@ document.getElementById('profile-pic-upload').addEventListener('change', functio
     }
 });
 
+// Contador de caracteres restantes utilizando o DOM para interagir com o conteúdo da página
+document.addEventListener('DOMContentLoaded', () => {
+    // Define um array de objetos com informações sobre cada campo
+    const fields = [
+        { id: 'edit-username', maxLength: 12, counterId: 'usernamecharCounter' },
+        { id: 'edit-description', maxLength: 250, counterId: 'descriptioncharCounter' },
+        { id: 'edit-birthdate', maxLength: 10, counterId: 'birthdatecharCounter' },
+        { id: 'edit-card', maxLength: 19, counterId: 'cardcharCounter' },
+        { id: 'edit-fullname', maxLength: 40, counterId: 'fullnamecharCounter' },
+        { id: 'edit-tipocadastro', maxLength: 10, counterId: 'cadastrocharCounter' },
+        { id: 'edit-documents', maxLength: 14, counterId: 'documentscharCounter' },
+        { id: 'edit-location', maxLength: 20, counterId: 'locationcharCounter' },
+        { id: 'edit-email', maxLength: 30, counterId: 'emailcharCounter' },
+        { id: 'edit-social', maxLength: 15, counterId: 'socialcharCounter' },
+    ];
+
+    // Para cada campo definido no array
+    fields.forEach(field => {
+        // Obtém o elemento de entrada correspondente pelo ID
+        const inputElement = document.getElementById(field.id);
+        // Obtém o elemento do contador correspondente pelo ID
+        const counterElement = document.getElementById(field.counterId);
+
+        // Adicione um ouvinte de evento para o input
+        inputElement.addEventListener('input', () => {
+            // Calcula o número restate de caracteres permitido
+            const remaining = field.maxLength - inputElement.value.length;
+            // Atualizada o texto do contador para mostrar os caracteres restantes 
+            counterElement.textContent = `${remaining} caracteres restantes`;
+        });
+    });
+});
