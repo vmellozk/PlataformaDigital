@@ -47,7 +47,8 @@ header {
     align-items: center;
     z-index: 100;
     font-size: 1.4rem;
-}
+    background-color: var(--main-color);
+  }
 
 /* */
 .logo {
@@ -252,7 +253,7 @@ span {
 
 /* */
 .aboutus a:hover {
-    background-color: var(--color-02);
+    background-color: #0077ff;
 }
 
 /* */
