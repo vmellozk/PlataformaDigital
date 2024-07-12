@@ -79,7 +79,7 @@ header {
 
 .profile-container {
     max-width: 1000px;
-    height: 380px;
+    height: 400px;
     margin: 20px auto;
     margin-top: 150px;
     background-color: #131212;
@@ -94,7 +94,7 @@ header {
     flex-wrap: wrap;
     gap: 55px;
     text-align: center;
-    margin-left: 50px;
+    position: static;
 }
 
 .profile-details label {
@@ -103,10 +103,26 @@ header {
 
 .profile-details p {
     margin-bottom: 10px;
-    color: #777;
+    color: #777;    
+}
+
+.info-group-1,
+.info-group-2 {
+    display: flex;
+    justify-content: center; /* Centraliza os itens dentro do grupo */
+    flex-wrap: wrap; /* Permite que os itens quebrem para a linha seguinte */
+    width: 100%; /* Ocupa toda a largura do container */
+}
+
+.info-item {
+    flex: 1 1 200px; /* Flexível, ocupa espaço igual e mínimo de 200px */
 }
 
 .profile-details .info-item {
+    min-height: 30px; /* ou ajuste conforme necessário */
+    display: flex; /* Alinhamento consistente */
+    flex-direction: column;
+    justify-content: center; /* Centraliza verticalmente */
     margin-bottom: 10px;
 }
 
@@ -125,6 +141,10 @@ header {
     position: relative;
 }
 
+.profile-pic-container button {
+    right: 20px;
+}
+
 .profile-pic {
     width: 100px;
     height: 100px;
@@ -133,7 +153,8 @@ header {
 }
 
 .change-pic-btn {
-    position: absolute;
+    top: 5px;
+    position: relative;
     bottom: 0;
     right: 0;
     background-color: rgba(0, 0, 0, 0.5);
@@ -142,6 +163,13 @@ header {
     padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.selected-pic-preview {
+    width: 80px; /* Ajuste o tamanho conforme necessário */
+    height: auto; /* Mantém a proporção */
+    margin-top: 10px; /* Espaçamento acima da imagem */
+    border-radius: 5px; /* Para um visual mais agradável */
 }
 
 .profile-info {

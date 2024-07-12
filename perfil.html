@@ -31,13 +31,11 @@
         <div class="profile-container">
             <div class="profile-header">
                 <div class="profile-pic-container">
-                    <img src="profile-pic.jpg" alt="Foto do Usuário" class="profile-pic">
-                    <button class="btn change-pic-btn" onclick="openModal('changePicModal')">Trocar Foto</button>
+                    <img src="profile-pic.jpg" alt="Sem Foto" class="profile-pic">
                 </div>
-
                 <div class="profile-info">
-                    <h1 id="username">Nome do Usuário</h1>
-                    <p id="user-description" class="description">Descrição breve do usuário. Pode incluir interesses, especialidades ou uma biografia curta, especialidades ou uma biografia curta, especialidades ou uma biografia curta, especialidades ou uma biografia curta, especialidades ou uma biografia curta.</p>
+                    <h1 id="username">Primeiro Nome</h1>
+                    <p id="user-description" class="description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus iusto ex numquam reiciendis aut aliquam impedit consectetur pariatur culpa, hic omnis repellat quia officiis. Voluptas, sequi voluptates? Facere sed necessitatibus ratione accusamus, ullam soluta minima, laborum exercitationem odit quae culpa?</p>
                 </div>
 
                 <div class="profile-actions">
@@ -47,46 +45,43 @@
 
             <!-- Detalhes do usuário -->
             <div class="profile-details">
-                <div class="info-item">
-                    <label>Data de Nascimento:</label>
-                    <p id="birthdate">DD/MM/AAAA</p>
+                <div class="info-group-1">
+                    <div class="info-item">
+                        <label>Data de Nascimento:</label>
+                        <p id="birthdate">DD/MM/AAAA</p>
+                    </div>
+                    <div class="info-item">
+                        <label>Cartão Cadastrado:</label>
+                        <p id="card">**** **** **** 1234</p>
+                    </div>
+                    <div class="info-item">
+                        <label>Nome Completo:</label>
+                        <p id="fullname">Nome Sobrenome Completo</p>
+                    </div>
+                    <div class="info-item">
+                        <label>Cadastro:</label>
+                        <p id="tipocadastro">Vendedor</p>
+                    </div>
                 </div>
 
-                <div class="info-item">
-                    <label>Cartão Cadastrado:</label>
-                    <p id="card">**** **** **** 1234</p>
+                <div class="info-group-2">
+                    <div class="info-item">
+                        <label>CPF:</label>
+                        <p id="documents">***.***.789-00</p>
+                    </div>
+                    <div class="info-item">
+                        <label>Localização:</label>
+                        <p id="location">Cidade, RJ</p>
+                    </div>
+                    <div class="info-item">
+                        <label>Email:</label>
+                        <p id="email">usuario@example.com</p>
+                    </div>
+                    <div class="info-item">
+                        <label>Instagram Profissional:</label>
+                        <p id="social">@usuario</p>
+                    </div>
                 </div>
-
-                <div class="info-item">
-                    <label>Nome Completo:</label>
-                    <p id="fullname">Nome Sobrenome Sobrenome Nome Nome</p>
-                </div>
-
-                <div class="info-item">
-                    <label>Cadastro:</label>
-                    <p id="tipocadastro">Vendedor</p>
-                </div>
-
-                <div class="info-item">
-                    <label>Documentos:</label>
-                    <p id="documents">CPF: 123.456.789-00</p>
-                </div>
-
-                <div class="info-item">
-                    <label>Localização:</label>
-                    <p id="location">Cidade, Estado - CEP: 12345-678</p>
-                </div>
-
-                <div class="info-item">
-                    <label>Email:</label>
-                    <p id="email">usuario@example.com</p>
-                </div>
-
-                <div class="info-item">
-                    <label>Redes Sociais:</label>
-                    <p id="social">Instagram: @usuario</p>
-                </div>
-
             </div>
             <!-- /Detalhes do usuário -->
         </div>
@@ -135,34 +130,38 @@
             <h2>Editar Perfil</h2>
             <form id="editProfileForm">
                 <label for="edit-username">Nome:</label>
-                <input type="text" id="edit-username" name="username" value="Nome do Usuário">
+                <input type="text" id="edit-username" name="username" maxlength="12" value="Primeiro Nome">
+
+                <label for="edit-picture">Foto de Perfil:</label>
+                <img id="selected-pic-preview" class="selected-pic-preview" src="#" alt="Pré-visualização" style="display: none;">
+                <button type="button" class="btn change-pic-btn" onclick="openModal('changePicModal')">Trocar Foto</button>
 
                 <label for="edit-description">Descrição:</label>
-                <textarea id="edit-description" name="description">Descrição breve do usuário. Pode incluir interesses, especialidades ou uma biografia curta, especialidades ou uma biografia curta, especialidades ou uma biografia curta, especialidades ou uma biografia curta, especialidades ou uma biografia curta.</textarea>
+                <textarea id="edit-description" maxlength="250" name="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam pariatur similique, veritatis doloremque earum architecto atque dolores ipsam, itaque illum et cupiditate? Nisi, laboriosam rem dolorum similique maiores ipsa facere. Vero enim reprehenderit hic quisquam et error, reiciendis modi mollitia.</textarea>
 
                 <label for="edit-birthdate">Data de Nascimento:</label>
-                <input type="text" id="edit-birthdate" name="birthdate" value="DD/MM/AAAA">
+                <input type="text" id="edit-birthdate" maxlength="10" name="birthdate" value="DD/MM/AAAA">
 
                 <label for="edit-card">Cartão Cadastrado:</label>
-                <input type="text" id="edit-card" name="card" value="**** **** **** 1234">
+                <input type="text" id="edit-card" maxlength="19" name="card" value="**** **** **** 1234">
 
                 <label for="edit-fullname">Nome Completo:</label>
-                <input type="text" id="edit-fullname" name="fullname" value="Nome Sobrenome">
+                <input type="text" id="edit-fullname" maxlength="40" name="fullname" value="Nome Sobrenome Completo">
 
                 <label for="edit-tipocadastro">Cadastro:</label>
-                <input type="text" id="edit-tipocadastro" name="tipocadastro" value="Cadastro">
+                <input type="text" id="edit-tipocadastro" maxlength="10" name="tipocadastro" value="Vendedor">
 
                 <label for="edit-documents">Documentos:</label>
-                <input type="text" id="edit-documents" name="documents" value="CPF: 123.456.789-00">
+                <input type="text" id="edit-documents" maxlength="14" name="documents" value="123.456.789-00">
 
                 <label for="edit-location">Localização:</label>
-                <input type="text" id="edit-location" name="location" value="Cidade, Estado - CEP: 12345-678">
+                <input type="text" id="edit-location" maxlength="20" name="location" value="Niterói, RJ">
 
                 <label for="edit-email">Email:</label>
-                <input type="email" id="edit-email" name="email" value="usuario@example.com">
+                <input type="email" id="edit-email" maxlength="30" name="email" value="usuario@example.com">
 
                 <label for="edit-social">Redes Sociais:</label>
-                <input type="text" id="edit-social" name="social" value="Instagram: @usuario">
+                <input type="text" id="edit-social" maxlength="15" name="social" value="@usuario">
 
                 <button type="submit" class="btn">Salvar Alterações</button>
             </form>

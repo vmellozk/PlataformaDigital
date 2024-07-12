@@ -64,3 +64,26 @@ document.getElementById('changePicForm').addEventListener('submit', function(e) 
     closeModal('changePicModal');
 
 });
+
+// Vai identificar o ID da linha 182 de "perfil.html" e adiciona um evento para detectar mudanças (seleção de arquivo)
+document.getElementById('profile-pic-upload').addEventListener('change', function(event) {
+    // Obtém o arquivo selecionado
+    const file = event.target.files[0];
+    // Verifica se o arquivo foi selecionado
+    if (file) {
+        // Cria um FileReader para ler o arquivo
+        const reader = new FileReader();
+        // Defininando uma função para ser chamada quando o arquivo estiver completo
+        reader.onload = function(e) {
+            // Seleciona a imagem para pré visualização
+            const preview = document.getElementById('selected-pic-preview');
+            // Define a fonte da imagem como o resultado da leitura do arquivo (URL do arquivo)
+            preview.src = e.target.result;
+            // Mostra a imagem
+            preview.style.display = 'block';
+        }
+        // Lê o arquivo como uma URL de dados (data URL)
+        reader.readAsDataURL(file);
+    }
+});
+
