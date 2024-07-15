@@ -92,6 +92,10 @@
     <section class="products-container">
         <div class="products">
 
+            <div class="product-actions">
+                <button class="btn" onclick="openModal('editProductModal')">Editar</button>
+            </div>
+
         <!-- Produto 1 -->
         <div class="product-card">
             <img src="img/produto.png" alt="Produto 1">
@@ -179,7 +183,7 @@
     </div>
     <!-- /Modal de edição de perfil -->
 
-    <!-- Modal -->
+    <!-- Modal de Troca de Foto -->
     <div id="changePicModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('changePicModal')">&times;</span>
@@ -191,7 +195,22 @@
             </form>
         </div>
     </div>
-    <!-- /Modal -->
+    <!-- /Modal de Troca de Foto -->
+
+    <!-- Modal de Editar o Produto -->
+    <div id='editProductModal' class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('editProductModal')">&times;</span>
+            <h2>Editar</h2>
+            <form id="editProductModal">
+
+                ...
+
+                <button type="submit" class="btn"> ... </button>
+            </form>
+        </div>
+    </div>
+    <!-- /Modal de Editar o Produto -->
 
     <footer>
         <p>Copyright &copy; 2024 by &lt;/devxxctor.&gt; All rights Reserved</p>
