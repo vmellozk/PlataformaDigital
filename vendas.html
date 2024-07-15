@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prática Sênior</title>
+    <!-- Link Ref CSS -->
+     <link rel="stylesheet" href="css/vendas.css">
+    <!-- /Link Ref CSS -->
+</head>
+<body>
+    <!-- Barra de Navegação-->
+    <header>
+        <a href="home.html" class="logo">Prática Sênior</a>
+        
+        <nav>
+            <ul class="nav">
+                <a href="#home">Início</a>
+                <li><a href="loja.html">Loja Sênior</a></li>
+                <a href="home.html#produtos">Nossos Produtos</a>
+                <li><a href="premium.html">Seja +</a></li>
+                <a href="home.html#contact">Contato</a>
+                <li><a href="perfil.html">Meu Perfil</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- /Barra de Navegação -->
+
+    <!-- Área de Início -->
+    <section class="home" id="home">
+        <div class="text-container-home">
+            <h1>A experiência da prática dos variados especialistas no mundo.</h1>
+            <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed asperiores libero quod fugit quo harum! Quam autem pariatur iure explicabo dolorum in magni totam, veniam maiores placeat voluptatum nostrum voluptatibus, maxime, dolore odio voluptas. Quae, explicabo animi mollitia culpa asperiores officia consequatur perspiciatis, fuga, dolores commodi fugit? Ratione, eum harum.</h2>
+        </div>
+    </section>
+    <!-- /Área de Início -->
+
+    <!-- Depoimentos -->
+    <section class="testimonials">
+        <h2 style="text-align: center;">Sêniors que Utilizam o Serviço</h2>
+        <div class="testimonial-cards">
+
+            <div class="testimonial-card">
+                <img src="img/depoimento.jpg" alt="Depoimento">
+                <div class="testimonial-info">
+                    <a href="perfil.html" class="profile-link">
+                        <img src="img/perfil.jpg" alt="Foto do Usuário" class="user-profile">
+                        <i class='bx bx-user'></i>
+                    </a>
+                    <h4>João Silva</h4>
+                    <p>São Paulo, cliente desde 2020</p>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <img src="img/depoimento.jpg" alt="Depoimento">
+                <div class="testimonial-info">
+                    <a href="perfil.html" class="profile-link">
+                        <img src="img/perfil.jpg" alt="Foto do Usuário" class="user-profile">
+                        <i class='bx bx-user'></i>
+                    </a>
+                    <h4>João Silva</h4>
+                    <p>São Paulo, cliente desde 2020</p>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <img src="img/depoimento.jpg" alt="Depoimento">
+                <div class="testimonial-info">
+                    <a href="perfil.html" class="profile-link">
+                        <img src="img/perfil.jpg" alt="Foto do Usuário" class="user-profile">
+                        <i class='bx bx-user'></i>
+                    </a>
+                    <h4>João Silva</h4>
+                    <p>São Paulo, cliente desde 2020</p>
+                </div>
+            </div> 
+        </div>
+    </section>
+    <!-- /Depoimentos -->
+
+    <!-- Seção Home -->
+    <section class="divform" id="divform">
+        <div class="text-container">
+            <h2 style="text-align: center;">Formulário para Criação do Produto</h2>
+            <form action="{{ url_for('submit') }}" method="POST">
+                <!-- Pergunta 1 -->
+                <div class="form-group">
+                    <label for="question1">Pergunta 01</label>
+                    <textarea type="text" id="question1" name="question1" required></textarea>
+                </div>
+
+                <!-- /Pergunta 1 -->
+
+                <!-- Pergunta 2 -->
+                <div class="form-group">
+                    <label for="question2">Pergunta 02</label>
+                    <textarea type="text" id="question2" name="question2" required></textarea>
+                </div>
+                <!-- /Pergunta 2 -->
+
+                <!-- Pergunta 3 -->
+                <div class="form-group">
+                    <label for="question3">Pergunta 03</label>
+                    <textarea type="text" id="question3" name="question3" required></textarea>
+                </div>
+                <!-- /Pergunta 3 -->
+
+                <!-- Pergunta 4 -->
+                <div class="form-group">
+                    <label for="question4">Pergunta 04</label>
+                    <textarea type="text" id="question4" name="question3" required></textarea>
+                </div>
+                <!-- /Pergunta 4 -->
+
+                <!-- Pergunta 5 -->
+                <div class="form-group">
+                    <label for="question5">Pergunta 05</label>
+                    <textarea type="text" id="question5" name="question3" required></textarea>
+                </div>
+                <!-- /Pergunta 6 -->
+
+                <!-- Pergunta 6 -->
+                <div class="form-group">
+                    <label for="question6">Pergunta 06</label>
+                    <textarea type="text" id="question6" name="question3" required></textarea>
+                </div>
+                <!-- /Pergunta 6 -->
+
+                <!-- Pergunta 7 -->
+                <div class="form-group">
+                    <label for="question7">Pergunta 07</label>
+                    <textarea type="text" id="question7" name="question3" required></textarea>
+                </div>
+                <!-- /Pergunta 7 -->
+
+                <!-- Pergunta 8 -->
+                <div class="form-group">
+                    <label for="question8">Pergunta 08</label>
+                    <textarea type="text" id="question8" name="question3" required></textarea>
+                </div>
+                <!-- /Pergunta 8 -->
+
+                <!-- Pergunta 9 -->
+                <div class="form-group">
+                    <label for="question9">Pergunta 09</label>
+                    <textarea type="text" id="question9" name="question3" required></textarea>
+                </div>
+                <!-- /Pergunta 9 -->
+
+                <!-- Pergunta 10 -->
+                <div class="form-group">
+                    <label for="question10">Pergunta 10</label>
+                    <textarea type="text" id="question10" name="question3" required></textarea>
+                </div>
+                <!-- /Pergunta 10 -->
+
+                <button type="submit">Gerar Produto</button>
+            </form>
+        </div>
+    </section>
+    <!-- /Seção Home -->
+    
+    <!-- Seção de Direitos sobre o site-->
+    <footer>
+        <p>Copyright &copy; 2024 by &lt;/devxxctor.&gt; All rights Reserved</p>
+    </footer>
+    <!-- /Seção de Direitos sobre o site -->
+    
+    <!-- Referência ao Arquivo JavaScript -->
+    <script src="js/vendas.js"></script>
+
+</body>
+</html>
