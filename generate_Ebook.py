@@ -1,12 +1,8 @@
-import sqlite3
-import pandas as pd
-from fpdf import FPDF
-
 def generate_ebook(user_id):
     conn = sqlite3.connect('database.db')
     df = pd.read_sql_query(f"SELECT * FROM survey_responses WHERE user_id = {user_id}", conn)
     conn.close()
-    
+
     class PDF(FPDF):
         def header(self):
             self.set_font('Arial', 'B', 12)
@@ -27,15 +23,10 @@ def generate_ebook(user_id):
             self.chapter_title(title)
             self.chapter_body(body)
 
-    # Crie uma instância do PDF
     pdf = PDF()
-
-    # Adicione um capítulo para cada resposta da pesquisa
-    for index, row in df.iterrows():
-        title = f"Response {index + 1}"
+    for vendas, row in df.iterrows():
+        title = f"Response {vendas + 1}"
         body = '\n'.join([f"{col}: {row[col]}" for col in df.columns if col not in ['id', 'user_id']])
         pdf.add_chapter(title, body)
 
-    # Salve o PDF
-    pdf_filename = f'ebook_user_{user_id}.pdf'
-    pdf.output(pdf_filename)
+    pdf.output(f'survey_responses_ebook_{user_id}.pdf')

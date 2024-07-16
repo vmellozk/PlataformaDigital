@@ -1,3 +1,5 @@
+#Definição dos Modelos do Banco de Dados
+
 import sqlite3
 
 def insert_user(email, password):

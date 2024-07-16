@@ -1,3 +1,5 @@
+#Inicialização do Banco de Dados
+
 import sqlite3
 
 def init_db():
