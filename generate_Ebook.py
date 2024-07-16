@@ -1,3 +1,9 @@
+#Função para Gerar o Ebook
+
+import sqlite3
+import pandas as pd
+from fpdf import FPDF
+
 def generate_ebook(user_id):
     conn = sqlite3.connect('database.db')
     df = pd.read_sql_query(f"SELECT * FROM survey_responses WHERE user_id = {user_id}", conn)

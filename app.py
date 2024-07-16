@@ -11,7 +11,7 @@ app.secret_key = 'chave_secreta'
 
 @app.route('/')
 def vendas():
-    return render_template('templates/vendas.html')
+    return render_template('vendas.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -26,27 +26,22 @@ def register():
         conn.commit()
         conn.close()
         return redirect(url_for('login'))
-    return redirect(url_for('templates/register.html'))
+    return render_template('register.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-        if request.method == 'POST':
-            email = request.form['email']
-            password = request.form['password']
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
 
-            conn = sqlite3.connect('database.db')
-            cursor = conn.cursor()
-            cursor.execute('SELECT id FROM user WHERE email = ? AND password = ?', (email, password))
+        user = get_user_by_email(email, password)
 
-            user = cursor.fetchone() # --> 
-            conn.close()
+        if user:
+            session['user_id'] = user[0]
+            return redirect(url_for('vendas'))
+    return render_template('login.html')
 
-            if user:
-                session['user_id'] = user[0]
-                return redirect(url_for('vendas'))
-            return render_template('templates/login.html')        
-
-@app.route('/submit', methods=['POST'])  
+@app.route('/submit', methods=['POST'])
 def submit():
     if 'user_id' in session:
         user_id = session['user_id']
@@ -64,13 +59,7 @@ def submit():
             request.form['question10']
         )
 
-        conn = sqlite3.connect('database.db')
-        cursor = conn.cursor()
-        cursor.execute('INSERT INTO survey_responses (user_id, question1, question2, question3, question4, question5, question6, question7, question8, question9, question10) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', data)
-
-        conn.commit()
-        conn.close()
-
+        insert_survey_response(data)
         generate_ebook(user_id)
 
         return redirect(url_for('vendas'))
