@@ -24,7 +24,8 @@ def init_db():
                        question7 TEXT,
                        question8 TEXT,
                        question9 TEXT,
-                       question10 TEXT)''')
+                       question10 TEXT,
+                       FOREIGN KEY(user_id) REFERENCES users(id))''')
     conn.commit()
     conn.close()
 
