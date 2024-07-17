@@ -19,12 +19,8 @@ def register():
         email = request.form['email']
         password = request.form['password']
 
-        conn = sqlite3.connect('database.db')
-        cursor = conn.cursor()
-        cursor.execute('INSERT INTO users (email, password) VALUES (?, ?)', (email, password))
+        insert_user(email, password)
 
-        conn.commit()
-        conn.close()
         return redirect(url_for('login'))
     return render_template('register.html')
 
@@ -35,7 +31,6 @@ def login():
         password = request.form['password']
 
         user = get_user_by_email(email, password)
-
         if user:
             session['user_id'] = user[0]
             return redirect(url_for('vendas'))
