@@ -12,7 +12,7 @@ def insert_user(email, password):
 def get_user_by_email(email, password):
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
-    cursor.execute('SELECT id FROM users WHERE email = ? AND password = ?', (email, password))
+    cursor.execute('SELECT * FROM users WHERE email = ? AND password = ?', (email, password))
     user = cursor.fetchone()
     conn.close()
     return user
