@@ -19,7 +19,13 @@ def register():
         email = request.form['email']
         password = request.form['password']
 
-        insert_user(email, password)
+        print(f"Registering user with email: {email}")
+
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
+        cursor.execute('INSERT INTO user (email, password) VALUES (?, ?)', (email, password))
+        conn.commit()
+        conn.close()
 
         return redirect(url_for('login'))
     return render_template('register.html')
@@ -30,10 +36,16 @@ def login():
         email = request.form['email']
         password = request.form['password']
 
+        print(f"Trying to login with email: {email}")
+
         user = get_user_by_email(email, password)
         if user:
+            print(f"User found: {user}")
+
             session['user_id'] = user[0]
             return redirect(url_for('vendas'))
+        else:
+            print(f"User not found or incorrect password")
     return render_template('login.html')
 
 @app.route('/submit', methods=['POST'])
@@ -54,10 +66,13 @@ def submit():
             request.form['question10']
         )
 
+        print(f"Insert survey response for user_id: {user_id}")
+
         insert_survey_response(data)
         generate_ebook(user_id)
 
         return redirect(url_for('vendas'))
+    print(f"User not logged in, redirecting to login")
     return redirect(url_for('login'))
 
 if __name__ == '__main__':

@@ -30,8 +30,8 @@ def generate_ebook(user_id):
             self.chapter_body(body)
 
     pdf = PDF()
-    for vendas, row in df.iterrows():
-        title = f"Response {vendas + 1}"
+    for index, row in df.iterrows():
+        title = f"Response {index + 1}"
         body = '\n'.join([f"{col}: {row[col]}" for col in df.columns if col not in ['id', 'user_id']])
         pdf.add_chapter(title, body)
 
