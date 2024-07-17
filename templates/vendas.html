@@ -30,54 +30,10 @@
     <section class="home" id="home">
         <div class="text-container-home">
             <h1>A experiência da prática dos variados especialistas no mundo.</h1>
-            <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed asperiores libero quod fugit quo harum! Quam autem pariatur iure explicabo dolorum in magni totam, veniam maiores placeat voluptatum nostrum voluptatibus, maxime, dolore odio voluptas. Quae, explicabo animi mollitia culpa asperiores officia consequatur perspiciatis, fuga, dolores commodi fugit? Ratione, eum harum.</h2>
+            <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quidem doloribus tenetur repellendus rem, sed porro deleniti aperiam saepe dolore, quia, sunt quos magnam laboriosam velit at adipisci consequatur expedita nesciunt accusamus tempora maiores qui ab. Adipisci blanditiis exercitationem deleniti neque culpa, molestias dicta tempora reiciendis saepe accusamus recusandae fuga autem nemo? Minima hic officia commodi, ab earum nulla aliquam ea doloremque iste. Aperiam, sapiente corporis mollitia libero officia aliquid consequuntur ab, harum consectetur facilis necessitatibus excepturi voluptas laborum, quae dolorem optio reiciendis expedita est sit officiis incidunt laudantium culpa voluptatibus iure. Officiis veniam, ea minus impedit amet aliquam nesciunt?</h2>
         </div>
     </section>
     <!-- /Área de Início -->
-
-    <!-- Depoimentos -->
-    <section class="testimonials">
-        <h2 style="text-align: center;">Sêniors que Utilizam o Serviço</h2>
-        <div class="testimonial-cards">
-
-            <div class="testimonial-card">
-                <img src="../img/depoimento.jpg" alt="Depoimento">
-                <div class="testimonial-info">
-                    <a href="perfil.html" class="profile-link">
-                        <img src="../img/perfil.jpg" alt="Foto do Usuário" class="user-profile">
-                        <i class='bx bx-user'></i>
-                    </a>
-                    <h4>João Silva</h4>
-                    <p>São Paulo, cliente desde 2020</p>
-                </div>
-            </div>
-
-            <div class="testimonial-card">
-                <img src="../img/depoimento.jpg" alt="Depoimento">
-                <div class="testimonial-info">
-                    <a href="perfil.html" class="profile-link">
-                        <img src="../img/perfil.jpg" alt="Foto do Usuário" class="user-profile">
-                        <i class='bx bx-user'></i>
-                    </a>
-                    <h4>João Silva</h4>
-                    <p>São Paulo, cliente desde 2020</p>
-                </div>
-            </div>
-
-            <div class="testimonial-card">
-                <img src="../img/depoimento.jpg" alt="Depoimento">
-                <div class="testimonial-info">
-                    <a href="perfil.html" class="profile-link">
-                        <img src="../img/perfil.jpg" alt="Foto do Usuário" class="user-profile">
-                        <i class='bx bx-user'></i>
-                    </a>
-                    <h4>João Silva</h4>
-                    <p>São Paulo, cliente desde 2020</p>
-                </div>
-            </div> 
-        </div>
-    </section>
-    <!-- /Depoimentos -->
 
     <!-- Seção Home -->
     <section class="divform" id="divform">
@@ -86,9 +42,17 @@
             <form action="{{ url_for('submit') }}" method="POST">
                 <!-- Pergunta 1 -->
                 <div class="form-group">
+
+                    <!-- E-mail -->
+                    <label for="email">Email Cadastrado:</label>
+                    <textarea type="email" id="email" name="email" required></textarea>
+                    <p id="charCounter">50 caracteres restantes</p>
+                    <h6>‎ </h6>
+                    <!-- /E-mail -->
+
                     <label for="question1">Pergunta 01</label>
                     <textarea type="text" id="question1" name="question1" required></textarea>
-                    <p id="question1Counter">100 caracteres restantes</p>
+                    <p id="question1Counter">300 caracteres restantes</p>
                 </div>
 
                 <!-- /Pergunta 1 -->
@@ -97,7 +61,7 @@
                 <div class="form-group">
                     <label for="question2">Pergunta 02</label>
                     <textarea type="text" id="question2" name="question2" required></textarea>
-                    <p id="question2Counter">100 caracteres restantes</p>
+                    <p id="question2Counter">300 caracteres restantes</p>
                 </div>
                 <!-- /Pergunta 2 -->
 
@@ -105,7 +69,7 @@
                 <div class="form-group">
                     <label for="question3">Pergunta 03</label>
                     <textarea type="text" id="question3" name="question3" required></textarea>
-                    <p id="question3Counter">100 caracteres restantes</p>
+                    <p id="question3Counter">300 caracteres restantes</p>
                 </div>
                 <!-- /Pergunta 3 -->
 
@@ -113,7 +77,7 @@
                 <div class="form-group">
                     <label for="question4">Pergunta 04</label>
                     <textarea type="text" id="question4" name="question4" required></textarea>
-                    <p id="question4Counter">100 caracteres restantes</p>
+                    <p id="question4Counter">300 caracteres restantes</p>
                 </div>
                 <!-- /Pergunta 4 -->
 
@@ -121,7 +85,7 @@
                 <div class="form-group">
                     <label for="question5">Pergunta 05</label>
                     <textarea type="text" id="question5" name="question5" required></textarea>
-                    <p id="question5Counter">100 caracteres restantes</p>
+                    <p id="question5Counter">300 caracteres restantes</p>
                 </div>
                 <!-- /Pergunta 6 -->
 
@@ -129,7 +93,7 @@
                 <div class="form-group">
                     <label for="question6">Pergunta 06</label>
                     <textarea type="text" id="question6" name="question6" required></textarea>
-                    <p id="question6Counter">100 caracteres restantes</p>
+                    <p id="question6Counter">300 caracteres restantes</p>
                 </div>
                 <!-- /Pergunta 6 -->
 
@@ -137,7 +101,7 @@
                 <div class="form-group">
                     <label for="question7">Pergunta 07</label>
                     <textarea type="text" id="question7" name="question7" required></textarea>
-                    <p id="question7Counter">100 caracteres restantes</p>
+                    <p id="question7Counter">300 caracteres restantes</p>
                 </div>
                 <!-- /Pergunta 7 -->
 
@@ -145,7 +109,7 @@
                 <div class="form-group">
                     <label for="question8">Pergunta 08</label>
                     <textarea type="text" id="question8" name="question8" required></textarea>
-                    <p id="question8Counter">100 caracteres restantes</p>
+                    <p id="question8Counter">300 caracteres restantes</p>
                 </div>
                 <!-- /Pergunta 8 -->
 
@@ -153,7 +117,7 @@
                 <div class="form-group">
                     <label for="question9">Pergunta 09</label>
                     <textarea type="text" id="question9" name="question9" required></textarea>
-                    <p id="question9Counter">100 caracteres restantes</p>
+                    <p id="question9Counter">300 caracteres restantes</p>
                 </div>
                 <!-- /Pergunta 9 -->
 
@@ -161,7 +125,7 @@
                 <div class="form-group">
                     <label for="question10">Pergunta 10</label>
                     <textarea type="text" id="question10" name="question10" required></textarea>
-                    <p id="question10Counter">100 caracteres restantes</p>
+                    <p id="question10Counter">300 caracteres restantes</p>
                 </div>
                 <!-- /Pergunta 10 -->
 
@@ -170,6 +134,50 @@
         </div>
     </section>
     <!-- /Seção Home -->
+
+        <!-- Depoimentos -->
+        <section class="testimonials">
+            <h2 style="text-align: center;">Sêniors que Utilizam o Serviço</h2>
+            <div class="testimonial-cards">
+    
+                <div class="testimonial-card">
+                    <img src="../img/depoimento.jpg" alt="Depoimento">
+                    <div class="testimonial-info">
+                        <a href="perfil.html" class="profile-link">
+                            <img src="../img/perfil.jpg" alt="Foto do Usuário" class="user-profile">
+                            <i class='bx bx-user'></i>
+                        </a>
+                        <h4>João Silva</h4>
+                        <p>São Paulo, cliente desde 2020</p>
+                    </div>
+                </div>
+    
+                <div class="testimonial-card">
+                    <img src="../img/depoimento.jpg" alt="Depoimento">
+                    <div class="testimonial-info">
+                        <a href="perfil.html" class="profile-link">
+                            <img src="../img/perfil.jpg" alt="Foto do Usuário" class="user-profile">
+                            <i class='bx bx-user'></i>
+                        </a>
+                        <h4>João Silva</h4>
+                        <p>São Paulo, cliente desde 2020</p>
+                    </div>
+                </div>
+    
+                <div class="testimonial-card">
+                    <img src="../img/depoimento.jpg" alt="Depoimento">
+                    <div class="testimonial-info">
+                        <a href="perfil.html" class="profile-link">
+                            <img src="../img/perfil.jpg" alt="Foto do Usuário" class="user-profile">
+                            <i class='bx bx-user'></i>
+                        </a>
+                        <h4>João Silva</h4>
+                        <p>São Paulo, cliente desde 2020</p>
+                    </div>
+                </div> 
+            </div>
+        </section>
+        <!-- /Depoimentos -->
     
     <!-- Seção de Direitos sobre o site-->
     <footer>

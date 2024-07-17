@@ -1,15 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
     const fields = [
-        { id: 'question1', maxLength: 100, counterId: 'question1Counter' },
-        { id: 'question2', maxLength: 100, counterId: 'question2Counter' },
-        { id: 'question3', maxLength: 100, counterId: 'question3Counter' },
-        { id: 'question4', maxLength: 100, counterId: 'question4Counter' },
-        { id: 'question5', maxLength: 100, counterId: 'question5Counter' },
-        { id: 'question6', maxLength: 100, counterId: 'question6Counter' },
-        { id: 'question7', maxLength: 100, counterId: 'question7Counter' },
-        { id: 'question8', maxLength: 100, counterId: 'question8Counter' },
-        { id: 'question9', maxLength: 100, counterId: 'question9Counter' },
-        { id: 'question10', maxLength: 100, counterId: 'question10Counter' },
+        { id: 'email', maxLength:50, counterId: 'charCounter'},
+        { id: 'question1', maxLength: 300, counterId: 'question1Counter' },
+        { id: 'question2', maxLength: 300, counterId: 'question2Counter' },
+        { id: 'question3', maxLength: 300, counterId: 'question3Counter' },
+        { id: 'question4', maxLength: 300, counterId: 'question4Counter' },
+        { id: 'question5', maxLength: 300, counterId: 'question5Counter' },
+        { id: 'question6', maxLength: 300, counterId: 'question6Counter' },
+        { id: 'question7', maxLength: 300, counterId: 'question7Counter' },
+        { id: 'question8', maxLength: 300, counterId: 'question8Counter' },
+        { id: 'question9', maxLength: 300, counterId: 'question9Counter' },
+        { id: 'question10', maxLength: 300, counterId: 'question10Counter' },
     ];
 
     fields.forEach(field => {
