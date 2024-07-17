@@ -10,7 +10,30 @@ app = Flask(__name__)
 app.secret_key = 'chave_secreta'
 
 @app.route('/')
+@app.route('/home')
+def home():
+    return render_template('home.html')
+
+@app.route('/loja')
+def loja():
+    return render_template('loja.html')
+
+@app.route('/user/visitante')
+def visit_user():
+    return render_template('perfil_visita.html')
+
+@app.route('/user')
+def user():
+    return render_template('perfil.html')
+
+@app.route('/premium')
+def premium():
+    return render_template('premium.html')
+
+@app.route('/formulario', methods=['GET', 'POST'])
 def vendas():
+    if request.method == 'POST':
+        pass
     return render_template('vendas.html')
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -36,14 +59,14 @@ def login():
         email = request.form['email']
         password = request.form['password']
 
-        print(f"Trying to login with email: {email}")
+        print(f"Trying to login with email: {email} and password: {password}")
 
         user = get_user_by_email(email, password)
         if user:
             print(f"User found: {user}")
 
-            session['user_id'] = user[0]
-            return redirect(url_for('vendas'))
+            session['user_id'] = user[0]    
+            return redirect(url_for('home'))
         else:
             print(f"User not found or incorrect password")
     return render_template('login.html')
