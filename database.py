@@ -9,6 +9,7 @@ def init_db():
                       (id INTEGER PRIMARY KEY,
                        email TEXT UNIQUE,
                        password TEXT)''')
+    
     cursor.execute('''CREATE TABLE IF NOT EXISTS survey_responses
                       (id INTEGER PRIMARY KEY,
                        user_id INTEGER,
@@ -25,3 +26,14 @@ def init_db():
                        FOREIGN KEY(user_id) REFERENCES users(id))''')
     conn.commit()
     conn.close()
+
+def insert_test_user():
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    cursor.execute('INSERT INTO users (email, password) VALUES (?, ?)', ('test@example.com', 'password'))
+    conn.commit()
+    conn.close()
+
+if __name__ == "__main__":
+    init_db()
+    insert_test_user()

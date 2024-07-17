@@ -41,16 +41,11 @@ def register():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
-
-        print(f"Registering user with email: {email}")
-
-        conn = sqlite3.connect('database.db')
-        cursor = conn.cursor()
-        cursor.execute('INSERT INTO user (email, password) VALUES (?, ?)', (email, password))
-        conn.commit()
-        conn.close()
-
+        
+        insert_user(email, password)
+        
         return redirect(url_for('login'))
+    
     return render_template('register.html')
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -64,8 +59,7 @@ def login():
         user = get_user_by_email(email, password)
         if user:
             print(f"User found: {user}")
-
-            session['user_id'] = user[0]    
+            session['user_id'] = user[0]
             return redirect(url_for('home'))
         else:
             print(f"User not found or incorrect password")
