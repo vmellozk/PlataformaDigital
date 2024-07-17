@@ -1,17 +1,3 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const textareas = document.querySelectorAll('textarea');
-s
-    function adjustHeight(el) {
-        el.style.height = 'auto';
-        el.style.height = `${el.scrollHeight}px`;
-    }
-
-    textareas.forEach(textarea => {
-        textarea.addEventListener('input', () => adjustHeight(textarea));
-        adjustHeight(textarea);
-    });
-});
-
 document.addEventListener('DOMContentLoaded', () => {
     const fields = [
         { id: 'question1', maxLength: 100, counterId: 'question1Counter' },
@@ -42,3 +28,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const textareas = document.querySelectorAll('textarea');
+
+    function adjustHeight(el) {
+        el.style.height = 'auto';
+        el.style.height = `${el.scrollHeight}px`;
+    }
+
+    textareas.forEach(textarea => {
+        textarea.addEventListener('input', () => adjustHeight(textarea));
+        adjustHeight(textarea);
+    });
+});
+
