@@ -12,16 +12,15 @@
 <body>
     <!-- Barra de Navegação-->
     <header>
-        <a href="home.html" class="logo">Prática Sênior</a>
+        <a href="{{  url_for('home')  }}" class="logo">Prática Sênior</a>
 
         <nav>
             <ul class="nav">
-                <a href="#home">Início</a>
-                <li><a href="loja.html">Loja Sênior</a></li>
-                <li><a href="vendas.html">Quero Vender</a></li>
-                <a href="home.html#produtos">Nossos Produtos</a>
-                <li><a href="premium.html">Seja +</a></li>
-                <a href="home.html#contact">Contato</a>
+                <li><a href="{{  url_for('loja')  }}">Loja Sênior</a></li>
+                <li><a href="{{  url_for('vendas')  }}">Quero Vender</a></li>
+                <a href="{{  url_for('home')  }}">Nossos Serviços</a>
+                <li><a href="{{  url_for('premium')  }}">Seja +</a></li>
+                <a href="{{  url_for('home')  }}">Contato</a>
             </ul>
         </nav>
     </header>

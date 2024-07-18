@@ -11,16 +11,15 @@
 <body>
     <!-- Barra de Navegação-->
     <header>
-        <a href="home.html" class="logo">Prática Sênior</a>
+        <a href="{{  url_for('home')  }}" class="logo">Prática Sênior</a>
         
         <nav>
             <ul class="nav">
-                <a href="#home">Início</a>
-                <li><a href="loja.html">Loja Sênior</a></li>
-                <a href="home.html#produtos">Nossos Produtos</a>
-                <li><a href="premium.html">Seja +</a></li>
-                <a href="home.html#contact">Contato</a>
-                <li><a href="perfil.html">Meu Perfil</a></li>
+                <li><a href="{{  url_for('loja')  }}">Loja Sênior</a></li>
+                <a href="{{  url_for('home')  }}">Nossos Serviços</a>
+                <li><a href="{{  url_for('premium')  }}">Seja +</a></li>
+                <a href="{{  url_for('home')  }}">Contato</a>
+                <li><a href="{{  url_for('user')  }}">Meu Perfil</a></li>
             </ul>
         </nav>
     </header>
@@ -43,13 +42,7 @@
                 <!-- Pergunta 1 -->
                 <div class="form-group">
 
-                    <!-- E-mail -->
-                    <label for="email">Email Cadastrado:</label>
-                    <textarea type="email" id="email" name="email" required></textarea>
-                    <p id="charCounter">50 caracteres restantes</p>
-                    <h6>‎ </h6>
-                    <!-- /E-mail -->
-
+                    <!-- Pergunta 1 -->
                     <label for="question1">Pergunta 01</label>
                     <textarea type="text" id="question1" name="question1" required></textarea>
                     <p id="question1Counter">300 caracteres restantes</p>
