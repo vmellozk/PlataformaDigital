@@ -84,13 +84,10 @@ def submit():
             request.form['question10']
         )
 
-        print(f"Insert survey response for user_id: {user_id}")
-
         insert_survey_response(data)
         generate_ebook(user_id)
 
         return redirect(url_for('vendas'))
-    print(f"User not logged in, redirecting to login")
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
