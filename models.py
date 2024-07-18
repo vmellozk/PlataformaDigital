@@ -2,19 +2,18 @@
 
 import sqlite3
 
-def insert_user(email, password, categoria):
+def insert_user(name, email, password, categoria):
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
-    cursor.execute('INSERT INTO users (email, password, categoria) VALUES (?, ?, ?)', (email, password, categoria))
+    cursor.execute('INSERT INTO users (name, email, password, categoria) VALUES (?, ?, ?, ?)', (name, email, password, categoria))
     conn.commit()
     conn.close()
 
 def get_user_by_email(email, password):
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
-    cursor.execute('SELECT id FROM users WHERE email = ? AND password = ?', (email, password))
+    cursor.execute('SELECT id, name, cateogira FROM users WHERE email = ? AND password = ?', (email, password))
     user = cursor.fetchone()
-    print(f"Query result for email {email}: {user}")
     conn.close()
     return user
 

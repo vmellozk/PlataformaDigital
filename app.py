@@ -39,10 +39,12 @@ def vendas():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
+        name = request.form['name']
         email = request.form['email']
         password = request.form['password']
+        categoria = request.form['categoria']
         
-        insert_user(email, password)
+        insert_user(name, email, password, categoria)
         
         return redirect(url_for('login'))
     
@@ -51,15 +53,14 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
-
-        print(f"Trying to login with email: {email} and password: {password}")
+        email = request.form['email_login']
+        password = request.form['password_login']
 
         user = get_user_by_email(email, password)
         if user:
-            print(f"User found: {user}")
             session['user_id'] = user[0]
+            session['user_nome'] = user[1]
+            session['user_categoria'] = user[2]
             return redirect(url_for('home'))
         else:
             print(f"User not found or incorrect password")

@@ -7,8 +7,10 @@ def init_db():
     cursor = conn.cursor()
     cursor.execute('''CREATE TABLE IF NOT EXISTS users
                       (id INTEGER PRIMARY KEY,
+                       name TEXT,
                        email TEXT UNIQUE,
-                       password TEXT)''')
+                       password TEXT,
+                       categoria TEXT)''')
     
     cursor.execute('''CREATE TABLE IF NOT EXISTS survey_responses
                       (id INTEGER PRIMARY KEY,
