@@ -18,6 +18,8 @@ def get_user_by_email(email, password):
     return user
 
 def insert_survey_response(data):
+    global response_number 
+
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
     cursor.execute('INSERT INTO survey_responses (user_id, question1, question2, question3, question4, question5, question6, question7, question8, question9, question10) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', data)
