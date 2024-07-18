@@ -17,16 +17,24 @@
         <nav>
             <ul class="nav">
                 <a href="#home">Início</a>
-                <li><a href="{{  url_for('register')  }}">Loja Sênior</a></li>
-                <li><a href="{{  url_for('register')  }}">Quero Vender</a></li>
                 <a href="#produtos">Nossos Serviços</a>
-                <li><a href="{{  url_for('register')  }}">Seja +</a></li>
+                <li><a href="{{  url_for('loja')  }}">Loja Sênior</a></li>
+
+                {% if 'user_id' in session %}
+                    <li><a href="{{  url_for('vendas')  }}">Quero Vender</a></li>
+                    <li><a href="{{  url_for('premium')  }}">Seja +</a></li>
+                    <li><a href="{{  url_for('user')  }}">Meu Perfil</a></li>
+                {% else %}
+                    <li><a href="{{  url_for('register')  }}">Quero Vender</a></li>
+                    <li><a href="{{  url_for('register')  }}">Seja +</a></li>
+                    <li><a href="{{  url_for('register')  }}">Meu Perfil</a></li>
+                {% endif %}
+
                 <a href="#contact">Contato</a>
-                <li><a href="{{  url_for('register')  }}">Meu Perfil</a></li>
             </ul>
         </nav>
     </header>
-
+    
     <!-- Área de Início -->
     <section class="home" id="home">
         <div class="text-container">

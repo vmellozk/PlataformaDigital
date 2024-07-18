@@ -24,17 +24,24 @@ def visit_user():
 
 @app.route('/user')
 def user():
-    return render_template('perfil.html')
+    if 'user_id' in session:
+        return render_template('perfil.html')
+    else:
+        return redirect(url_for('login'))
 
 @app.route('/premium')
 def premium():
-    return render_template('premium.html')
+    if 'user_id' in session:
+        return render_template('premium.html')
+    else:
+        return redirect(url_for('login'))
 
 @app.route('/formulario', methods=['GET', 'POST'])
 def vendas():
-    if request.method == 'POST':
-        pass
-    return render_template('vendas.html')
+    if 'user_id' in session:
+        return render_template('vendas.html')
+    else:
+        return redirect(url_for('login'))
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
