@@ -2,10 +2,10 @@
 
 import sqlite3
 
-def insert_user(email, password):
+def insert_user(email, password, categoria):
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
-    cursor.execute('INSERT INTO users (email, password) VALUES (?, ?)', (email, password))
+    cursor.execute('INSERT INTO users (email, password, categoria) VALUES (?, ?, ?)', (email, password, categoria))
     conn.commit()
     conn.close()
 
