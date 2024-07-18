@@ -109,9 +109,10 @@ a.links{
     position: relative;
 }
 
+/* Cadastre-se */
 h1{
     font-size: 48px;
-    color: #066a75;
+    color: #12a5b6;
     padding: 10px 0;
     font-family: Arial,sans-serif;
     font-weight: bold;
@@ -135,8 +136,9 @@ p:first-child{
     margin: 0px;
 }
 
+/* Tipo de cadastro */
 label{
-    color: #405c60;
+    color: #7f7c7c;
     position: relative;
 }
 
@@ -151,7 +153,32 @@ input:-moz-placeholder,
 textarea:-moz-placeholder{
     color: #bebcbc;
     font-style: italic;
-} 
+}
+
+#categoria {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: flex-start;
+    appearance: none;
+    border-radius: 3px;
+    padding: 10px;
+    width: 605px;
+    cursor: pointer;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#categoria label {
+    align-self: baseline;
+    margin-bottom: 5px;
+}
+
+#categoria select {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
 
 input {
     outline: none;
@@ -180,7 +207,6 @@ input[type="submit"]{
     padding: 8px 5px;
     color: #fff;
     font-size: 20px;  
-    border: 1px solid #fff; 
     margin-bottom: 10px;  
     text-shadow: 0 1px 1px #333;
 
@@ -194,12 +220,14 @@ input[type="submit"]:hover{
     background: #4ab3c6;
 }
 
+/* Já tem uma conta? */
 .link{
     color: #7f7c7c;
     font-size: 16px;
     text-align: center;
 }
 
+/* Ir para login */
 .link a {
     font-weight: bold;
     padding: 6px;
@@ -212,6 +240,7 @@ input[type="submit"]:hover{
     -webkit-transition: all 0.4s linear;
     transition: all 0.4s  linear;
 }
+
 .link a:hover {
     color: #39bfd7;
 }
@@ -224,10 +253,11 @@ input[type="submit"]:hover{
     width: 88%; 
     padding: 18px 6% 60px 6%;
     margin: 0 0 35px 0;
-    background: rgb(247, 247, 247);
-    border: 1px solid rgba(147, 184, 189,0.8);
+    background: rgb(31, 31, 31);
+    border: 2px solid rgba(0, 0, 0, 0.8);
     text-align: center;
     padding: 10px 10px;
+    box-shadow: 0 0 30px 10px #000000;
 
     border-radius: 5px;
 
