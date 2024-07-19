@@ -15,18 +15,42 @@
   <!-- Barra de Navegação -->
   <header>
     <a href="{{  url_for('home')  }}" class="logo">Prática Sênior</a>
-
+    
     <nav>
       <ul class="nav">
-        <li><a href="{{  url_for('vendas')  }}">Quero Vender</a></li>
-        <a href="{{  url_for('home')  }}#produtos">Nossos Serviços</a>
-        <li><a href="{{  url_for('premium')  }}">Seja +</a></li>
-        <a href="{{  url_for('home')  }}#contact">Contato</a>
-        <li><a href="{{  url_for('user')  }}">Meu Perfil</a></li>
+        
+          <li><a href="{{  url_for('home')  }}#produtos">Nossos Serviços</a></li>
+          <li><a href="{{ url_for('home')  }}#contact">Contato</a></li>
+
+          {% if 'user_id' in session %}
+              <li><a href="{{  url_for('vendas')  }}">Quero Vender</a></li>
+              <li><a href="{{  url_for('premium')  }}">Seja +</a></li>
+              <li><a href="{{  url_for('user')  }}">Meu Perfil</a></li>
+              <li><a href="{{ url_for('logout') }}">Logout</a></li>
+          {% else %}
+              <li><a href="{{  url_for('register')  }}">Quero Vender</a></li>
+              <li><a href="{{  url_for('register')  }}">Seja +</a></li>
+              <li><a href="{{  url_for('register')  }}">Meu Perfil</a></li>
+          {% endif %}
+    
       </ul>
-    </nav>
+  </nav>
   </header>
   <!-- /Barra de Navegação -->
+  
+  <!-- PopUp de Mensagens -->
+  {% with messages = get_flashed_messages(with_categories=True) %}    
+    {% if messages %}
+      <div class="flash-messages">
+        {% for category, message in messages %}
+          <div class="flash {{ category }}" id="flash-message">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+  <!-- /PopUp de Mensagens -->
 
   <!-- Filtros -->
   <section class="main-content" id="main-content">
