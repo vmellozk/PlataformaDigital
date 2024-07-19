@@ -1,6 +1,6 @@
+// Limitando o tamanho dos caracteres
 document.addEventListener('DOMContentLoaded', () => {
     const fields = [
-        { id: 'email', maxLength:50, counterId: 'charCounter'},
         { id: 'question1', maxLength: 300, counterId: 'question1Counter' },
         { id: 'question2', maxLength: 300, counterId: 'question2Counter' },
         { id: 'question3', maxLength: 300, counterId: 'question3Counter' },
@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// Aumentando o textarea conforme é digitado
 document.addEventListener('DOMContentLoaded', function() {
     const textareas = document.querySelectorAll('textarea');
 
@@ -44,3 +45,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Selecionando o tempo para pular para a página home
+function redirectAfterDelay() {
+    setTimeout(function() {
+        window.location.href = "{{ url_for('home') }}";
+    }, 3000);
+}

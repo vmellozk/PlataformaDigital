@@ -7,7 +7,15 @@ from fpdf import FPDF
 def generate_ebook(user_id):
     conn = sqlite3.connect('database.db')
     df = pd.read_sql_query(f"SELECT * FROM survey_responses WHERE user_id = {user_id}", conn)
+    df_user = pd.read_sql_query(f"SELECT email FROM users WHERE id = {user_id}", conn)
+
     conn.close()
+
+    if df_user.empty:
+        print("E-mail não encontrado para o usuário.")
+        return
+    
+    email = df_user.iloc[0]['email']
 
     class PDF(FPDF):
         def header(self):
@@ -30,7 +38,6 @@ def generate_ebook(user_id):
             self.chapter_body(body)
 
     pdf = PDF()
-
     response_number = 1
 
     for index, row in df.iterrows():
@@ -38,6 +45,6 @@ def generate_ebook(user_id):
         body = '\n'.join([f"{col}: {row[col]}" for col in df.columns if col not in ['id', 'user_id']])
         pdf.add_chapter(title, body)
 
-        pdf.output(f'{response_number}_survey_responses_ebook_{user_id}.pdf')
+        pdf.output(f'{response_number}_ebook_{email}.pdf')
 
         response_number += 1
