@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from database import init_db
 from models import insert_user, get_user_by_email, insert_survey_response
 from generate_Ebook import generate_ebook
@@ -129,6 +129,7 @@ def submit():
 @app.route('/logout')
 def logout():
     session.clear()
+    flash('Você foi desconectado com sucesso!', 'success')
     return redirect(url_for('home'))
 
 if __name__ == '__main__':
