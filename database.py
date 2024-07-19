@@ -26,6 +26,13 @@ def init_db():
                        question9 TEXT,
                        question10 TEXT,
                        FOREIGN KEY(user_id) REFERENCES users(id))''')
+    
+    cursor.execute('''CREATE TABLE IF NOT EXISTS ebooks
+                      (id INTEGER PRIMARY KEY,
+                       user_id INTEGER,
+                       file_path TEXT,
+                       FOREIGN KEY(user_id) REFERENCES users(id))''')
+
     conn.commit()
     conn.close()
 

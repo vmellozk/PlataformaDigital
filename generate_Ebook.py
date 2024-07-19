@@ -10,8 +10,6 @@ def generate_ebook(user_id):
     df = pd.read_sql_query(f"SELECT * FROM survey_responses WHERE user_id = {user_id}", conn)
     df_user = pd.read_sql_query(f"SELECT email FROM users WHERE id = {user_id}", conn)
 
-    conn.close()
-
     if df_user.empty:
         print("E-mail não encontrado para o usuário.")
         return
@@ -44,11 +42,19 @@ def generate_ebook(user_id):
     if not os.path.exists('ebooks'):
         os.makedirs('ebooks')
 
+    cursor = conn.cursor()
+
     for index, row in df.iterrows():
         title = f"Response {index + 1}"
         body = '\n'.join([f"{col}: {row[col]}" for col in df.columns if col not in ['id', 'user_id']])
         pdf.add_chapter(title, body)
 
-        pdf.output(f'ebooks/{email}_ebook_{response_number}.pdf')
+        file_path = f'ebooks/{email}_ebook_{response_number}.pdf'
+        pdf.output(file_path)
+
+        cursor.execute('INSERT INTO ebooks (user_id, file_path) VALUES (?, ?)', (user_id, file_path))
 
         response_number += 1
+
+    conn.commit()
+    conn.close()
