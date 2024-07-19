@@ -5,3 +5,5 @@ database.db
 __pycache__/
 
 *.pdf
+
+ebooks/*.pdf
