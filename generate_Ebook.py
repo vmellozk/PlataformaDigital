@@ -1,5 +1,6 @@
 #Função para Gerar o Ebook
 
+import os
 import sqlite3
 import pandas as pd
 from fpdf import FPDF
@@ -40,11 +41,14 @@ def generate_ebook(user_id):
     pdf = PDF()
     response_number = 1
 
+    if not os.path.exists('ebooks'):
+        os.makedirs('ebooks')
+
     for index, row in df.iterrows():
         title = f"Response {index + 1}"
         body = '\n'.join([f"{col}: {row[col]}" for col in df.columns if col not in ['id', 'user_id']])
         pdf.add_chapter(title, body)
 
-        pdf.output(f'{response_number}_ebook_{email}.pdf')
+        pdf.output(f'ebooks/{email}_ebook_{response_number}.pdf')
 
         response_number += 1
