@@ -16,8 +16,8 @@
         
         <nav>
             <ul class="nav">
-                <a href="#home">Início</a>
-                <a href="#produtos">Nossos Serviços</a>
+                <li><a href="#home">Início</a></li>
+                <li><a href="#produtos">Nossos Serviços</a></li>
                 <li><a href="{{  url_for('loja')  }}">Loja Sênior</a></li>
 
                 {% if 'user_id' in session %}
@@ -30,7 +30,7 @@
                     <li><a href="{{  url_for('register')  }}">Meu Perfil</a></li>
                 {% endif %}
 
-                <a href="#contact">Contato</a>
+                <li><a href="#contact">Contato</a></li>
             </ul>
         </nav>
     </header>
