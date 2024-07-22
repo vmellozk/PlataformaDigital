@@ -11,3 +11,5 @@ ebooks/*.pdf
 *.db
 
 ebooks/
+
+.env

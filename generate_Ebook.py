@@ -5,13 +5,15 @@ import sqlite3
 import openai
 import pandas as pd
 from fpdf import FPDF
+from dotenv import load_dotenv
 
-openai_key = 'chave_api_aqui'
+load_dotenv()
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
 def generate_ebook(user_id):
     conn = sqlite3.connect('database.db')
-    df = pd.read_sql_query(f"SELECT * FROM survey_responses WHERE user_id = {user_id}", conn)
-    df_user = pd.read_sql_query(f"SELECT email FROM users WHERE id = {user_id}", conn)
+    df = pd.read_sql_query("SELECT * FROM survey_responses WHERE user_id = ?", conn, params=(user_id,))
+    df_user = pd.read_sql_query("SELECT email FROM users WHERE id = ?", conn, params=(user_id,))
 
     if df_user.empty:
         print("E-mail não encontrado para o usuário.")
@@ -54,12 +56,16 @@ def generate_ebook(user_id):
 
         # Enviar para o ChatGPT para melhorar o texto
         prompt = f"Baseado nas respostas abaixo, gere um texto detalhado e organizado para o eBook:\n\n{questions_answers}"
-        response = openai.Completion.create(
-            engine="text-davinci-003",
-            prompt=prompt,
-            max_tokens=1500
-        )
-        improved_text = response.choices[0].text.strip()
+        try:
+            response = openai.Completion.create(
+                engine="text-davinci-003",
+                prompt=prompt,
+                max_tokens=1500
+            )
+            improved_text = response.choices[0].text.strip()
+        except Exception as e:
+            print(f"Erro ao chamar a API do ChatGPT: {e}")
+            improved_text = "Erro ao processar o texto com o ChatGPT."
 
         pdf.add_chapter(title, improved_text)
         file_path = f'ebooks/{email}_ebook_{response_number}.pdf'
