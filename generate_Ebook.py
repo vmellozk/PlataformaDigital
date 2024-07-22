@@ -2,8 +2,11 @@
 
 import os
 import sqlite3
+import openai
 import pandas as pd
 from fpdf import FPDF
+
+openai_key = 'chave_api_aqui'
 
 def generate_ebook(user_id):
     conn = sqlite3.connect('database.db')
@@ -46,14 +49,23 @@ def generate_ebook(user_id):
 
     for index, row in df.iterrows():
         title = f"Response {index + 1}"
-        body = '\n'.join([f"{col}: {row[col]}" for col in df.columns if col not in ['id', 'user_id']])
-        pdf.add_chapter(title, body)
+        # Preparar perguntas e respostas
+        questions_answers = '\n'.join([f"{col}: {row[col]}" for col in df.columns if col not in ['id', 'user_id']])
 
+        # Enviar para o ChatGPT para melhorar o texto
+        prompt = f"Baseado nas respostas abaixo, gere um texto detalhado e organizado para o eBook:\n\n{questions_answers}"
+        response = openai.Completion.create(
+            engine="text-davinci-003",
+            prompt=prompt,
+            max_tokens=1500
+        )
+        improved_text = response.choices[0].text.strip()
+
+        pdf.add_chapter(title, improved_text)
         file_path = f'ebooks/{email}_ebook_{response_number}.pdf'
         pdf.output(file_path)
 
         cursor.execute('INSERT INTO ebooks (user_id, file_path) VALUES (?, ?)', (user_id, file_path))
-
         response_number += 1
 
     conn.commit()
