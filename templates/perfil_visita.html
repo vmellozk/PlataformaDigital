@@ -56,7 +56,7 @@
         <div class="profile-container">
             <div class="profile-header">
                 <div class="profile-pic-container">
-                    <img src="../img/avatar.png" alt="Sua Foto" class="profile-pic">
+                    <img src="{{ url_for('static', filename='images/avatar.png') }}" alt="Sua Foto" class="profile-pic">
                 </div>
                 <div class="profile-info">
                     <h1 id="username">Primeiro Nome</h1>
@@ -108,7 +108,7 @@
 
         <!-- Produto 1 -->
         <div class="product-card">
-            <img src="../img/produto.png" alt="Produto 1">
+            <img src="{{ url_for('static', filename='images/produto.png') }}" alt="Produto 1">
             <div class="product-info">
                 <h3>Nome do Produto 1</h3>
                 <p>Descrição breve do Produto 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum at imperdiet libero.</p>
@@ -124,10 +124,10 @@
 
         <!-- Produto 2 -->
         <div class="product-card">
-            <img src="../img/produto.png" alt="Produto 1">
+            <img src="{{ url_for('static', filename='images/produto.png') }}" alt="Produto 2">
             <div class="product-info">
-                <h3>Nome do Produto 1</h3>
-                <p>Descrição breve do Produto 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum at imperdiet libero.</p>
+                <h3>Nome do Produto 2</h3>
+                <p>Descrição breve do Produto 2. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum at imperdiet libero.</p>
                 <div class="product-footer">
                     <span class="product-price">R$ 299,90</span>
                     <a href="https://dashboard.kiwify.com.br" target="_blank">
