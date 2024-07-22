@@ -99,14 +99,15 @@ def submit():
         )
 
         try:
+            print(f"Inserindo resposta do formulário: {data}")  # Print para verificar os dados
             insert_survey_response(data)
+            print(f"Gerando eBook para o usuário_id: {user_id}")  # Print para verificar a geração do eBook
             generate_ebook(user_id)
-
-            flash('Formulário Enviado com sucesso! Aguarde o email de contato.', 'success')
-
+            flash('Formulário enviado com sucesso! Aguarde o eBook gerado.', 'success')
         except Exception as e:
-            #print(f"Error during form submission or ebook generation: {e}")
+            print(f"Erro durante a submissão do formulário ou geração do eBook: {e}")  # Print para erro
             flash('Houve um erro ao enviar o formulário. Tente novamente ou entre em contato.', 'warning')
+
         return redirect(url_for('home'))
 
     return redirect(url_for('login'))
