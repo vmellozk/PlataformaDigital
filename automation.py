@@ -6,11 +6,11 @@ from time import sleep
 
 def chatgpt_response(responses_file, response_file, name):
     # Reinicie o WebDriver para garantir uma nova sessão
-    driver = webdriver.Edge()
+    driver = webdriver.Chrome()
     driver.get('https://chat.openai.com')
 
     # Aguarde até o campo de entrada de texto estar presente
-    WebDriverWait(driver, 30).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.TAG_NAME, 'textarea'))
     )
 

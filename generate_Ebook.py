@@ -43,14 +43,14 @@ def generate_ebook(user_id):
         if not os.path.exists(response_file):
             raise FileNotFoundError(f"O arquivo de resposta '{response_file}' não foi criado.")
 
+        with open(response_file, 'r') as file:
+            content = file.read()
+
         # Criar o eBook em PDF
         pdf = PDF()
         title = "Insights do Formulário"
         company_name = "Prática Sênior"
         pdf.add_cover(title, company_name, name)
-
-        with open(response_file, 'r') as file:
-            content = file.read()
 
         sections = content.split('\n\n')
         if len(sections) >= 2:

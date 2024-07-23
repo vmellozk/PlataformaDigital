@@ -2,7 +2,7 @@ venv/
 
 database.db
 
-__pycache__/
+__pycache__
 
 *.pdf
 
@@ -15,3 +15,9 @@ ebooks/
 .env
 
 automation_backup.py
+
+responses.txt
+
+response.txt
+
+teste.py
