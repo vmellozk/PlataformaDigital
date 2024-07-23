@@ -4,9 +4,9 @@ import pandas as pd
 from pdf_base import PDF
 from automation import chatgpt_response
 
-def create_ebooks_directory():
-    if not os.path.exists('ebooks'):
-        os.makedirs('ebooks')
+ebook_directory = 'ebooks'
+if not os.path.exists(ebook_directory):
+    os.makedirs(ebook_directory)
 
 def generate_ebook(user_id):
     responses_file = 'responses.txt'

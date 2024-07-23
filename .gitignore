@@ -13,3 +13,5 @@ ebooks/*.pdf
 ebooks/
 
 .env
+
+automation_backup.py
