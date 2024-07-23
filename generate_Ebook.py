@@ -1,12 +1,14 @@
 import os
 import sqlite3
-import openai
 import pandas as pd
-from fpdf import FPDF
+from pdf_base import PDF
 from dotenv import load_dotenv
 
 load_dotenv()
-openai.api_key = os.getenv('OPENAI_API_KEY')
+
+def create_ebooks_directory():
+    if not os.path.exists('ebooks'):
+        os.makedirs('ebooks')
 
 def generate_ebook(user_id):
     try:
@@ -29,61 +31,6 @@ def generate_ebook(user_id):
         print(f"E-mail do usuário: {email}")
         print(f"Nome do autor: {name}")
 
-        class PDF(FPDF):
-            def header(self):
-                self.set_font('Arial', 'B', 12)
-                self.cell(0, 10, 'Survey Responses eBook', 0, 1, 'C')
-
-            def chapter_title(self, title):
-                self.set_font('Arial', 'B', 12)
-                self.cell(0, 10, title, 0, 1, 'L')
-                self.ln(10)
-
-            def chapter_body(self, body):
-                self.set_font('Arial', '', 12)
-                self.multi_cell(0, 10, body)
-                self.ln()
-
-            def add_chapter(self, title, body):
-                self.add_page()
-                self.chapter_title(title)
-                self.chapter_body(body)
-
-            def add_cover(self, title, company_name, name):
-                self.add_page()
-                self.set_font('Arial', 'B', 24)
-                self.set_y(80)
-                self.cell(0, 10, company_name, 0, 1, 'C')
-                self.set_font('Arial', 'B', 36)
-                self.cell(0, 10, title, 0, 1, 'C')
-                self.set_font('Arial', 'I', 20)
-                self.cell(0, 10, f'By {name}', 0, 1, 'C')
-                self.ln(20)
-
-            def add_introduction(self, text):
-                self.add_page()
-                self.set_font('Arial', 'B', 16)
-                self.cell(0, 10, 'Introdução', 0, 1, 'L')
-                self.set_font('Arial', '', 12)
-                self.multi_cell(0, 10, text)
-                self.ln()
-
-            def add_summary(self, text):
-                self.add_page()
-                self.set_font('Arial', 'B', 16)
-                self.cell(0, 10, 'Sumário', 0, 1, 'L')
-                self.set_font('Arial', '', 12)
-                self.multi_cell(0, 10, text)
-                self.ln()
-
-            def add_conclusion(self, text):
-                self.add_page()
-                self.set_font('Arial', 'B', 16)
-                self.cell(0, 10, 'Conclusão', 0, 1, 'L')
-                self.set_font('Arial', '', 12)
-                self.multi_cell(0, 10, text)
-                self.ln()
-
         pdf = PDF()
         title = "Insights do Formulário"
         company_name = "Prática Sênior"
@@ -97,57 +44,17 @@ def generate_ebook(user_id):
         pdf.add_summary(summary)
 
         response_number = 1
-        if not os.path.exists('ebooks'):
-            os.makedirs('ebooks')
+        create_ebooks_directory()
 
         cursor = conn.cursor()
         for index, row in df.iterrows():
             title = f"Response {index + 1}"
             questions_answers = '\n'.join([f"{col}: {row[col]}" for col in df.columns if col not in ['id', 'user_id']])
-            prompt = f"""
-            Crie um eBook com base nas respostas do formulário abaixo. O eBook deve seguir a estrutura abaixo:
-
-            1. **Capa**: 
-            - Título: "Insights do Formulário"
-            - Autor: {name}
-
-            2. **Introdução**: 
-            - Apresente o propósito do eBook e o que será coberto.
-
-            3. **Sumário**: 
-            - Liste as principais seções e tópicos que serão abordados.
-
-            4. **Conteúdo Principal**:
-            - Divida o conteúdo em 5 seções, com base nas respostas do formulário.
-            - Cada seção deve cobrir um conjunto específico de respostas e ser apresentada de forma clara e concisa.
-            - Disserte também sobre a área comentada na resposta e abranja falando do mercado atual e futuro, contando as evoluções e afins.
-
-            5. **Conclusão**: 
-            - Resuma os principais pontos discutidos e forneça uma visão geral das conclusões.
-
-            Use o texto a seguir para compor o conteúdo do eBook:
-
-            Certifique-se de que o eBook seja informativo e fácil de ler, com uma formatação limpa e organizada. Cada seção deve ser bem estruturada e os pontos principais destacados. Mantenha o conteúdo relevante e focado nos insights extraídos das respostas do formulário.
             
-            \n\n{questions_answers}"""
+            # Utilizando respostas diretamente sem processamento da API
+            ebook_content = f"**Título:** {title}\n\n**Respostas:**\n{questions_answers}"
+            print(f"Conteúdo do eBook gerado com sucesso.")
             
-            try:
-                print(f"Enviando prompt para a API do ChatGPT...")
-                response = openai.Completion.create(
-                    engine="text-davinci-002",
-                    prompt=prompt,
-                    max_tokens=3000,
-                    temperature=0.7
-                )
-                print(f"Resposta da API recebida.")
-                
-                ebook_content = response['choices'][0]['text'].strip()
-                print(f"Conteúdo do eBook gerado com sucesso.")
-
-            except Exception as e:
-                print(f"Erro ao chamar a API do ChatGPT: {e}")
-                ebook_content = "Erro ao processar o texto com o ChatGPT."
-
             sections = ebook_content.split('\n\n')
             if len(sections) >= 2:
                 pdf.add_introduction(sections[0])
