@@ -14,14 +14,10 @@ ebooks/
 
 .env
 
-automation_backup.py
-
 responses.txt
 
 response.txt
 
 teste.py
-teste2.py
-teste3.py
-teste4.py
-teste5.py
+
+output.txt
