@@ -10,7 +10,7 @@ if not os.path.exists(ebook_directory):
 
 def generate_ebook(user_id):
     responses_file = 'responses.txt'
-    response_file = 'response.txt'
+    output_file = 'output.txt'
 
     try:
         print(f"Iniciando a geração do eBook para o usuário_id: {user_id}")
@@ -38,12 +38,12 @@ def generate_ebook(user_id):
                 file.write(f"Response {index + 1}:\n{questions_answers}\n\n")
 
         # Obter a resposta do ChatGPT usando Selenium
-        chatgpt_response(responses_file, response_file, name)
+        chatgpt_response(responses_file, output_file, name)
 
-        if not os.path.exists(response_file):
-            raise FileNotFoundError(f"O arquivo de resposta '{response_file}' não foi criado.")
+        if not os.path.exists(output_file):
+            raise FileNotFoundError(f"O arquivo de resposta '{output_file}' não foi criado.")
 
-        with open(response_file, 'r') as file:
+        with open(output_file, 'r') as file:
             content = file.read()
 
         # Criar o eBook em PDF
@@ -76,7 +76,7 @@ def generate_ebook(user_id):
         # Remover arquivos temporários apenas se o eBook foi criado com sucesso
         if os.path.exists(file_path):
             os.remove(responses_file)
-            os.remove(response_file)
+            os.remove(output_file)
         else:
             print("O eBook não foi criado, mantendo arquivos temporários.")
         

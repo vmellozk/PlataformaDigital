@@ -6,7 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 import pyperclip
 
-def chatgpt_response(responses_file, response_file, name):
+def chatgpt_response(responses_file, output_file, name):
     driver = uc.Chrome(version_main=126)
 
     try:
@@ -23,43 +23,47 @@ def chatgpt_response(responses_file, response_file, name):
             responses_text = file.read()
 
         #Prompt
-        full_prompt = f'Crie um eBook com base nas respostas do formulário abaixo. O eBook deve seguir a estrutura abaixo: \n1. **Capa**: - Título: "Insights do Formulário" - Autor: {name} \n2. **Introdução**: - Apresente o propósito do eBook e o que será coberto. \n3. **Sumário**: - Liste as principais seções e tópicos que serão abordados. \n4. **Conteúdo Principal**: - Divida o conteúdo em 5 seções, com base nas respostas do formulário. - Cada seção deve cobrir um conjunto específico de respostas e ser apresentada de forma clara e concisa. - Disserte também sobre a área comentada na resposta e abrança falando do mercado atual e futuro, contando as evoluções e afins \n5. **Conclusão**: - Resuma os principais pontos discutidos e forneça uma visão geral das conclusões. \nUse o texto a seguir para compor o conteúdo do eBook: {responses_text} \nCertifique-se de que o eBook seja informativo e fácil de ler, com uma formatação limpa e organizada. Cada seção deve ser bem estruturada e os pontos principais destacados. Mantenha o conteúdo relevante e focado nos insights extraídos das respostas do formulário.'
-        time.sleep(5)
+        full_prompt = (f'Responda em plaintext, como se fosse um código. Crie um eBook com base nas respostas '
+                       f'do formulário abaixo. O eBook deve seguir a estrutura abaixo: 1. **Capa**: - Título: "Insights '
+                       f'do Formulário" - Autor: {name} 2. **Introdução**: - Apresente o propósito do eBook e o que será '
+                       f'coberto. 3. **Sumário**: - Liste as principais seções e tópicos que serão abordados. 4. **Conteúdo '
+                       f'Principal**: - Divida o conteúdo em 5 seções, com base nas respostas do formulário. - Cada seção '
+                       f'deve cobrir um conjunto específico de respostas e ser apresentada de forma clara e concisa. - '
+                       f'Disserte também sobre a área comentada na resposta e abrança falando do mercado atual e futuro, '
+                       f'contando as evoluções e afins 5. **Conclusão**: - Resuma os principais pontos discutidos e forneça '
+                       f'uma visão geral das conclusões. Use o texto a seguir para compor o conteúdo do eBook: {responses_text}'
+                       f'Certifique-se de que o eBook seja informativo e fácil de ler, com uma formatação '
+                       f'limpa e organizada. Cada seção deve ser bem estruturada e os pontos principais destacados. Mantenha '
+                       f'o conteúdo relevante e focado nos insights extraídos das respostas do formulário.')
 
-        # Envia o texto do prompt
+        # Dividir o texto em partes menores e inserir gradualmente
         actions = ActionChains(driver)
-        input_field.send_keys(full_prompt)
+        for i in range(0, len(full_prompt), 1000):
+            input_field.send_keys(full_prompt[i:i + 1000])
+            time.sleep(3)
+        time.sleep(5)
+        # Pressiona Enter para enviar a mensagem
         actions.send_keys(Keys.ENTER).perform()
-        time.sleep(60)
+        time.sleep(120)
 
         # Localiza o botão de copiar e clica nele
         try:
+            print("Tentando localizar o botão de copiar.")
             copy_button = driver.find_element(By.XPATH, "//button[contains(text(), 'Copiar código')]")
             copy_button.click()
             time.sleep(2)
 
             copied_text = pyperclip.paste()
-            with open("output.txt", "w", encoding="utf-8") as file:
+            with open('output.txt', "w", encoding="utf-8") as file:
                 file.write(copied_text)
 
-            print("Texto copiado e salvo em output.txt.")
+            print(f"Texto copiado e salvo como 'output.txt")
 
         except Exception as e:
-            print("Erro ao copiar o texto:", e)
+            print(f"Erro durante a automação: {e}")
 
-    except Exception as e:
-        print("Erro durante a automação:", e)
-
-    # Fecha o navegador corretamente
     finally:
         try:
             driver.quit()
         except Exception as e:
-            print("Erro ao encerrar o driver:", e)
-
-if __name__ == '__main__':
-    try:
-        chatgpt_response()
-    except OSError as e:
-        if e.winerror == 6:
-            print("Erro ignorado: Identificador inválido")
+            print(f"Erro ao encerrar o driver: {e}")
