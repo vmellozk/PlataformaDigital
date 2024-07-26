@@ -11,34 +11,35 @@ def chatgpt_response(responses_file, output_file, name):
 
     try:
         driver.get('https://chat.openai.com')
-        time.sleep(10)
+        time.sleep(2)
 
-        #Achando o elemento
+        #Achando o elemento para 
         input_field = driver.find_element(By.XPATH, '//*[@id="prompt-textarea"]')
         time.sleep(1)
+
+        # Definir o foco no campo de entrada manualmente
+        input_field.click()
+        time.sleep(2)
 
         # Lê o texto do arquivo de respostas
         with open(responses_file, 'r') as file:
             responses_text = file.read()
 
         # Prompt
-        full_prompt = (f'Responda em plaintext, como se fosse um código. Crie um eBook com base nas respostas '
-                       f'do formulário abaixo. O eBook deve seguir a estrutura abaixo: 1. **Capa**: - Título: "Insights '
+        full_prompt = (f'Vou mandar um padrão de criação de ebook, mas não responda! '
+                       f'Preciso de um eBook com base nas respostas de um formulário que será enviado '
+                       f'abaixo. O eBook deve seguir a estrutura: 1. **Capa**: - Título: "Insights '
                        f'do Formulário" - Autor: {name} 2. **Introdução**: - Apresente o propósito do eBook e o que será '
                        f'coberto. 3. **Sumário**: - Liste as principais seções e tópicos que serão abordados. 4. **Conteúdo '
                        f'Principal**: - Divida o conteúdo em 5 seções, com base nas respostas do formulário. - Cada seção '
                        f'deve cobrir um conjunto específico de respostas e ser apresentada de forma clara e concisa. - '
                        f'Disserte também sobre a área comentada na resposta e abrança falando do mercado atual e futuro, '
                        f'contando as evoluções e afins 5. **Conclusão**: - Resuma os principais pontos discutidos e forneça '
-                       f'uma visão geral das conclusões. Certifique-se de que o eBook seja informativo e fácil de ler, com uma '
-                       f'formatação limpa e organizada. Cada seção deve ser bem estruturada e os pontos principais destacados. '
-                       f'Mantenha o conteúdo relevante e focado nos insights extraídos das respostas do formulário. '
-                       f'Use o texto a seguir para compor o conteúdo do eBook: Responda OK antes de receber as respostas.
-                       {time.sleep(3)} \n\n{responses_text}')
-
-        # Definir o foco no campo de entrada manualmente
-        input_field.click()
-        time.sleep(2)
+                       f'uma visão geral das conclusões. '
+                       f'Certifique-se de que o eBook seja informativo e fácil de ler, com uma formatação '
+                       f'limpa e organizada. Cada seção deve ser bem estruturada e os pontos principais destacados. Mantenha '
+                       f'o conteúdo relevante e focado nos insights extraídos das respostas do formulário. '
+                       f'Só responda na próxima mensagem, quando for enviado as respostas')
 
         # Inserir o prompt em partes menores
         for i in range(0, len(full_prompt), 5000):
@@ -47,7 +48,18 @@ def chatgpt_response(responses_file, output_file, name):
 
         # Pressionar Enter para enviar o prompt
         input_field.send_keys(Keys.ENTER)
-        time.sleep(10)  # Ajuste o tempo conforme necessário para aguardar a resposta
+        time.sleep(5)
+
+        # Segundo prompt com a mensagem para resposta em plaintext
+        responses_prompt = f'Responda em plaintext, como se fosse um código, tendo o botão copiar código para facilitar. Aqui estão as respostas: \n{responses_text}'
+
+        # Enviar o segundo prompt
+        input_field.send_keys(responses_prompt)
+        time.sleep(2)
+        input_field.send_keys(Keys.ENTER)
+
+        #
+        time.sleep(60)
 
         # Aguarda a resposta ser gerada e o botão de copiar estar disponível
         WebDriverWait(driver, 240).until(

@@ -3,6 +3,7 @@ from database import init_db
 from models import insert_user, get_user_by_email, insert_survey_response
 from generate_Ebook import generate_ebook
 from time import sleep
+import threading
 import sqlite3
 
 app = Flask(__name__)
@@ -101,9 +102,15 @@ def submit():
         try:
             print(f"Inserindo resposta do formulário: {data}")  # Print para verificar os dados
             insert_survey_response(data)
-            print(f"Gerando eBook para o usuário_id: {user_id}")  # Print para verificar a geração do eBook
-            generate_ebook(user_id)
+
+            # Iniciando uma thread para gerar o ebook em segundo plano
+            def generate_ebook_in_thread(user_id):
+                print(f"Gerando eBook para o usuário_id: {user_id}")
+                generate_ebook(user_id)
+            thread = threading.Thread(target=generate_ebook_in_thread, args=(user_id,))
+            thread.start()
             flash('Formulário enviado com sucesso! Aguarde o eBook gerado.', 'success')
+
         except Exception as e:
             print(f"Erro durante a submissão do formulário ou geração do eBook: {e}")  # Print para erro
             flash('Houve um erro ao enviar o formulário. Tente novamente ou entre em contato.', 'warning')
