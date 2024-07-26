@@ -15,10 +15,11 @@ def get_full_prompt(name):
             f' - **Recomendações Práticas**: Ofereça recomendações detalhadas e práticas para aplicar o conhecimento sobre o tópico de maneira eficaz, com exemplos e orientações precisas. '
             f' - **Conclusão**: Recapitule os pontos principais discutidos no tópico e forneça uma visão geral das conclusões, resumindo os principais aprendizados e implicações. '
             f'Cada seção deve ser desenvolvida de forma extensa e profunda, proporcionando um conteúdo rico e detalhado. O objetivo é garantir que o livro seja abrangente e informativo. '
-            f'5. **Conclusão Geral**: - Na última página, resuma os principais pontos discutidos em todo o livro e forneça uma visão geral abrangente das conclusões finais, consolidando as principais ideias e aprendizados. '
+            f'5. **Conclusão Geral**: - Na última página, resuma os principais pontos discutidos em todo o livro e forneça uma visão geral abrangente das conclusões finais, consolidando as principais ideias e aprendizados. Lembrando, preciso de aproximadamente de 20 folhas de livro. '
             f'Por favor, só responda quando o conteúdo completo tiver sido gerado e enviado, conforme o padrão detalhado acima.')
 
 def get_responses_prompt(responses_text):
     return (f'Por favor, gere um texto extenso e detalhado baseado nas respostas a seguir, seguindo o padrão de livro descrito acima. '
-            f'Responda em plaintext, como se fosse um código, que tenha o botão de copiar código para facilitar, e deve ser formatado como se fosse um livro completo, com aproximadamente 20 páginas de conteúdo. \n\n'
+            f'Responda em plaintext, como se fosse um código, com o botão de copiar código para facilitar. '
+            f'O conteúdo deve ser tão extenso e detalhado quanto um livro, com aproximadamente 20 páginas, e deve seguir rigorosamente a estrutura especificada. \n\n'
             f'{responses_text}')
