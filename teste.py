@@ -14,14 +14,13 @@ def chatgpt_response(responses_file, output_file, name):
         driver.get('https://chat.openai.com')
         time.sleep(2)
 
-        # Achando o elemento para 
         input_field = driver.find_element(By.XPATH, '//*[@id="prompt-textarea"]')
         time.sleep(0.5)
         input_field.click()
         time.sleep(0.5)
 
         # Lê o texto do arquivo de respostas
-        with open(responses_file, 'r') as file:
+        with open(responses_file, 'r', encoding='utf-8') as file:
             responses_text = file.read()
 
         # Prompt 1
@@ -29,14 +28,14 @@ def chatgpt_response(responses_file, output_file, name):
         for i in range(0, len(full_prompt), 5000):
             input_field.send_keys(full_prompt[i:i + 5000])
             time.sleep(1)
-        time.sleep(1)
         input_field.send_keys(Keys.ENTER)
         time.sleep(2.5)
 
         # Prompt 2
         responses_prompt = get_responses_prompt(responses_text)
-        input_field.send_keys(responses_prompt)
-        time.sleep(1)
+        for i in range(0, len(responses_prompt), 5000):
+            input_field.send_keys(responses_prompt[i:i + 5000])
+            time.sleep(1)
         input_field.send_keys(Keys.ENTER)
         time.sleep(90)
 
@@ -55,8 +54,6 @@ def chatgpt_response(responses_file, output_file, name):
             copied_text = pyperclip.paste()
             with open(output_file, "w", encoding="utf-8") as file:
                 file.write(copied_text)
-
-            print(f"Texto copiado e salvo como '{output_file}'.")
 
         except Exception as e:
             print(f"Erro durante a automação: {e}")
