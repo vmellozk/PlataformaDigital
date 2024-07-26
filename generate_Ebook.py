@@ -32,7 +32,7 @@ def generate_ebook(user_id):
         print(f"E-mail do usuário: {email}")
         print(f"Nome do autor: {name}")
 
-        with open(responses_file, 'w') as file:
+        with open(responses_file, 'w', encoding='utf-8') as file:
             for index, row in df.iterrows():
                 questions_answers = '\n'.join([f"{col}: {row[col]}" for col in df.columns if col not in ['id', 'user_id']])
                 file.write(f"Response {index + 1}:\n{questions_answers}\n\n")
@@ -42,8 +42,7 @@ def generate_ebook(user_id):
 
         if not os.path.exists(output_file):
             raise FileNotFoundError(f"O arquivo de resposta '{output_file}' não foi criado.")
-
-        with open(output_file, 'r') as file:
+        with open(output_file, 'r', encoding='utf-8') as file:
             content = file.read()
 
         # Criar o eBook em PDF
