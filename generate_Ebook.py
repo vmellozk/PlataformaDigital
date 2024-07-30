@@ -57,26 +57,10 @@ def generate_ebook(user_id):
         print("Criando o eBook em PDF...")
         pdf = PDF()
 
-        # Adicionar capa
-        pdf.add_cover("Insights do Formulário", "Prática Sênior", name)
-
-        # Dividir o conteúdo em seções e adicionar ao PDF
-        sections = content.strip().split('\n\n')
-        print(f"Número de seções: {len(sections)}")
-        
-        if len(sections) > 0:
-            pdf.add_introduction(sections[0])
-        
-        if len(sections) > 1:
-            pdf.add_summary(sections[1])
-
-        content_start = 2
-        content_end = min(content_start + 5, len(sections))
-        for i in range(content_start, content_end):
-            pdf.add_chapter(f"Seção {i - content_start + 1}", sections[i])
-        
-        if len(sections) > content_end:
-            pdf.add_conclusion(sections[content_end])
+        # Adicionar uma página e o conteúdo do arquivo output.txt ao PDF
+        pdf.add_page()
+        pdf.set_font('Arial', '', 12)
+        pdf.multi_cell(0, 10, content)
 
         file_path = f'ebooks/{email}_ebook.pdf'
         pdf.output(file_path)
@@ -102,6 +86,3 @@ def generate_ebook(user_id):
         conn.close()
         print("Conexão com o banco de dados fechada.")
 
-if __name__ == '__main__':
-    user_id = 1  # Substitua pelo ID do usuário que deseja testar
-    generate_ebook(user_id)

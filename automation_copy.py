@@ -2,13 +2,12 @@ import time
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 import undetected_chromedriver as uc
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
 import pyperclip
 import pyautogui
-from prompt_copy import get_full_prompt, get_responses_prompt
+from prompt import (get_cover_prompt, get_intro_prompt, get_table_of_contents_prompt,
+                           get_content_prompt, get_conclusion_prompt, get_final_conclusion_prompt)
 
-def chatgpt_response(responses_file, output_file, name):
+def chatgpt_response(prompt_file, output_file):
     driver = uc.Chrome(version_main=126)
 
     try:
@@ -20,40 +19,30 @@ def chatgpt_response(responses_file, output_file, name):
         input_field.click()
         time.sleep(0.5)
 
-        # Lê o texto do arquivo de respostas
-        with open(responses_file, 'r', encoding='utf-8') as file:
-            responses_text = file.read()
+        # Lê o texto do arquivo de prompt
+        with open(prompt_file, 'r', encoding='utf-8') as file:
+            prompt_text = file.read()
 
-        # Prompt 1
-        full_prompt = get_full_prompt(name)
-        for i in range(0, len(full_prompt), 5000):
-            input_field.send_keys(full_prompt[i:i + 5000])
+        # Envia o prompt e obtém a resposta
+        for i in range(0, len(prompt_text), 5000):
+            input_field.send_keys(prompt_text[i:i + 5000])
             time.sleep(1)
         input_field.send_keys(Keys.ENTER)
-        time.sleep(2.5)
-
-        # Prompt 2
-        responses_prompt = get_responses_prompt(responses_text)
-        for i in range(0, len(responses_prompt), 5000):
-            input_field.send_keys(responses_prompt[i:i + 5000])
-            time.sleep(1)
-        input_field.send_keys(Keys.ENTER)
-        
         time.sleep(90)
-
-        # Aguarda a resposta ser gerada e o botão de copiar estar disponível
-        #WebDriverWait(driver, 90).until(
-            #EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Copiar código')]"))
-        #)
 
         # Localiza o botão de copiar e clica nele
         try:
             print("Tentando localizar o botão de copiar.")
-            pyautogui.click(pyautogui.locateCenterOnScreen('static/images/button_copy_gpt.png'))
-            time.sleep(1)
-            copied_text = pyperclip.paste()
-            with open(output_file, "w", encoding="utf-8") as file:
-                file.write(copied_text)
+            copy_button_location = pyautogui.locateCenterOnScreen('static/images/button_copy_gpt.png', confidence=0.8)
+            if copy_button_location:
+                pyautogui.click(copy_button_location)
+                time.sleep(1)
+                copied_text = pyperclip.paste()
+                with open(output_file, "w", encoding="utf-8") as file:
+                    file.write(copied_text)
+                print("Texto copiado e salvo com sucesso.")
+            else:
+                print("Botão de copiar não encontrado.")
 
         except Exception as e:
             print(f"Erro durante a automação: {e}")
@@ -63,3 +52,24 @@ def chatgpt_response(responses_file, output_file, name):
             driver.quit()
         except Exception as e:
             print(f"Erro ao encerrar o driver: {e}")
+
+def generate_ebook_parts(name, responses_text):
+    prompts = {
+        'cover': get_cover_prompt(name),
+        'intro': get_intro_prompt(),
+        'toc': get_table_of_contents_prompt(),
+        'content': get_content_prompt(responses_text),
+        'conclusion': get_conclusion_prompt(),
+        'final_conclusion': get_final_conclusion_prompt()
+    }
+    
+    for part, prompt_text in prompts.items():
+        prompt_file = f'{part}_prompt.txt'
+        output_file = f'{part}_output.txt'
+        
+        with open(prompt_file, 'w', encoding='utf-8') as file:
+            file.write(prompt_text)
+        
+        print(f"Processando {part}...")
+        chatgpt_response(prompt_file, output_file)
+        print(f"{part.capitalize()} processado e salvo.")

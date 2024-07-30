@@ -63,3 +63,4 @@ def chatgpt_response(responses_file, output_file, name):
             driver.quit()
         except Exception as e:
             print(f"Erro ao encerrar o driver: {e}")
+
