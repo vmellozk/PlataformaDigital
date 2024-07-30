@@ -7,4 +7,4 @@ ebooks/*.pdf
 ebooks/
 .env
 *.txt
-*_copy.py
+output/

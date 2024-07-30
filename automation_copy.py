@@ -1,0 +1,76 @@
+import time
+import os
+from selenium.webdriver import Keys
+from selenium.webdriver.common.by import By
+import undetected_chromedriver as uc
+import pyperclip
+import pyautogui
+from prompt_copy import get_initial_prompt, get_cover_prompt, get_table_of_contents_prompt, get_intro_prompt, get_content_prompt, get_conclusion_prompt, responses
+
+def chatgpt_response(responses_file, output_directory, name):
+    driver = uc.Chrome(version_main=126)
+
+    # Cria o diretório de saída se não existir
+    if not os.path.exists(output_directory):
+        os.makedirs(output_directory)
+
+    try:
+        driver.get('https://chat.openai.com')
+        time.sleep(3)
+
+        input_field = driver.find_element(By.XPATH, '//*[@id="prompt-textarea"]')
+        time.sleep(0.5)
+        input_field.click()
+        time.sleep(0.5)
+
+        # Lê o texto do arquivo de respostas
+        with open(responses_file, 'r', encoding='utf-8') as file:
+            responses_text = file.read()
+
+        # Lista de prompts e nomes de arquivos
+        prompts = [
+            (get_initial_prompt(name), None),
+            (responses(responses_text), None),
+            (get_cover_prompt(name), 'capa.txt', 5),
+            (get_table_of_contents_prompt(), 'sumario.txt', 7),
+            (get_intro_prompt(), 'introducao.txt', 30),
+            (get_content_prompt(), 'conteudoprincipal.txt', 120),
+            (get_conclusion_prompt(), 'conclusao.txt', 60)
+        ]
+
+        #
+        for prompt_text, filename, *wait_time in prompts:
+            for i in range(0, len(prompt_text), 5000):
+                input_field.send_keys(prompt_text[i:i + 5000])
+                time.sleep(1)
+            input_field.send_keys(Keys.ENTER)
+            if wait_time:
+                time.sleep(wait_time[0])
+            else:
+                time.sleep(5)
+
+            # Verifica se o filename é None antes de tentar copiar e salvar o texto
+            if filename:
+                try:
+                    print(f"Tentando localizar o botão de copiar para {filename}.")
+                    pyautogui.click(pyautogui.locateCenterOnScreen('static/images/button_copy_gpt.png'))
+                    time.sleep(1)
+                    copied_text = pyperclip.paste()
+
+                    # Salva a resposta em um arquivo separado
+                    with open(f"{output_directory}/{filename}", "w", encoding="utf-8") as file:
+                        file.write(copied_text)
+                    print(f"Resposta salva em: {output_directory}/{filename}")
+
+                except Exception as e:
+                    print(f"Erro durante a automação para {filename}: {e}")
+
+    #
+    finally:
+        try:
+            driver.quit()
+        except Exception as e:
+            print(f"Erro ao encerrar o driver: {e}")
+
+if __name__ == "__main__":
+    chatgpt_response('responses.txt', 'output', 'name')
