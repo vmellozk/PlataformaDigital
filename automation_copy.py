@@ -6,7 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 import pyperclip
 import pyautogui
-from prompt import get_full_prompt, get_responses_prompt
+from prompt_copy import get_full_prompt, get_responses_prompt
 
 def chatgpt_response(responses_file, output_file, name):
     driver = uc.Chrome(version_main=126)
