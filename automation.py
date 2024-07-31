@@ -1,19 +1,22 @@
 import time
+import os
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 import undetected_chromedriver as uc
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
 import pyperclip
 import pyautogui
-from prompt import get_full_prompt, get_responses_prompt
+from prompt import get_initial_prompt, get_cover_prompt, get_table_of_contents_prompt, get_intro_prompt, get_content_prompt, get_conclusion_prompt, responses
 
-def chatgpt_response(responses_file, output_file, name):
+def chatgpt_response(responses_file, output_directory, name):
     driver = uc.Chrome(version_main=126)
+
+    # Cria o diretório de saída se não existir
+    if not os.path.exists(output_directory):
+        os.makedirs(output_directory)
 
     try:
         driver.get('https://chat.openai.com')
-        time.sleep(2)
+        time.sleep(3)
 
         input_field = driver.find_element(By.XPATH, '//*[@id="prompt-textarea"]')
         time.sleep(0.5)
@@ -24,43 +27,47 @@ def chatgpt_response(responses_file, output_file, name):
         with open(responses_file, 'r', encoding='utf-8') as file:
             responses_text = file.read()
 
-        # Prompt 1
-        full_prompt = get_full_prompt(name)
-        for i in range(0, len(full_prompt), 5000):
-            input_field.send_keys(full_prompt[i:i + 5000])
-            time.sleep(1)
-        input_field.send_keys(Keys.ENTER)
-        time.sleep(2.5)
+        # Criei uma lista das funções dos prompts para não ter que repetir o for em cada um prompt
+        prompts = [
+            (get_initial_prompt(), None),
+            (responses(responses_text), None),
+            (get_cover_prompt(name), 'capa.txt', 7),
+            (get_table_of_contents_prompt(), 'sumario.txt', 9),
+            (get_intro_prompt(), 'introducao.txt', 20),
+            (get_content_prompt(), 'conteudoprincipal.txt', 120),
+            (get_conclusion_prompt(), 'conclusao.txt', 40)
+        ]
 
-        # Prompt 2
-        responses_prompt = get_responses_prompt(responses_text)
-        for i in range(0, len(responses_prompt), 5000):
-            input_field.send_keys(responses_prompt[i:i + 5000])
-            time.sleep(1)
-        input_field.send_keys(Keys.ENTER)
-        
-        time.sleep(90)
+        #
+        for prompt_text, filename, *wait_time in prompts:
+            for i in range(0, len(prompt_text), 5000):
+                input_field.send_keys(prompt_text[i:i + 5000])
+                time.sleep(1)
+            input_field.send_keys(Keys.ENTER)
+            if wait_time:
+                time.sleep(wait_time[0])
+            else:
+                time.sleep(5)
 
-        # Aguarda a resposta ser gerada e o botão de copiar estar disponível
-        #WebDriverWait(driver, 90).until(
-            #EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Copiar código')]"))
-        #)
+            # Verifica se o filename é None antes de tentar copiar e salvar o texto
+            if filename:
+                try:
+                    print(f"Tentando localizar o botão de copiar para {filename}.")
+                    pyautogui.click(pyautogui.locateCenterOnScreen('static/images/button_copy_gpt.png'))
+                    time.sleep(1)
+                    copied_text = pyperclip.paste()
 
-        # Localiza o botão de copiar e clica nele
-        try:
-            print("Tentando localizar o botão de copiar.")
-            pyautogui.click(pyautogui.locateCenterOnScreen('static/images/button_copy_gpt.png'))
-            time.sleep(1)
-            copied_text = pyperclip.paste()
-            with open(output_file, "w", encoding="utf-8") as file:
-                file.write(copied_text)
+                    # Salva a resposta em um arquivo separado
+                    with open(f"{output_directory}/{filename}", "w", encoding="utf-8") as file:
+                        file.write(copied_text)
+                    print(f"Resposta salva em: {output_directory}/{filename}")
 
-        except Exception as e:
-            print(f"Erro durante a automação: {e}")
+                except Exception as e:
+                    print(f"Erro durante a automação para {filename}: {e}")
 
+    #
     finally:
         try:
             driver.quit()
         except Exception as e:
             print(f"Erro ao encerrar o driver: {e}")
-
