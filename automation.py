@@ -34,7 +34,7 @@ def chatgpt_response(responses_file, output_directory, name):
         # Criei uma lista das funções dos prompts para não ter que repetir o for em cada um prompt
         prompts = [
             (get_initial_prompt(), None),
-            (responses(responses_text), None, 17),
+            (responses(responses_text), None, 10),
             (get_cover_prompt(name), 'capa.txt', 5),
             (get_table_of_contents_prompt(), 'sumario.txt', 7),
             (get_intro_prompt(), 'introducao.txt', 20),
@@ -56,10 +56,8 @@ def chatgpt_response(responses_file, output_directory, name):
             # Verifica se o filename é None antes de tentar copiar e salvar o texto
             if filename:
                 try:
-                    copy_field = wait.until(
-                    EC.element_to_be_clickable((By.XPATH, '//*[@id="__next"]'))
-                )
-                    copy_field.click()
+                    pyautogui.click(pyautogui.locateCenterOnScreen('static/images/button_copy_gpt.png'))
+                    time.sleep(1)
                     copied_text = pyperclip.paste()
 
                     # Salva a resposta em um arquivo separado
