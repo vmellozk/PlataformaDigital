@@ -21,4 +21,3 @@ def get_content_prompt():
 
 def get_conclusion_prompt():
     return (f'Recapitule os principais pontos discutidos no conteúdo e forneça uma visão geral das conclusões, resumindo os principais aprendizados e implicações, tudo em um único texto, sem separar. Apenas responda o que foi pedido, sem "esse foi o taltal, se precisar de mais..." não quero nada disso.')
-
