@@ -50,10 +50,17 @@ def generate_ebook(user_id):
         # Criar o eBook em PDF
         pdf = PDF()
 
-        # Adicionar uma página e o conteúdo ao PDF
-        pdf.add_page()
-        pdf.set_font('Arial', '', 12)
-        pdf.multi_cell(0, 10, combined_content)
+        # Adicionar uma página para cada seção
+        section_titles = ['', 'Sumário', 'Introdução', 'Conteúdo Principal', 'Conclusão']
+        section_files = ['capa.txt', 'sumario.txt', 'introducao.txt', 'conteudoprincipal.txt', 'conclusao.txt']
+
+        for title, filename in zip(section_titles, section_files):
+            file_path = f"{output_directory}/{filename}"
+            if os.path.exists(file_path):
+                with open(file_path, 'r', encoding='utf-8') as file:
+                    content = file.read()
+                    # Adiciona uma nova página para cada seção
+                    pdf.add_section(title, content)
 
         file_path = f'{ebook_directory}/{email}_ebook.pdf'
         pdf.output(file_path)

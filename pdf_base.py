@@ -11,4 +11,4 @@ class PDF(FPDF):
         self.cell(0, 10, title, 0, 1, 'C')
         self.ln(10)
         self.set_font('Arial', '', 12)
-        self.multi_cell(0, 10, content.encode('latin-1', 'replace').decode('latin-1'))
+        self.multi_cell(0, 10, content)
