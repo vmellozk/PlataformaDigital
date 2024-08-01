@@ -103,6 +103,8 @@ def chatgpt_response(responses_file, output_directory, name):
                 try:
                     # Aguarda o botão de copiar para clicar
                     while True:
+                        pyautogui.click(pyautogui.locateCenterOnScreen('static/images/emoji.png', confidence=0.8))
+                        time.sleep(2)
                         button_location = pyautogui.locateCenterOnScreen('static/images/button_copy_gpt.png', confidence=0.8)
                         if button_location:
                             pyautogui.click(button_location)
