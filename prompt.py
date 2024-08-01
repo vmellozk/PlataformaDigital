@@ -5,7 +5,7 @@ def get_initial_prompt():
             f'Só responda quando eu te pedir um item por item, agora vou mandar as respostas, mas não responda nada ainda.')
             
 def responses(responses_text):
-    return (f"Essas são as respostas do formulário: \n\n{responses_text}\n\n Mas ainda não responda! Espere a próxima mensagem.")
+    return (f"{responses_text}")
 
 def get_cover_prompt(name):
     return (f'Responda para a capa da seguinte forma: "Título by {name}". Onde o título será de sua escolha. Apenas responda o que foi pedido, sem "esse foi o taltal, se precisar de mais..." não quero nada disso.')

@@ -3,6 +3,7 @@ import os
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium import webdriver
 from selenium.webdriver.support import expected_conditions as EC
 import undetected_chromedriver as uc
 import pyperclip
@@ -18,14 +19,51 @@ def chatgpt_response(responses_file, output_directory, name):
 
     try:
         # Abre o navegador e define o tempo máximo de espera
-        driver.get('https://chat.openai.com')
-        wait = WebDriverWait(driver, 5)
+        driver.get('https://chat.hix.ai/')
+        driver.maximize_window()
+        wait = WebDriverWait(driver, 15)
+
+        # Fazendo login na plataforma
+        time.sleep(2)
+        email = 'victorhugoarx@gmail.com'
+        password = '@113Mello@'
+
+        def click_image(image_path):
+            print(f"Tentando localizar a imagem: {image_path}")
+            location = pyautogui.locateCenterOnScreen(image_path, confidence=0.8)
+            if location:
+                pyautogui.click(location)
+                return True
+            else:
+                print(f"Não foi possível localizar a imagem: {image_path}")
+                return False
+
+        # Tente clicar nas imagens
+        if not click_image('static/images/try_for_free.png'):
+            return
+        time.sleep(1)
+        if not click_image('static/images/sign_here.png'):
+            return
+        time.sleep(1)
+        if not click_image('static/images/email.png'):
+            return
+        time.sleep(1)
+        pyautogui.write(email)
+        time.sleep(1)
+        if not click_image('static/images/password.png'):
+            return
+        time.sleep(1)
+        pyautogui.write(password)
+        time.sleep(1)
+        if not click_image('static/images/sign_in.png'):
+            return
+        time.sleep(5)
 
         # Espera até que o campo de entrada esteja presente e clicável
         input_field = wait.until(
-        EC.element_to_be_clickable((By.XPATH, '//*[@id="prompt-textarea"]'))
-    )
-        input_field.click()
+            EC.element_to_be_clickable((By.XPATH, '//*[@id="app-body"]/main/div/div/div[2]/footer/form/div/textarea'))
+        )
+        pyautogui.click()
 
         # Lê o texto do arquivo de respostas
         with open(responses_file, 'r', encoding='utf-8') as file:
@@ -42,12 +80,19 @@ def chatgpt_response(responses_file, output_directory, name):
             (get_conclusion_prompt(), 'conclusao.txt', 40)
         ]
 
-        #
         for prompt_text, filename, *wait_time in prompts:
             for i in range(0, len(prompt_text), 5000):
                 input_field.send_keys(prompt_text[i:i + 5000])
                 time.sleep(1)
+            time.sleep(3)
             input_field.send_keys(Keys.ENTER)
+
+            # Recupera o campo de entrada novamente antes de enviar o próximo prompt
+            time.sleep(5)  # Espera um tempo adicional para garantir que o navegador processe a resposta
+            input_field = wait.until(
+                EC.element_to_be_clickable((By.XPATH, '//*[@id="app-body"]/main/div/div/div[2]/footer/form/div/textarea'))
+            )
+            
             if wait_time:
                 time.sleep(wait_time[0])
             else:
@@ -56,7 +101,14 @@ def chatgpt_response(responses_file, output_directory, name):
             # Verifica se o filename é None antes de tentar copiar e salvar o texto
             if filename:
                 try:
-                    pyautogui.click(pyautogui.locateCenterOnScreen('static/images/button_copy_gpt.png'))
+                    # Aguarda o botão de copiar para clicar
+                    while True:
+                        button_location = pyautogui.locateCenterOnScreen('static/images/button_copy_gpt.png', confidence=0.8)
+                        if button_location:
+                            pyautogui.click(button_location)
+                            break
+                        time.sleep(0.5)
+                    
                     time.sleep(1)
                     copied_text = pyperclip.paste()
 
@@ -67,9 +119,11 @@ def chatgpt_response(responses_file, output_directory, name):
                 except Exception as e:
                     print(f"Erro durante a automação para {filename}: {e}")
 
-    #
     finally:
         try:
             driver.quit()
         except Exception as e:
             print(f"Erro ao encerrar o driver: {e}")
+
+# Exemplo de uso
+chatgpt_response('responses.txt', 'output_directory', 'Nome')
