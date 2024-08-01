@@ -6,5 +6,5 @@ ebooks/*.pdf
 *.db
 ebooks/
 .env
-*.txt
 output/
+responses.txt
