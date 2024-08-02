@@ -8,3 +8,5 @@ ebooks/
 .env
 output/
 responses.txt
+tools/
+*.jar
