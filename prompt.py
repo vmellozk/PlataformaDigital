@@ -1,5 +1,5 @@
 def get_initial_prompt():
-    return (f'Olá! Você está prestes a criar um eBook para um CEO. Você receberá instruções para gerar um eBook completo e detalhado, seguindo um padrão específico. '
+    return (f'Olá! Você está prestes a criar um eBook para um cliente. Você receberá instruções para gerar um eBook completo e detalhado, seguindo um padrão específico. '
             f'Primeiro, você irá receber as respostas de um formulário. Com base nessas respostas, eu vou te pedir item por item e você deverá criar o eBook conforme o padrão fornecido. '
             f'O eBook será dividido nas seguintes partes: Capa, Sumário, Introdução, Conteúdo Principal e Conclusão. '
             f'Só responda quando eu te pedir um item por item, agora vou mandar as respostas, mas não responda nada ainda.')

@@ -101,10 +101,21 @@ def chatgpt_response(responses_file, output_directory, name):
             # Verifica se o filename é None antes de tentar copiar e salvar o texto
             if filename:
                 try:
+                    # Aguarda o botão de copiar para clicar, esperando que a imagem passada apareça
+                    # Primeiro, mova o mouse para o local do XPath fornecido
+                    target_element = wait.until(
+                        EC.presence_of_element_located((By.XPATH, '//*[@id="app-body"]/main/div/div/div[1]/div/main/ul/li[2]/div/div[2]/div/div[2]'))
+                    )
+                    driver.execute_script("arguments[0].scrollIntoView();", target_element)
+                    time.sleep(1)  # Aguarda um momento para garantir que o botão se torne visível
+
+                    # Movendo o mouse para o elemento para garantir que o botão de copiar apareça
+                    action = webdriver.ActionChains(driver)
+                    action.move_to_element(target_element).perform()
+                    time.sleep(1)  # Aguarda um momento para garantir que o botão se torne visível
+
                     # Aguarda o botão de copiar para clicar
                     while True:
-                        pyautogui.click(pyautogui.locateCenterOnScreen('static/images/emoji.png', confidence=0.8))
-                        time.sleep(2)
                         button_location = pyautogui.locateCenterOnScreen('static/images/button_copy_gpt.png', confidence=0.8)
                         if button_location:
                             pyautogui.click(button_location)
@@ -120,7 +131,7 @@ def chatgpt_response(responses_file, output_directory, name):
 
                 except Exception as e:
                     print(f"Erro durante a automação para {filename}: {e}")
-
+    #
     finally:
         try:
             driver.quit()
