@@ -25,8 +25,8 @@ def chatgpt_response(responses_file, output_directory, name):
 
         # Fazendo login na plataforma
         time.sleep(2)
-        email = 'victorhugoarx@gmail.com'
-        password = '@113Mello@'
+        email = '---'
+        password = '---'
 
         def click_image(image_path):
             print(f"Tentando localizar a imagem: {image_path}")
