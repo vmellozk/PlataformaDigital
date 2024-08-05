@@ -4,83 +4,91 @@ import pandas as pd
 from pdf_base import PDF
 from automation import chatgpt_response
 
-# Diretório para salvar os eBooks e arquivos temporários
+# Diretório para o eBook
 ebook_directory = 'ebooks'
-output_directory = 'output'
 if not os.path.exists(ebook_directory):
     os.makedirs(ebook_directory)
-if not os.path.exists(output_directory):
-    os.makedirs(output_directory)
 
 def generate_ebook(user_id):
     responses_file = 'responses.txt'
+    output_file = 'output.txt'
+    tittle_file = 'tittle.txt'
 
     try:
+        # Conexão com o banco de dados
         conn = sqlite3.connect('database.db')
-        
-        # Obtenha as respostas do formulário para o usuário específico
         df = pd.read_sql_query("SELECT * FROM survey_responses WHERE user_id = ?", conn, params=(user_id,))
-        # Obtenha o e-mail e o nome do autor do usuário
         df_user = pd.read_sql_query("SELECT email, name FROM users WHERE id = ?", conn, params=(user_id,))
         if df_user.empty:
             print("E-mail ou nome do autor não encontrado para o usuário.")
             return
 
-        #
         email = df_user.iloc[0]['email']
         name = df_user.iloc[0]['name']
 
-        # Escrever as respostas no arquivo responses.txt
+        # Salva as respostas em um arquivo
         with open(responses_file, 'w', encoding='utf-8') as file:
             for index, row in df.iterrows():
                 questions_answers = '\n'.join([f"{col}: {row[col]}" for col in df.columns if col not in ['id', 'user_id']])
                 file.write(f"Response {index + 1}:\n{questions_answers}\n\n")
 
-        # Obter as respostas do ChatGPT e salvar em arquivos separados
-        chatgpt_response(responses_file, output_directory, name)
+        # Executa a função de automação para gerar o conteúdo
+        chatgpt_response(responses_file, output_file, tittle_file, name)
 
-        # Ler e combinar o conteúdo dos arquivos de saída para o PDF
-        combined_content = ""
-        for filename in ['capa.txt', 'sumario.txt', 'introducao.txt', 'conteudoprincipal.txt', 'conclusao.txt']:
-            file_path = f"{output_directory}/{filename}"
-            if os.path.exists(file_path):
-                with open(file_path, 'r', encoding='utf-8') as file:
-                    combined_content += file.read() + "\n\n"
+        # Verifica se o arquivo de resposta foi criado
+        if not os.path.exists(output_file):
+            raise FileNotFoundError(f"O arquivo de resposta '{output_file}' não foi criado.")
+        
+        # Lê o conteúdo do arquivo de resposta
+        with open(output_file, 'r', encoding='utf-8') as file:
+            content = file.read()
 
-        # Criar o eBook em PDF
+        # Lê o conteúdo do arquivo de título
+        if os.path.exists(tittle_file):
+            with open(tittle_file, 'r', encoding='utf-8') as file:
+                tittle_content = file.read().strip()
+        else:
+            tittle_content = "Título não disponível"
+
+        # Cria o PDF
         pdf = PDF()
+        title = tittle_content
+        pdf.add_cover(title, name)
 
-        # Adicionar uma página para cada seção
-        section_titles = ['', 'Sumário', 'Introdução', 'Conteúdo Principal', 'Conclusão']
-        section_files = ['capa.txt', 'sumario.txt', 'introducao.txt', 'conteudoprincipal.txt', 'conclusao.txt']
+        #
+        sections = content.split('####')
+        if len(sections) >= 1:
+            pdf.add_introduction(sections[0])
+        if len(sections) >= 2:
+            pdf.add_summary(sections[1])
 
-        for title, filename in zip(section_titles, section_files):
-            file_path = f"{output_directory}/{filename}"
-            if os.path.exists(file_path):
-                with open(file_path, 'r', encoding='utf-8') as file:
-                    content = file.read()
-                    # Adiciona uma nova página para cada seção
-                    pdf.add_section(title, content)
+        #
+        content_start = 2
+        for i in range(content_start, len(sections)):
+            pdf.add_chapter(f"Seção {i - content_start + 1}", sections[i])
 
-        file_path = f'{ebook_directory}/{email}_ebook.pdf'
+        #
+        if len(sections) > content_start:
+            pdf.add_conclusion(sections[-1])
+
+        #
+        file_path = f'ebooks/{email}_ebook.pdf'
         pdf.output(file_path)
         print(f"eBook salvo em: {file_path}")
 
-        # Inserir o caminho do eBook no banco de dados
+        # Atualiza o banco de dados
         cursor = conn.cursor()
         cursor.execute('INSERT INTO ebooks (user_id, file_path) VALUES (?, ?)', (user_id, file_path))
         conn.commit()
 
-        # Remover arquivos temporários apenas se o eBook foi criado com sucesso
-        if os.path.exists(file_path):
-            os.remove(responses_file)
-            for filename in os.listdir(output_directory):
-                os.remove(f"{output_directory}/{filename}")
-            os.rmdir(output_directory)
-            print("Arquivos temporários removidos.")
-        else:
-            print("O eBook não foi criado, mantendo arquivos temporários.")
-        
+        # Remove arquivos temporários, se desejado
+        #if os.path.exists(file_path):
+         #   os.remove(responses_file)
+          #  os.remove(output_file)
+           # os.remove(tittle_file)
+        #else:
+         #   print("O eBook não foi criado, mantendo arquivos temporários.")
+
     except Exception as e:
         print(f"Erro durante a geração do eBook: {e}")
     finally:
