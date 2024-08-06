@@ -35,11 +35,9 @@ def generate_ebook(user_id):
         # Executa a função de automação para gerar o conteúdo
         chatgpt_response(responses_file, output_file, tittle_file, name)
 
-        # Verifica se o arquivo de resposta foi criado
+        # Verifica se o arquivo de resposta foi criado e lê o conteúdo do arquivo de resposta
         if not os.path.exists(output_file):
             raise FileNotFoundError(f"O arquivo de resposta '{output_file}' não foi criado.")
-        
-        # Lê o conteúdo do arquivo de resposta
         with open(output_file, 'r', encoding='utf-8') as file:
             content = file.read()
 
@@ -47,31 +45,24 @@ def generate_ebook(user_id):
         if os.path.exists(tittle_file):
             with open(tittle_file, 'r', encoding='utf-8') as file:
                 tittle_content = file.read().strip()
-        else:
-            tittle_content = "Título não disponível"
 
         # Cria o PDF
         pdf = PDF()
         title = tittle_content
-        pdf.add_cover(title, name)
+        pdf.add_cover(title)
 
-        #
+        # Divide o conteúdo nas seções e adiciona as seções ao PDF
         sections = content.split('####')
-        if len(sections) >= 1:
-            pdf.add_introduction(sections[0])
-        if len(sections) >= 2:
-            pdf.add_summary(sections[1])
+        if len(sections) > 0:
+            pdf.add_introduction(sections[0].strip())
+        if len(sections) > 1:
+            pdf.add_summary(sections[1].strip())
+        for i in range(2, len(sections) - 1):
+            pdf.add_chapter(f"Seção {i - 1}", sections[i].strip())
+        if len(sections) > 2:
+            pdf.add_conclusion(sections[-1].strip())
 
-        #
-        content_start = 2
-        for i in range(content_start, len(sections)):
-            pdf.add_chapter(f"Seção {i - content_start + 1}", sections[i])
-
-        #
-        if len(sections) > content_start:
-            pdf.add_conclusion(sections[-1])
-
-        #
+        # Salva o arquivo PDF
         file_path = f'ebooks/{email}_ebook.pdf'
         pdf.output(file_path)
         print(f"eBook salvo em: {file_path}")
@@ -81,13 +72,13 @@ def generate_ebook(user_id):
         cursor.execute('INSERT INTO ebooks (user_id, file_path) VALUES (?, ?)', (user_id, file_path))
         conn.commit()
 
-        # Remove arquivos temporários, se desejado
-        #if os.path.exists(file_path):
-         #   os.remove(responses_file)
-          #  os.remove(output_file)
-           # os.remove(tittle_file)
-        #else:
-         #   print("O eBook não foi criado, mantendo arquivos temporários.")
+        # Remove arquivos temporários
+        if os.path.exists(file_path):
+            #os.remove(responses_file)
+            os.remove(output_file)
+            os.remove(tittle_file)
+        else:
+            print("O eBook não foi criado, mantendo arquivos temporários.")
 
     except Exception as e:
         print(f"Erro durante a geração do eBook: {e}")
