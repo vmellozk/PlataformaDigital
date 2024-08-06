@@ -3,6 +3,7 @@ import sqlite3
 import pandas as pd
 from pdf_base import PDF
 from automation import chatgpt_response
+from text_utils import clean_text  # Importe a função de limpeza
 
 # Diretório para o eBook
 ebook_directory = 'ebooks'
@@ -40,15 +41,20 @@ def generate_ebook(user_id):
             raise FileNotFoundError(f"O arquivo de resposta '{output_file}' não foi criado.")
         with open(output_file, 'r', encoding='utf-8') as file:
             content = file.read()
+        
+        # Limpa o conteúdo do arquivo de resposta
+        content = clean_text(content)
 
         # Lê o conteúdo do arquivo de título
         if os.path.exists(tittle_file):
             with open(tittle_file, 'r', encoding='utf-8') as file:
                 tittle_content = file.read().strip()
 
+        # Limpa o título também
+        title = clean_text(tittle_content)
+
         # Cria o PDF
         pdf = PDF()
-        title = tittle_content
         pdf.add_cover(title)
 
         # Divide o conteúdo nas seções e adiciona as seções ao PDF
@@ -74,7 +80,6 @@ def generate_ebook(user_id):
 
         # Remove arquivos temporários
         if os.path.exists(file_path):
-            #os.remove(responses_file)
             os.remove(output_file)
             os.remove(tittle_file)
         else:
