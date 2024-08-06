@@ -35,11 +35,9 @@ def generate_ebook(user_id):
         # Executa a função de automação para gerar o conteúdo
         chatgpt_response(responses_file, output_file, tittle_file, name)
 
-        # Verifica se o arquivo de resposta foi criado
+        # Verifica se o arquivo de resposta foi criado e lê o conteúdo do arquivo de resposta
         if not os.path.exists(output_file):
             raise FileNotFoundError(f"O arquivo de resposta '{output_file}' não foi criado.")
-        
-        # Lê o conteúdo do arquivo de resposta
         with open(output_file, 'r', encoding='utf-8') as file:
             content = file.read()
 
@@ -47,18 +45,14 @@ def generate_ebook(user_id):
         if os.path.exists(tittle_file):
             with open(tittle_file, 'r', encoding='utf-8') as file:
                 tittle_content = file.read().strip()
-        else:
-            tittle_content = "Título não disponível"
 
         # Cria o PDF
         pdf = PDF()
         title = tittle_content
-        pdf.add_cover(title, name)
+        pdf.add_cover(title)
 
-        # Divide o conteúdo nas seções
+        # Divide o conteúdo nas seções e adiciona as seções ao PDF
         sections = content.split('####')
-
-        # Adiciona as seções ao PDF
         if len(sections) > 0:
             pdf.add_introduction(sections[0].strip())
         if len(sections) > 1:
@@ -77,6 +71,14 @@ def generate_ebook(user_id):
         cursor = conn.cursor()
         cursor.execute('INSERT INTO ebooks (user_id, file_path) VALUES (?, ?)', (user_id, file_path))
         conn.commit()
+
+        # Remove arquivos temporários
+        if os.path.exists(file_path):
+            #os.remove(responses_file)
+            os.remove(output_file)
+            os.remove(tittle_file)
+        else:
+            print("O eBook não foi criado, mantendo arquivos temporários.")
 
     except Exception as e:
         print(f"Erro durante a geração do eBook: {e}")

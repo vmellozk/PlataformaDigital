@@ -5,7 +5,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 import undetected_chromedriver as uc
 from prompt_teste import get_initial_prompt, responses, tittle
-
+ 
 def chatgpt_response(responses_file, output_file, tittle_file, name):
     driver = uc.Chrome(version_main=126)
 
