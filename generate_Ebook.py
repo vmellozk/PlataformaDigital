@@ -24,7 +24,6 @@ def generate_ebook(user_id):
             print("E-mail ou nome do autor não encontrado para o usuário.")
             return
 
-        #
         email = df_user.iloc[0]['email']
         name = df_user.iloc[0]['name']
 
@@ -67,16 +66,42 @@ def generate_ebook(user_id):
         pdf = PDF()
         pdf.add_cover(title)
 
-        # Divide o conteúdo nas seções e adiciona as seções ao PDF
-        sections = content.split('####')
-        if len(sections) > 0:
-            pdf.add_introduction(sections[0].strip())
-        if len(sections) > 1:
-            pdf.add_summary(sections[1].strip())
-        for i in range(2, len(sections) - 1):
-            pdf.add_chapter(f"Seção {i - 1}", sections[i].strip())
-        if len(sections) > 2:
-            pdf.add_conclusion(sections[-1].strip())
+        # Adiciona as seções ao PDF com base nas palavras-chave
+        sections = {
+            "Introdução": "",
+            "Sumário": "",
+            "Conteúdo": "",
+            "Conclusão": ""
+        }
+        
+        current_section = None
+        lines = content.split('\n')
+        for line in lines:
+            if "Introdução" in line:
+                current_section = "Introdução"
+            elif "Sumário" in line:
+                current_section = "Sumário"
+            elif "Conteúdo" in line:
+                current_section = "Conteúdo"
+            elif "Conclusão" in line:
+                current_section = "Conclusão"
+            elif current_section:
+                sections[current_section] += line + '\n'
+
+        # Adiciona a Introdução sem adicionar página extra
+        pdf.add_introduction(clean_text(sections["Introdução"].strip()))
+
+        # Adiciona as outras seções com verificação de conteúdo
+        for section, text in sections.items():
+            if section == "Introdução":
+                continue  # Já adicionada
+            if text.strip():
+                if section == "Sumário":
+                    pdf.add_summary(clean_text(text.strip()))
+                elif section == "Conteúdo":
+                    pdf.add_chapter("Conteúdo", clean_text(text.strip()))
+                elif section == "Conclusão":
+                    pdf.add_conclusion(clean_text(text.strip()))
 
         # Salva o arquivo PDF
         file_path = f'ebooks/{email}_ebook.pdf'
@@ -100,6 +125,3 @@ def generate_ebook(user_id):
     finally:
         conn.close()
         print("Conexão com o banco de dados fechada.")
-
-if __name__ == "__main__":
-    generate_ebook(user_id=1)

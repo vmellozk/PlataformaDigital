@@ -5,7 +5,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 import undetected_chromedriver as uc
 from prompt import get_initial_prompt, responses, tittle
- 
+
 def chatgpt_response(responses_file, output_file, tittle_file, name):
     driver = uc.Chrome(version_main=126)
 
@@ -39,7 +39,7 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
             input_field.send_keys(responses_prompt[i:i + 5000])
             time.sleep(1)
         input_field.send_keys(Keys.ENTER)
-        time.sleep(22)
+        time.sleep(15)
 
         # Prompt 3
         tittle_prompt = tittle(name)
@@ -69,11 +69,11 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
             file.write(copied_tittle)
         time.sleep(1)
     
-        confirmacao = 'OK, agora me forneça o restante do conteúdo. Lembrando da hash antes de: ####Sumário, ####Introdução, ####Conteúdo e ####Conclusão. Forneça esses tópicos assim e tudo em um único texto! Apenas responda o que foi pedido, sem "essa foi a resposta, se precisar de mais..." não quero nada disso. '
+        confirmacao = 'OK, agora me forneça o restante do conteúdo. Lembrando da hash antes de: ####Introdução, ####Sumário, ####Conteúdo e ####Conclusão. Forneça esses tópicos assim e tudo em um único texto! Apenas responda o que foi pedido, sem "essa foi a resposta, se precisar de mais..." não quero nada disso. '
         input_field.send_keys(confirmacao)
         time.sleep(1)
         input_field.send_keys(Keys.ENTER)
-        time.sleep(70)
+        time.sleep(45)
 
         #Aguarda a resposta ser gerada e o botão de copiar estar disponível
         while True:
