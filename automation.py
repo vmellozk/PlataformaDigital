@@ -31,7 +31,7 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
             input_field.send_keys(full_prompt[i:i + 5000])
             time.sleep(1)
         input_field.send_keys(Keys.ENTER)
-        time.sleep(3)
+        time.sleep(5)
 
         # Prompt 2
         responses_prompt = responses(responses_text)
@@ -39,7 +39,7 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
             input_field.send_keys(responses_prompt[i:i + 5000])
             time.sleep(1)
         input_field.send_keys(Keys.ENTER)
-        time.sleep(15)
+        time.sleep(22)
 
         # Prompt 3
         tittle_prompt = tittle(name)
@@ -47,7 +47,7 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
             input_field.send_keys(tittle_prompt[i:i + 1000])
             time.sleep(2)
         input_field.send_keys(Keys.ENTER)
-        time.sleep(14)
+        time.sleep(8)
 
         #Aguarda a resposta ser gerada e o botão de copiar estar disponível
         while True:

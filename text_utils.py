@@ -1,15 +1,12 @@
 import re
 
 def clean_text(text):
-    # Definindo que remove palavras específicas e caracteres especiais, além de remover caracteres não alfanuméricos e espaços
-    words_to_remove = ['palavra1', 'palavra2']
-    special_characters = r'[^\w\s]'
+    # Definindo palavras específicas para remover e a expressão regular para caracteres especiais que devem ser removidos, excluindo os que queremos manter
+    words_to_remove = ['Capa']
+    allowed_characters = r'[^A-Za-z0-9\s.,?!:;()+=/<>-áàâãéèêíìîóòôõúùûç]'
 
-    # Remove palavras específicas
+    # Remove palavras específicas e remove caracteres especiais não permitidos
     for word in words_to_remove:
         text = re.sub(r'\b' + re.escape(word) + r'\b', '', text, flags=re.IGNORECASE)
-
-    # Remove caracteres especiais
-    text = re.sub(special_characters, '', text)
-
+    text = re.sub(allowed_characters, '', text)
     return text
