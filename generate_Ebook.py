@@ -3,7 +3,7 @@ import sqlite3
 import pandas as pd
 from pdf_base import PDF
 from automation import chatgpt_response
-from text_utils import clean_text  # Importe a função de limpeza
+from text_utils import clean_text
 
 # Diretório para o eBook
 ebook_directory = 'ebooks'
@@ -24,8 +24,18 @@ def generate_ebook(user_id):
             print("E-mail ou nome do autor não encontrado para o usuário.")
             return
 
+        #
         email = df_user.iloc[0]['email']
         name = df_user.iloc[0]['name']
+
+        # Separa o nome para pegar somente o primeiro e o último
+        name_parts = name.split()
+        if len(name_parts) > 1:
+            first_name = name_parts[0]
+            last_name = name_parts[-1]
+            formatted_name = f'{first_name} {last_name}'
+        else:
+            formatted_name = name
 
         # Salva as respostas em um arquivo
         with open(responses_file, 'w', encoding='utf-8') as file:
@@ -34,7 +44,7 @@ def generate_ebook(user_id):
                 file.write(f"Response {index + 1}:\n{questions_answers}\n\n")
 
         # Executa a função de automação para gerar o conteúdo
-        chatgpt_response(responses_file, output_file, tittle_file, name)
+        chatgpt_response(responses_file, output_file, tittle_file, formatted_name)
 
         # Verifica se o arquivo de resposta foi criado e lê o conteúdo do arquivo de resposta
         if not os.path.exists(output_file):
