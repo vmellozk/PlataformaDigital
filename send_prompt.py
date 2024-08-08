@@ -6,8 +6,9 @@ from selenium.webdriver.common.by import By
 from prompt import get_initial_prompt, responses, tittle
 
 output_file = 'output.txt'
+responses_file = 'responses.txt'
 
-def send_prompts(driver, responses_file, tittle_file, name):
+def send_prompts(driver, responses_file=responses_file, tittle_file='tittle.txt', name='default_name'):
     def get_input_field():
         return driver.find_element(By.XPATH, '//*[@id="prompt-textarea"]')
 
@@ -22,7 +23,8 @@ def send_prompts(driver, responses_file, tittle_file, name):
         input_field.send_keys(full_prompt[i:i + 5000])
         time.sleep(1)
     input_field.send_keys(Keys.ENTER)
-    time.sleep(5)
+    time.sleep(10)
+
     # Prompt 2
     responses_prompt = responses(responses_text)
     input_field = get_input_field()
@@ -30,7 +32,8 @@ def send_prompts(driver, responses_file, tittle_file, name):
         input_field.send_keys(responses_prompt[i:i + 5000])
         time.sleep(1)
     input_field.send_keys(Keys.ENTER)
-    time.sleep(15)
+    time.sleep(20)
+
     # Prompt 3
     tittle_prompt = tittle(name)
     input_field = get_input_field()
@@ -38,7 +41,7 @@ def send_prompts(driver, responses_file, tittle_file, name):
         input_field.send_keys(tittle_prompt[i:i + 1000])
         time.sleep(2)
     input_field.send_keys(Keys.ENTER)
-    time.sleep(8)
+    time.sleep(7)
 
     # Aguarda a resposta ser gerada e o botão de copiar estar disponível e salvar num arquivo txt
     while True:
@@ -54,6 +57,7 @@ def send_prompts(driver, responses_file, tittle_file, name):
         except Exception as e:
             print(f"Erro durante a automação de copiar: {e}")
             time.sleep(1)
+
     copied_tittle = pyperclip.paste()
     with open(tittle_file, "w", encoding="utf-8") as file:
         file.write(copied_tittle)
@@ -64,7 +68,7 @@ def send_prompts(driver, responses_file, tittle_file, name):
     input_field.send_keys(confirmacao)
     time.sleep(1)
     input_field.send_keys(Keys.ENTER)
-    time.sleep(45)
+    time.sleep(55)
 
     # Verifica a presença do botão 'emoji_gpt.png' e realiza ações associadas
     while True:
@@ -72,6 +76,14 @@ def send_prompts(driver, responses_file, tittle_file, name):
             button_location = pyautogui.locateCenterOnScreen('static/images/emoji_gpt1.png')
             if button_location is None:
                 button_location = pyautogui.locateCenterOnScreen('static/images/emoji_gpt2.png')
+            if button_location is None:
+                button_location = pyautogui.locateCenterOnScreen('static/images/seta.png')
+            if button_location is None:
+                button_location = pyautogui.locateCenterOnScreen('static/images/introducao.png')
+            if button_location is None:
+                button_location = pyautogui.locateCenterOnScreen('static/images/sumario.png')
+            if button_location is None:
+                button_location = pyautogui.locateCenterOnScreen('static/images/conteudo.png')
             if button_location:
                 pyautogui.click(button_location)
                 time.sleep(1)
