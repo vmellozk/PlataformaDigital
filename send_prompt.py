@@ -52,7 +52,7 @@ def send_prompts(driver, responses_file, tittle_file, name):
                 print("Botão de copiar não encontrado.")
                 time.sleep(1)
         except Exception as e:
-            print(f"Erro durante a automação: {e}")
+            print(f"Erro durante a automação de copiar: {e}")
             time.sleep(1)
     copied_tittle = pyperclip.paste()
     with open(tittle_file, "w", encoding="utf-8") as file:
@@ -66,16 +66,28 @@ def send_prompts(driver, responses_file, tittle_file, name):
     input_field.send_keys(Keys.ENTER)
     time.sleep(45)
 
-    # Aguarda a resposta ser gerada e o botão de copiar estar disponível e salvar num arquivo txt
+    # Verifica a presença do botão 'emoji_gpt.png' e realiza ações associadas
     while True:
         try:
-            button_location = pyautogui.locateCenterOnScreen('static/images/emoji_gpt.png')
+            button_location = pyautogui.locateCenterOnScreen('static/images/emoji_gpt1.png')
+            if button_location is None:
+                button_location = pyautogui.locateCenterOnScreen('static/images/emoji_gpt2.png')
             if button_location:
                 pyautogui.click(button_location)
-                time.sleep(5)
+                time.sleep(1)
                 pyautogui.press('end')
-                time.sleep(5)
+                time.sleep(3)
+                break
+            else:
+                print("Nenhum botão 'emoji_gpt' encontrado.")
+                time.sleep(1)
+        except Exception as e:
+            print(f"Erro durante a automação para achar o emoji: {e}")
+            time.sleep(1)
 
+    # Verifica a presença do botão 'button_copy_chat_gpt.png' e realiza ações associadas
+    while True:
+        try:
             copy_button_location = pyautogui.locateCenterOnScreen('static/images/button_copy_chat_gpt.png')
             if copy_button_location:
                 pyautogui.click(copy_button_location)
@@ -85,9 +97,8 @@ def send_prompts(driver, responses_file, tittle_file, name):
                 print("Botão de copiar não encontrado.")
                 time.sleep(1)
         except Exception as e:
-            print(f"Erro durante a automação: {e}")
+            print(f"Erro durante a automação de copiar a mensagem: {e}")
             time.sleep(1)
-
     copied_text = pyperclip.paste()
     with open(output_file, "w", encoding="utf-8") as file:
         file.write(copied_text)
