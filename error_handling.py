@@ -1,3 +1,5 @@
+from send_prompt import send_prompts
+from selenium.webdriver.common.by import By
 import time
 import pyautogui
 import os
@@ -9,12 +11,23 @@ def delete_files(file_paths):
             os.remove(file_path)
 
 # Atualiza a página e reinicia o script
-def handle_error(driver, input_field, respons_file, tittle_file, name):
+def handle_error(driver, responses_file, tittle_file, name):
     if pyautogui.locateCenterOnScreen('static/error/network_error.png', confidence=0.7):
         time.sleep(1)
         delete_files(['output.txt', 'tittle.txt'])
         pyautogui.hotkey('f5')
-        time.sleep(5)
+        time.sleep(7)
+
+        input_field = driver.find_element(By.XPATH, '//*[@id="prompt-textarea"]')
+        time.sleep(1)
+        input_field.click()
+        time.sleep(1)
+        
+        # Verifica se responses_file existe e não está vazio
+        if os.path.exists(responses_file) and os.path.getsize(responses_file) > 0:
+            send_prompts(driver, responses_file, tittle_file, name)
+        else:
+            print(f"Arquivo {responses_file} não encontrado ou está vazio.")
 
 # Verifica se a imagem 'image_path' está na tela e clica na imagem 'click_image_path' se encontrada
 def click_image_if_found(image_path, click_image_path):
@@ -29,9 +42,9 @@ def click_image_if_found(image_path, click_image_path):
                 return True
         return False
     except pyautogui.ImageNotFoundException:
-        # adicionar um logging
         pass
+        # Adicionar logging aqui
     except Exception as e:
-        # adicionar um logging
         pass
+        # Adicionar logging aqui
     return False
