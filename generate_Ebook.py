@@ -3,7 +3,7 @@ import sqlite3
 import pandas as pd
 from pdf_base import PDF
 from automation import chatgpt_response
-from text_utils import clean_text
+from clear_caracters import clean_text
 
 # Diretório para o eBook
 ebook_directory = 'ebooks'
