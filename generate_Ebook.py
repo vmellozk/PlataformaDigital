@@ -24,6 +24,7 @@ def generate_ebook(user_id):
             print("E-mail ou nome do autor não encontrado para o usuário.")
             return
 
+        #
         email = df_user.iloc[0]['email']
         name = df_user.iloc[0]['name']
 
@@ -45,35 +46,28 @@ def generate_ebook(user_id):
         # Executa a função de automação para gerar o conteúdo
         chatgpt_response(responses_file, output_file, tittle_file, formatted_name)
 
-        # Verifica se o arquivo de resposta foi criado e lê o conteúdo do arquivo de resposta
+        # Verifica se o arquivo de resposta foi criado e lê o conteúdo do arquivo de resposta e çimpa o conteúdo do arquivo de resposta
         if not os.path.exists(output_file):
             raise FileNotFoundError(f"O arquivo de resposta '{output_file}' não foi criado.")
         with open(output_file, 'r', encoding='utf-8') as file:
             content = file.read()
-        
-        # Limpa o conteúdo do arquivo de resposta
         content = clean_text(content)
 
-        # Lê o conteúdo do arquivo de título
+        # Lê o conteúdo do arquivo de título e Limpa o título também
         if os.path.exists(tittle_file):
             with open(tittle_file, 'r', encoding='utf-8') as file:
                 tittle_content = file.read().strip()
-
-        # Limpa o título também
         title = clean_text(tittle_content)
 
-        # Cria o PDF
+        # Cria o PDF e Adiciona as seções ao PDF com base nas palavras-chave
         pdf = PDF()
         pdf.add_cover(title)
-
-        # Adiciona as seções ao PDF com base nas palavras-chave
         sections = {
             "Introdução": "",
             "Sumário": "",
             "Conteúdo": "",
             "Conclusão": ""
         }
-        
         current_section = None
         lines = content.split('\n')
         for line in lines:
@@ -94,7 +88,7 @@ def generate_ebook(user_id):
         # Adiciona as outras seções com verificação de conteúdo
         for section, text in sections.items():
             if section == "Introdução":
-                continue  # Já adicionada
+                continue
             if text.strip():
                 if section == "Sumário":
                     pdf.add_summary(clean_text(text.strip()))
@@ -115,6 +109,7 @@ def generate_ebook(user_id):
 
         # Remove arquivos temporários
         if os.path.exists(file_path):
+            #os.remove(responses_file)
             os.remove(output_file)
             os.remove(tittle_file)
         else:
