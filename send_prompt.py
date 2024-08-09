@@ -24,7 +24,6 @@ def send_prompts(driver, responses_file=responses_file, tittle_file='tittle.txt'
         time.sleep(1)
     input_field.send_keys(Keys.ENTER)
     time.sleep(10)
-
     # Prompt 2
     responses_prompt = responses(responses_text)
     input_field = get_input_field()
@@ -33,7 +32,6 @@ def send_prompts(driver, responses_file=responses_file, tittle_file='tittle.txt'
         time.sleep(1)
     input_field.send_keys(Keys.ENTER)
     time.sleep(20)
-
     # Prompt 3
     tittle_prompt = tittle(name)
     input_field = get_input_field()
@@ -57,7 +55,6 @@ def send_prompts(driver, responses_file=responses_file, tittle_file='tittle.txt'
         except Exception as e:
             print(f"Erro durante a automação de copiar: {e}")
             time.sleep(1)
-
     copied_tittle = pyperclip.paste()
     with open(tittle_file, "w", encoding="utf-8") as file:
         file.write(copied_tittle)
