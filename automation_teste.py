@@ -42,7 +42,7 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
         except Exception as e:
             print(f"Erro ao encerrar o driver: {e}")
 
-# Verifica continuamente se a imagem está presente e clica na imagem especificada
+# Verifica se aparecer o pop up de logar e fecha
 def continuously_check_images():
     while True:
         try:
@@ -53,7 +53,7 @@ def continuously_check_images():
             pass
         time.sleep(2)
 
-# Verifica continuamente se a imagem de erro está presente e atualiza a página se necessário
+# Verifica continuamente se a imagem network_error aparece e reinicia todo o processo
 def continuously_check_errors(driver, input_field, responses_file, tittle_file, name):
     while True:
         try:
