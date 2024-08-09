@@ -24,7 +24,7 @@ def generate_ebook(user_id):
             print("E-mail ou nome do autor não encontrado para o usuário.")
             return
 
-        #
+        # Obtém o email e o nome do Banco de Dados
         email = df_user.iloc[0]['email']
         name = df_user.iloc[0]['name']
 
@@ -36,6 +36,13 @@ def generate_ebook(user_id):
             formatted_name = f'{first_name} {last_name}'
         else:
             formatted_name = name
+
+        # Manipula o email para obter a parte antes do '@'
+        email_parts = email.split('@')
+        if len(email_parts) > 1:
+            email_base = email_parts[0]
+        else:
+            email_base = email
 
         # Salva as respostas em um arquivo
         with open(responses_file, 'w', encoding='utf-8') as file:
@@ -97,10 +104,14 @@ def generate_ebook(user_id):
                 elif section == "Conclusão":
                     pdf.add_conclusion(clean_text(text.strip()))
 
-        # Salva o arquivo PDF
-        file_path = f'ebooks/{email}_ebook.pdf'
+        # Salva o arquivo PDF e verifica a numeração atual dos arquivos
+        counter = 1
+        while True:
+            file_path = f'ebooks/{email_base}_{counter}.pdf'
+            if not os.path.exists(file_path):
+                break
+            counter += 1
         pdf.output(file_path)
-        print(f"eBook salvo em: {file_path}")
 
         # Atualiza o banco de dados
         cursor = conn.cursor()
