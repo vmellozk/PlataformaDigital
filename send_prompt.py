@@ -68,34 +68,29 @@ def send_prompts(driver, responses_file=responses_file, tittle_file='tittle.txt'
     input_field.send_keys(Keys.ENTER)
     time.sleep(55)
 
-    # Desce para o final da página
-    image_names = ['emoji_gpt1.png', 'emoji_gpt2.png', 'seta.png', 'introducao.png', 'sumario.png', 'conteudo.png']
+    # 
     while True:
-        found_image = False
-        for image_name in image_names:
-            try:
-                button_location = pyautogui.locateCenterOnScreen(f'static/images/{image_name}', confidence=0.4)
-                if button_location:
-                    print(f"Imagem encontrada: {image_name}")
-                    pyautogui.click(button_location)
-                    time.sleep(1)
-                    pyautogui.press('end')
-                    time.sleep(3)
-                    found_image = True
-                    break
-            except pyautogui.ImageNotFoundException:
-                print(f"Imagem não encontrada: {image_name}")
-                continue
-        if found_image:
-            break
-        else:
-            print("Nenhuma das imagens encontradas.")
+        try:
+            button_location = pyautogui.locateCenterOnScreen('static/images/chatgpt.png')
+            if button_location:
+                pyautogui.click(button_location)
+                time.sleep(1)
+                pyautogui.click(button_location)
+                time.sleep(1)
+                pyautogui.press('end')
+                time.sleep(3)
+                break
+            else:
+                print("imagem chatgpt nao encontrada")
+                time.sleep(1)
+        except Exception as e:
+            print(f"Erro durante a automação para achar a imagem: {e}")
             time.sleep(1)
 
     # Verifica a presença do botão 'button_copy_chat_gpt.png' e realiza ações associadas
     while True:
         try:
-            copy_button_location = pyautogui.locateCenterOnScreen('static/images/button_copy_chat_gpt.png', confidence=0.5)
+            copy_button_location = pyautogui.locateCenterOnScreen('static/images/button_copy_chat_gpt.png')
             if copy_button_location:
                 pyautogui.click(copy_button_location)
                 time.sleep(2)
