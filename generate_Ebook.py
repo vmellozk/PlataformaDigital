@@ -130,4 +130,6 @@ def generate_ebook(user_id):
         print(f"Erro durante a geração do eBook: {e}")
     finally:
         conn.close()
-        print("Conexão com o banco de dados fechada.")
+
+if __name__ == "__main__":
+    generate_ebook(user_id=1)

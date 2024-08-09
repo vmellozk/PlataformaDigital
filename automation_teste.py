@@ -9,6 +9,27 @@ import threading
 image_check_thread = None
 error_check_thread = None
 
+# Verifica se aparecer o pop up de logar e fecha
+def continuously_check_images():
+    while True:
+        try:
+            found = click_image_if_found('static/error/thanks_for_use_error.png', 'static/error/continue_desconected.png')
+            if found:
+                pass
+        except Exception as e:
+            pass
+        time.sleep(2)
+
+# Verifica continuamente se a imagem network_error aparece e reinicia todo o processo
+def continuously_check_errors(driver, input_field, responses_file, tittle_file, name):
+    while True:
+        try:
+            handle_error(driver, input_field, responses_file, tittle_file, name)
+            time.sleep(10)
+        except Exception as e:
+            pass
+        time.sleep(2)
+
 def chatgpt_response(responses_file, output_file, tittle_file, name):
     global image_check_thread, error_check_thread
     driver = uc.Chrome(version_main=126)
@@ -41,24 +62,3 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
             driver.quit()
         except Exception as e:
             print(f"Erro ao encerrar o driver: {e}")
-
-# Verifica se aparecer o pop up de logar e fecha
-def continuously_check_images():
-    while True:
-        try:
-            found = click_image_if_found('static/error/thanks_for_use_error.png', 'static/error/continue_desconected.png')
-            if found:
-                pass
-        except Exception as e:
-            pass
-        time.sleep(2)
-
-# Verifica continuamente se a imagem network_error aparece e reinicia todo o processo
-def continuously_check_errors(driver, input_field, responses_file, tittle_file, name):
-    while True:
-        try:
-            handle_error(driver, input_field, responses_file, tittle_file, name)
-            time.sleep(2)
-        except Exception as e:
-            pass
-        time.sleep(2)

@@ -42,9 +42,9 @@ def click_image_if_found(image_path, click_image_path):
                 return True
         return False
     except pyautogui.ImageNotFoundException:
-        pass
         # Adicionar logging aqui
+        pass
     except Exception as e:
-        pass
         # Adicionar logging aqui
+        pass
     return False
