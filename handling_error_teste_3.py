@@ -1,8 +1,10 @@
 import time
 import pyautogui
 import os
-from send_prompt_teste_1 import send_prompts
+from send_prompt_teste_3 import send_prompts
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 # Apaga arquivos específicos
 def delete_files(file_paths):
@@ -36,12 +38,17 @@ def handle_error(driver, input_field, responses_file, tittle_file, name):
         time.sleep(1)
         delete_files(['output.txt', 'tittle.txt'])
         pyautogui.hotkey('f5')
-        time.sleep(5)  # Aguarda o tempo necessário para a página ser atualizada
+        time.sleep(30)
 
-        input_field = driver.find_element(By.XPATH, '//*[@id="prompt-textarea"]')
-        time.sleep(1)
-        input_field.click()
-        time.sleep(1)
+    # Verificar repetidamente se a imagem aparece
+    while not pyautogui.locateCenterOnScreen('static/error/chatgpt.png'):
+        print("Aguardando a imagem 'chatgpt.png'...")
+        time.sleep(2)
 
-        send_prompts(input_field, responses_file, tittle_file, name)
- 
+    # Agora que a imagem foi detectada, reidentifica o campo de entrada
+    input_field = WebDriverWait(driver, 15).until(
+        EC.presence_of_element_located((By.XPATH, '//*[@id="prompt-textarea"]'))
+    )
+
+    # Só agora envia os prompts
+    send_prompts(driver, responses_file, tittle_file, name)

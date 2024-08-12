@@ -1,8 +1,8 @@
 import time
 from selenium.webdriver.common.by import By
 import undetected_chromedriver as uc
-from handling_error_teste_1 import click_image_if_found, handle_error
-from send_prompt_teste_1 import send_prompts
+from handling_error_teste_2 import click_image_if_found, handle_error
+from send_prompt_teste_2 import send_prompts
 import threading
 
 # Declara a variável global para as threads de verificação
@@ -51,13 +51,13 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
         error_check_thread.start()
 
         # Envia os prompts
-        send_prompts(input_field, responses_file, tittle_file, name)
+        send_prompts(driver, responses_file, tittle_file, name)
 
     finally:
         if image_check_thread is not None:
-            image_check_thread.join(timeout=10)
+            image_check_thread.join(timeout=5)
         if error_check_thread is not None:
-            error_check_thread.join(timeout=10)
+            error_check_thread.join(timeout=5)
         try:
             driver.quit()
         except Exception as e:
@@ -67,6 +67,5 @@ if __name__ == "__main__":
     responses_file = 'responses.txt'
     output_file = 'output.txt'
     tittle_file = 'tittle.txt'
-    name = 'Meu Projeto'
+    name = 'Victor Mello'
     chatgpt_response(responses_file, output_file, tittle_file, name)
- 

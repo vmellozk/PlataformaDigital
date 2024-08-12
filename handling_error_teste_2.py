@@ -1,8 +1,10 @@
 import time
 import pyautogui
 import os
-from send_prompt_teste_1 import send_prompts
+from send_prompt_teste_2 import send_prompts
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 # Apaga arquivos específicos
 def delete_files(file_paths):
@@ -36,12 +38,11 @@ def handle_error(driver, input_field, responses_file, tittle_file, name):
         time.sleep(1)
         delete_files(['output.txt', 'tittle.txt'])
         pyautogui.hotkey('f5')
-        time.sleep(5)  # Aguarda o tempo necessário para a página ser atualizada
+        time.sleep(6)
 
-        input_field = driver.find_element(By.XPATH, '//*[@id="prompt-textarea"]')
-        time.sleep(1)
-        input_field.click()
-        time.sleep(1)
+        # Esperar até que o campo de entrada esteja presente novamente
+        input_field = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, '//*[@id="prompt-textarea"]'))
+        )
 
         send_prompts(input_field, responses_file, tittle_file, name)
- 

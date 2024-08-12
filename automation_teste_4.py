@@ -1,15 +1,16 @@
 import time
 from selenium.webdriver.common.by import By
 import undetected_chromedriver as uc
-from handling_error_teste_1 import click_image_if_found, handle_error
-from send_prompt_teste_1 import send_prompts
+from handling_error_teste_4 import click_image_if_found, handle_error
+from send_prompt_teste_4 import send_prompts
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import threading
+import pyautogui
 
-# Declara a variável global para as threads de verificação
 image_check_thread = None
 error_check_thread = None
 
-# Verifica continuamente se a imagem está presente e clica na imagem especificada
 def continuously_check_images():
     while True:
         try:
@@ -20,7 +21,6 @@ def continuously_check_images():
             pass
         time.sleep(2)
 
-# Verifica continuamente se a imagem de erro está presente e atualiza a página se necessário
 def continuously_check_errors(driver, input_field, responses_file, tittle_file, name):
     while True:
         try:
@@ -39,25 +39,29 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
         driver.get('https://chat.openai.com')
         time.sleep(2)
 
-        input_field = driver.find_element(By.XPATH, '//*[@id="prompt-textarea"]')
+        while not pyautogui.locateCenterOnScreen('static/images/chatgpt.png'):
+            print("Aguardando a imagem 'chatgpt.png' antes de continuar...")
+            time.sleep(2)
+
+        input_field = WebDriverWait(driver, 15).until(
+            EC.presence_of_element_located((By.XPATH, '//*[@id="prompt-textarea"]'))
+        )
         time.sleep(1)
         input_field.click()
         time.sleep(1)
 
-        # Inicia a verificação contínua em threads separadas
         image_check_thread = threading.Thread(target=continuously_check_images, daemon=True)
         image_check_thread.start()
         error_check_thread = threading.Thread(target=continuously_check_errors, args=(driver, input_field, responses_file, tittle_file, name), daemon=True)
         error_check_thread.start()
 
-        # Envia os prompts
-        send_prompts(input_field, responses_file, tittle_file, name)
+        send_prompts(driver, responses_file, tittle_file, name)
 
     finally:
         if image_check_thread is not None:
-            image_check_thread.join(timeout=10)
+            image_check_thread.join(timeout=5)
         if error_check_thread is not None:
-            error_check_thread.join(timeout=10)
+            error_check_thread.join(timeout=5)
         try:
             driver.quit()
         except Exception as e:
@@ -67,6 +71,5 @@ if __name__ == "__main__":
     responses_file = 'responses.txt'
     output_file = 'output.txt'
     tittle_file = 'tittle.txt'
-    name = 'Meu Projeto'
+    name = 'Victor Mello'
     chatgpt_response(responses_file, output_file, tittle_file, name)
- 
