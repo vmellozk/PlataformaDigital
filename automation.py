@@ -4,7 +4,6 @@ import undetected_chromedriver as uc
 from send_prompt import send_prompts
 
 def chatgpt_response(responses_file, output_file, tittle_file, name):
-    global image_check_thread, error_check_thread
     driver = uc.Chrome(version_main=126)
 
     try:
@@ -21,10 +20,6 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
         send_prompts(input_field, responses_file, tittle_file, name)
 
     finally:
-        if image_check_thread is not None:
-            image_check_thread.join(timeout=5)
-        if error_check_thread is not None:
-            error_check_thread.join(timeout=5)
         try:
             driver.quit()
         except Exception as e:
