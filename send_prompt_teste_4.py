@@ -69,6 +69,7 @@ def send_prompts(driver, responses_file, tittle_file, name):
         file.write(copied_tittle)
     time.sleep(1)
 
+    #
     confirmacao = 'OK, agora me forneça o restante do conteúdo. Lembrando da hash antes de: ####Introdução, ####Sumário, ####Conteúdo e ####Conclusão. Forneça esses tópicos assim e tudo em um único texto! Apenas responda o que foi pedido, sem "essa foi a resposta, se precisar de mais..." não quero nada disso. '
     input_field.send_keys(confirmacao)
     time.sleep(1)
@@ -112,3 +113,4 @@ def send_prompts(driver, responses_file, tittle_file, name):
     with open(output_file, "w", encoding="utf-8") as file:
         file.write(copied_text)
     time.sleep(1)
+ 

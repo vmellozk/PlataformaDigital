@@ -8,9 +8,11 @@ from selenium.webdriver.support import expected_conditions as EC
 import threading
 import pyautogui
 
+#
 image_check_thread = None
 error_check_thread = None
 
+#
 def continuously_check_images():
     while True:
         try:
@@ -21,15 +23,17 @@ def continuously_check_images():
             pass
         time.sleep(2)
 
-def continuously_check_errors(driver, input_field, responses_file, tittle_file, name):
+#
+def continuously_check_errors(driver, responses_file, tittle_file, name):
     while True:
         try:
-            handle_error(driver, input_field, responses_file, tittle_file, name)
+            handle_error(driver, responses_file, tittle_file, name)
             time.sleep(10)
         except Exception as e:
             pass
         time.sleep(2)
 
+#
 def chatgpt_response(responses_file, output_file, tittle_file, name):
     global image_check_thread, error_check_thread
     driver = uc.Chrome(version_main=126)
@@ -52,7 +56,9 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
 
         image_check_thread = threading.Thread(target=continuously_check_images, daemon=True)
         image_check_thread.start()
-        error_check_thread = threading.Thread(target=continuously_check_errors, args=(driver, input_field, responses_file, tittle_file, name), daemon=True)
+        
+        # Passa os argumentos como uma tupla
+        error_check_thread = threading.Thread(target=continuously_check_errors, args=(driver, responses_file, tittle_file, name), daemon=True)
         error_check_thread.start()
 
         send_prompts(driver, responses_file, tittle_file, name)

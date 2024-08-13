@@ -1,6 +1,7 @@
 import time
 import pyautogui
 import os
+import sys
 from send_prompt_teste_4 import send_prompts
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -33,22 +34,21 @@ def click_image_if_found(image_path, click_image_path):
     return False
 
 # Atualiza a página e chama a função de envio de prompts
-def handle_error(driver, input_field, responses_file, tittle_file, name):
-    if pyautogui.locateCenterOnScreen('static/error/error_symbol.png', confidence=0.7):
-        time.sleep(1)
-        delete_files(['output.txt', 'tittle.txt'])
-        pyautogui.hotkey('f5')
-        time.sleep(30)
+def handle_error(driver, responses_file, tittle_file, name):
+    try:
+        # Verifica se o símbolo de erro está presente na tela
+        if pyautogui.locateCenterOnScreen('static/error/error_symbol.png', confidence=0.7):
+            time.sleep(1)
+            # Deleta os arquivos especificados se existirem
+            delete_files(['output.txt', 'tittle.txt'])
+            time.sleep(1)
+            
+            # Fecha o navegador
+            driver.quit()
+            time.sleep(3)
+            os.execv(sys.executable, ['python', 'automation_teste_4.py'] + sys.argv[1:])
 
-    # Verificar repetidamente se a imagem aparece
-    while not pyautogui.locateCenterOnScreen('static/error/chatgpt.png'):
-        print("Aguardando a imagem 'chatgpt.png'...")
-        time.sleep(2)
-
-    # Agora que a imagem foi detectada, reidentifica o campo de entrada
-    input_field = WebDriverWait(driver, 15).until(
-        EC.presence_of_element_located((By.XPATH, '//*[@id="prompt-textarea"]'))
-    )
-
-    # Só agora envia os prompts
-    send_prompts(driver, responses_file, tittle_file, name)
+    except Exception as e:
+        pass
+        # Opcional: Se houver um erro ao tentar reiniciar, o programa pode ser encerrado
+        # os._exit(1)
