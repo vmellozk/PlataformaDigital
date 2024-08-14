@@ -1,0 +1,149 @@
+1. Visão Geral do Projeto
+* Descrição do Projeto
+Este projeto tem como objetivo fornecer uma interface de perfil para usuários em um sistema web, permitindo que
+eles visualizem e editem informações pessoais de forma dinâmica. O público-alvo são usuários que precisam gerenciar
+e atualizar seus perfis regularmente, como em plataformas sociais ou sistemas de cadastro. O sistema atende a essa
+necessidade ao oferecer uma experiência de usuário fluida e interativa, com modais para edição de perfil e
+atualização de fotos.
+
+* Arquitetura
+Este arquivo perfil_visita.js funciona como o backend da página de perfil, interagindo diretamente com o DOM para
+manipular elementos da interface. A página é composta por três arquivos principais:
+
+- perfil_visita.html: Estrutura HTML da página de perfil.
+- perfil_visita.css: Estilos aplicados ao perfil.
+- perfil_visita.js: Manipulação de eventos e lógica de frontend para a interação do usuário.
+
+* Estrutura do Código e Organização
+Organização dos Arquivos e Pastas
+
+├── css/
+│   └── perfil_visita.css  # Estilos para a página de perfil
+├── js/
+│   └── perfil_visita.js   # Lógica de frontend para a página de perfil
+├── index.html
+└── perfil_visita.html     # Estrutura HTML da página de perfil
+
+* Descrição dos Módulos e Funções
+Este arquivo perfil_visita.js contém várias funções principais, cada uma responsável por uma tarefa específica
+relacionada à manipulação do perfil do usuário. As funções estão organizadas de maneira que interagem diretamente
+com o DOM, permitindo que o usuário edite seu perfil, atualize sua foto e veja a contagem de caracteres restantes
+em campos específicos.
+
+
+
+2. Documentação Específica de Arquivos
+* openModal(modalId)
+- Descrição: Abre um modal específico ao alterar o estilo do elemento para ser exibido.
+- Parâmetros: modalId (string) - O ID do modal que deve ser aberto.
+- Uso: Esta função é usada nas linhas 35 e 44 do arquivo perfil.html para abrir modais específicos.
+
+* closeModal(modalId)
+- Descrição: Fecha o modal especificado ao alterar o estilo do elemento para ser ocultado.
+- Parâmetros: modalId (string) - O ID do modal que deve ser fechado.
+- Uso: Esta função é utilizada nas linhas 122 e 161 do arquivo perfil.html.
+
+* Manipulador de Evento: Formulário de Edição de Perfil
+- Descrição: Impede o envio padrão do formulário e atualiza dinamicamente o conteúdo do perfil do usuário com as
+informações editadas.
+- Elementos Alvo: Formulário de edição de perfil (editProfileForm) na linha 124 do perfil.html.
+- Eventos: submit - Ouvinte de eventos que previne o comportamento padrão e atualiza o DOM.
+
+* Manipulador de Evento: Formulário de Atualização de Foto
+- Descrição: Impede o envio padrão do formulário e atualiza a imagem do perfil do usuário.
+- Elementos Alvo: Formulário de troca de foto (changePicForm) na linha 163 do perfil.html.
+- Eventos: submit - Ouvinte de eventos que previne o comportamento padrão e atualiza a imagem do perfil.
+
+* Manipulador de Evento: Pré-visualização da Imagem
+- Descrição: Permite que o usuário visualize uma prévia da imagem carregada antes de atualizar a foto de perfil.
+- Elementos Alvo: Input de upload de foto (profile-pic-upload) na linha 182 do perfil.html.
+- Eventos: change - Ouvinte de eventos que atualiza a pré-visualização da imagem no DOM.
+
+* Contador de Caracteres Restantes
+- Descrição: Calcula e exibe o número de caracteres restantes em campos específicos ao digitar.
+- Uso: Utiliza a estrutura DOMContentLoaded para garantir que o script seja executado após o carregamento completo
+do DOM.
+- Elementos Alvo: Campos de entrada específicos definidos em um array, como edit-username, edit-description, entre
+outros.
+
+
+
+3. Comentários Inline
+const username = document.getElementById('edit-username').value; --> Captura dos novos valores dos campos do
+formulário
+
+Esse trecho de código captura o valor atual do campo de entrada "username" para atualizações dinâmicas no DOM.
+
+
+
+4. Instruções de Configuração e Instalação
+* Dependências
+Nenhuma dependência externa é necessária para o funcionamento deste arquivo.
+
+* Configurações Específicas
+Uso de IDs: Certifique-se de que os IDs dos elementos no HTML correspondam aos esperados no JavaScript. Caso
+contrário, as funcionalidades podem não funcionar corretamente.
+
+
+
+5. Guia de Uso Geral
+- A edição de informações do perfil ocorre dinamicamente, sem recarregar a página. Ao clicar no botão de salvar,
+as informações são atualizadas na página principal do perfil.
+- A atualização de fotos permite uma pré-visualização antes de confirmar a nova imagem de perfil.
+
+
+
+6. Testes
+* Estratégia de Testes
+- Testes de Integração: Devem ser realizados para garantir que as funções de abertura e fechamento de modais
+funcionem corretamente junto com o HTML.
+- Testes Manuais: Verifique visualmente se os dados do perfil estão sendo atualizados corretamente e se as imagens
+são carregadas e exibidas como esperado.
+
+* Cobertura de Testes
+Prioridade: Funções de manipulação de perfil e atualização de imagem devem ter alta prioridade nos testes devido à sua importância na experiência do usuário.
+
+
+
+7. Erros e Solução de Problemas
+* Erros Comuns
+Modal Não Abre/Fecha: Verifique se o ID passado para as funções openModal e closeModal corresponde ao ID do modal
+no HTML.
+Imagem Não Carrega: Certifique-se de que o FileReader está corretamente configurado para ler o arquivo de imagem.
+
+* Logs
+Uso: Não há logs gerados por este script, mas pode-se adicionar console logs para debugging durante o
+desenvolvimento.
+
+
+
+8. Histórico de Alterações
+* Changelog Local e Global
+Versão 1.0: Implementação inicial das funcionalidades de edição de perfil, upload de foto e contagem de caracteres.
+
+
+
+9. Contribuição
+* Guia para Contribuidores
+- Padrões de Codificação: Siga o guia de estilo definido pelo projeto para garantir a consistência no código.
+- Código de Conduta: <!-- Uso pessoal. -->
+
+* Estilo de Codificação
+JavaScript ES6: Utilize as melhores práticas, como arrow functions e template literals, onde aplicável.
+
+
+
+10. Licenciamento e Direitos Autorais
+* Licença
+Este projeto é licenciado sob a licença MIT. Consulte o arquivo de licença para mais detalhes.
+
+
+
+11. Referências e Links Externos
+* Documentação Externa
+- MDN Web Docs - Manipulação de DOM
+- JavaScript Info - Trabalhando com Forms
+
+* Recursos de Aprendizado
+Artigos e Tutoriais: Consulte recursos adicionais sobre manipulação de DOM e eventos em JavaScript para aprimorar
+o entendimento deste código.

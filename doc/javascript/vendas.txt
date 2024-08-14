@@ -1,0 +1,173 @@
+1. Visão Geral do Arquivo
+* Descrição do Arquivo
+O arquivo vendas.js é responsável por implementar funcionalidades interativas e dinâmicas na página vendas.html.
+
+* Seu propósito principal é:
+- Limitar o número de caracteres em campos de texto.
+- Ajustar a altura de caixas de texto (textareas) automaticamente conforme o usuário digita.
+- Redirecionar automaticamente o usuário para a página inicial após um atraso.
+
+* Relação com Outros Arquivos
+- vendas.html: O arquivo vendas.js adiciona interatividade à página vendas.html manipulando elementos do DOM
+definidos no HTML.
+- vendas.css: Enquanto vendas.css define a aparência dos elementos, vendas.js lida com o comportamento desses
+elementos, como ajustes de altura e contagem de caracteres.
+
+
+
+2. Estrutura do Código e Organização
+* Organização Interna
+- Limitação de caracteres: Monitora o número de caracteres em campos de texto e atualiza o contador.
+- Ajuste de altura do textarea: Ajusta a altura dos textareas conforme o conteúdo.
+- Redirecionamento automático: Redireciona o usuário para a página inicial após um atraso.
+
+* Blocos de Código e Funções
+--- Limitação de caracteres:
+document.addEventListener('DOMContentLoaded', () => {
+    const fields = [
+        { id: 'question1', maxLength: 1000, counterId: 'question1Counter' },
+        // ... demais campos
+    ];
+
+    fields.forEach(field => {
+        const inputElement = document.getElementById(field.id);
+        const counterElement = document.getElementById(field.counterId);
+
+        inputElement.addEventListener('input', () => {
+            const remaining = field.maxLength - inputElement.value.length;
+
+            if (inputElement.value.length > field.maxLength) {
+                inputElement.value = inputElement.value.slice(0, field.maxLength);
+            }
+
+            counterElement.textContent = `${remaining >= 0 ? remaining : 0} caracteres restantes`;
+        });
+    });
+});
+
+- Nome da Função/Bloco: Limitação de caracteres
+- Interação com Outros Blocos: Este bloco interage com os elementos de entrada no HTML, utilizando IDs específicos
+para controlar o comprimento do texto e atualizar o contador.
+Exemplo Prático: Se o usuário digitar mais de 1000 caracteres em qualquer campo, o texto será truncado e o contador
+será atualizado.
+
+--- Ajuste de altura do textarea:
+document.addEventListener('DOMContentLoaded', function() {
+    const textareas = document.querySelectorAll('textarea');
+
+    function adjustHeight(el) {
+        el.style.height = 'auto';
+        el.style.height = `${el.scrollHeight}px`;
+    }
+
+    textareas.forEach(textarea => {
+        textarea.addEventListener('input', () => adjustHeight(textarea));
+        adjustHeight(textarea);
+    });
+});
+
+- Nome da Função/Bloco: Ajuste de altura do textarea
+- Parâmetros: el --> O elemento textarea a ser ajustado.
+- Interação com Outros Blocos: Este bloco ajusta a altura dos elementos textarea conforme o usuário digita, garantindo
+que o texto visível se ajuste ao conteúdo.
+Exemplo Prático: O textarea expande automaticamente para mostrar todo o texto à medida que é digitado.
+
+--- Redirecionamento automático:
+function redirectAfterDelay() {
+    setTimeout(function() {
+        window.location.href = "{{ url_for('home') }}";
+    }, 3000);
+}
+
+- Nome da Função/Bloco: Redirecionamento automático
+- Interação com Outros Blocos: Este bloco define uma função para redirecionar o usuário após um atraso de 3 segundos,
+utilizando uma URL gerada pelo servidor.
+Exemplo Prático: Após um atraso de 3 segundos, o usuário será redirecionado para a página inicial.
+
+
+
+3. Documentação Específica de Funções
+* Eventos e Manipuladores de Eventos (Limitação de caracteres): 
+- Descrição dos Eventos: input nos campos de texto.
+- Funções Associadas: Atualiza o contador de caracteres e ajusta o valor do campo de texto.
+- Ajuste de altura do textarea
+- Descrição dos Eventos: input nos elementos textarea.
+- Funções Associadas: Ajusta a altura do textarea para se ajustar ao conteúdo.
+- Redirecionamento automático
+- Descrição dos Eventos: Não possui eventos diretos, mas é chamado para redirecionar o usuário.
+- Funções Associadas: Redireciona a página após um atraso.
+
+
+
+4. Instruções de Configuração e Instalação
+* Dependências
+Não há dependências específicas para o arquivo vendas.js.
+
+* Configurações Específicas
+Não há configurações específicas além da URL gerada pelo servidor.
+
+
+
+5. Guia de Uso Geral
+* Como Executar
+O arquivo vendas.js é automaticamente carregado quando a página vendas.html é carregada e executa suas
+funcionalidades conforme os eventos no DOM.
+
+* Comandos Comuns
+Minificação: Utilize ferramentas de minificação como uglify-js ou terser para otimizar o arquivo para produção.
+
+
+
+6. Testes
+* Como Testar
+- Testes Manuais: Verifique se os campos de texto limitam o número de caracteres, se o textarea ajusta sua altura
+corretamente e se o redirecionamento ocorre após o atraso.
+- Testes Automatizados: Teste a lógica de contagem de caracteres e ajuste de altura com frameworks de testes de UI,
+se aplicável.
+
+* Cobertura de Testes
+Cobertura: Verifique se a lógica de manipulação de eventos está coberta pelos testes manuais ou automatizados.
+
+
+
+7. Erros e Solução de Problemas
+* Erros Comuns
+- Caracteres excedentes: Se o texto não estiver sendo truncado corretamente, verifique a lógica de slice e maxLength.
+- Altura do textarea: Se a altura não ajustar corretamente, verifique se o scrollHeight está sendo calculado
+corretamente.
+
+* Debugging
+Console Logs: Utilize console.log para verificar o estado dos elementos e valores em diferentes pontos do código.
+
+
+
+8. Histórico de Alterações
+* Changelog Local
+[Data] - [Descrição da alteração] - Adicionada a funcionalidade de ajuste automático do textarea.
+
+
+
+9. Contribuição
+* Estilo de Codificação
+Convenções: Siga a convenção de nomenclatura camelCase para variáveis e funções.
+
+* Sugestões para Melhorias
+Refatoração: Considere modularizar o código para separar a lógica de manipulação de eventos em funções distintas.
+
+
+
+10. Licenciamento e Direitos Autorais
+* Licença
+[Licença] - O arquivo está sob a licença [inserir licença].
+
+* Avisos Legais
+[Avisos] - [Incluir quaisquer disclaimers ou notas legais, se necessário].
+
+
+
+11. Referências e Links Externos
+* Documentação Externa
+MDN Web Docs - Documentação oficial para JavaScript e DOM.
+
+* Recursos de Aprendizado
+JavaScript.info - Recursos educacionais sobre JavaScript.

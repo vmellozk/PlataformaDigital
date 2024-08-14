@@ -1,0 +1,151 @@
+1. Visão Geral do Projeto
+* Descrição:
+O projeto é um site que apresenta uma página inicial estilizada com home.html e home.css. O CSS define o layout e
+o estilo da página, incluindo tipografia, cores, e formatação para diversos elementos como cabeçalhos, botões, e
+seções de conteúdo.
+
+* Arquitetura:
+A arquitetura do sistema é baseada na separação de responsabilidades entre o HTML e o CSS. O arquivo home.html
+define a estrutura e o conteúdo da página, enquanto home.css é responsável pela estilização, garantindo a
+aparência visual e a experiência do usuário.
+
+
+
+2. Estrutura do Código e Organização
+* Organização dos Arquivos e Pastas:
+- home.html: define a estrutura da página inicial.
+- home.css: contém a estilização da página inicial, incluindo cores, fontes, e layout.
+
+* Descrição dos Módulos e Funções:
+- home.css: estiliza a página inicial definida em home.html, configurando o layout global, a tipografia, e os
+estilos específicos para diferentes componentes como cabeçalhos, mensagens de flash, e seções de conteúdo.
+
+
+
+3. Documentação Específica de Arquivos
+* Cabeçalho do Arquivo:
+Nome do Arquivo: home.css
+
+* Descrição Geral:
+Este arquivo contém regras de estilização para a página inicial do projeto. Define a aparência de elementos
+como o cabeçalho, mensagens de flash, e seções de conteúdo, além de configurar cores e fontes.
+
+Autor: Victor Mello
+Data de Criação: 
+Última Modificação: 
+Licenciamento:
+Licença: [Licença do Projeto, se houver]
+
+* Bibliotecas Importadas: 
+https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap: Importa a fonte "Poppins" do Google Fonts.
+
+* Dependências Internas:
+Referência ao home.html para aplicação das regras de estilização.
+
+* Descrição das Funções e Classes:
+Comentários não aplicáveis a arquivos CSS. Em vez disso, são utilizados comentários no próprio código para descrever
+os estilos.
+
+* Comentários Inline:
+- Importação da Fonte: Define a importação da fonte "Poppins".
+- Definição de valores padrões para utilização em todo o código: Define variáveis CSS para cores principais.
+- Reset de estilos padrão: Remove margens, preenchimentos, e outros estilos padrão para garantir um layout
+consistente.
+- Estilização do cabeçalho: Define o estilo do cabeçalho fixo.
+- Estilização das mensagens de flash: Define o estilo para mensagens de sucesso, erro, aviso e informação.
+- Estilização das seções de conteúdo: Define o estilo para diferentes seções como área de atuação, produtos, e
+formulário de contato.
+
+* Notas sobre Desempenho:
+O uso de transform: scale() nas classes .areaatuacao-item e .produtos-item pode impactar o desempenho em
+dispositivos com hardware limitado.
+
+* Tratamento de Erros e Mecanismos de Exceções:
+Não aplicável a arquivos CSS.
+
+* Exemplos de Uso e Casos de Uso:
+A classe .home pode ser usada para centralizar e alinhar o conteúdo na página inicial.
+As classes .flash.success, .flash.error, .flash.warning, e .flash.info são usadas para estilizar diferentes tipos
+de mensagens de feedback.
+
+
+
+4. Instruções de Configuração e Instalação
+* Dependências:
+Nenhuma dependência externa além da fonte importada.
+
+* Instruções de Instalação:
+O arquivo home.css deve ser vinculado ao home.html usando uma tag <link> no <head> do HTML.
+
+* Configurações Específicas:
+Nenhuma configuração específica necessária além da vinculação correta do CSS ao HTML.
+
+
+
+5. Guia de Uso Geral
+* Exemplos de Execução:
+Não aplicável a arquivos CSS.
+
+* Comandos Comuns:
+Não aplicável a arquivos CSS.
+
+
+
+6. Testes
+* Estratégia de Testes:
+Testar a página em diferentes navegadores e dispositivos para garantir que o estilo seja aplicado corretamente e
+que a aparência seja consistente.
+
+* Como Rodar os Testes:
+Verifique a página inicial em diferentes navegadores e dispositivos.
+
+* Cobertura de Testes:
+Verifica o estilo de todos os principais componentes da página inicial.
+
+
+
+7. Erros e Solução de Problemas
+* Erros Comuns:
+Problemas com a exibição de fontes podem ocorrer se o link para Google Fonts estiver incorreto.
+O estilo pode não ser aplicado corretamente se o arquivo home.css não estiver vinculado corretamente ao home.html.
+
+* Logs:
+Não aplicável a arquivos CSS.
+
+
+
+8. Histórico de Alterações
+* Changelog Local e Global:
+- [Data] - Criado o arquivo com a estilização inicial.
+- [Data] - Atualizado para incluir novos estilos e ajustar a aparência.
+
+* Planejamento Futuro:
+- Adicionar mais variáveis para maior personalização.
+- Melhorar a responsividade para dispositivos móveis.
+
+
+
+9. Contribuição
+* Guia para Contribuidores:
+Para contribuir com melhorias no estilo, edite o arquivo home.css e envie um pull request com suas alterações.
+
+* Estilo de Codificação:
+Seguir convenções de nomenclatura CSS e manter comentários claros para facilitar a manutenção.
+
+
+
+10. Licenciamento e Direitos Autorais
+* Licença:
+- [Tipo de licença do projeto]
+
+* Avisos Legais:
+- [Avisos legais, se houver]
+
+
+
+11. Referências e Links Externos
+* Documentação Externa:
+Link para a documentação do Google Fonts
+
+* Recursos de Aprendizado:
+Link para a documentação do CSS

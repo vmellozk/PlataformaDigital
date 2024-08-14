@@ -1,0 +1,150 @@
+1. Visão Geral do Projeto
+* Descrição do Projeto:
+O projeto é uma página de loja online que exibe produtos e permite a filtragem desses produtos com base em várias
+categorias, regiões e outros critérios. A página também inclui uma barra de navegação e mensagens de feedback para
+o usuário.
+
+* Arquitetura:
+A arquitetura do sistema é baseada em um layout HTML com estilização aplicada através de CSS. O arquivo loja.css é
+responsável por definir a aparência e o estilo dos elementos na página loja.html, garantindo uma apresentação visual
+consistente e responsiva.
+
+
+
+2. Estrutura do Código e Organização
+* Organização dos Arquivos e Pastas:
+- loja.html: Arquivo HTML principal que estrutura o conteúdo da página.
+- loja.css: Arquivo de estilização que define a aparência dos elementos na página loja.html.
+- static/css/: Diretório onde o arquivo loja.css está localizado.
+
+* Descrição dos Módulos e Funções:
+- @import url(...): Importa a fonte Poppins do Google Fonts.
+- :root: Define variáveis CSS para cores utilizadas em todo o arquivo.
+- *: Define estilos globais aplicados a todos os elementos.
+- header, .nav, .logo: Estilos para a barra de navegação.
+- .main-content, .filters: Estilos para o conteúdo principal e filtros.
+- .products-container, .product-card, .product-info, .product-footer: Estilos para os produtos e seus detalhes.
+- footer: Estilos para o rodapé da página.
+
+
+
+3. Documentação Específica de Arquivos
+* Cabeçalho do Arquivo:
+- Nome do Arquivo: loja.css
+- Descrição Geral: Define os estilos e a aparência da página de loja, incluindo a barra de navegação, filtros, cards de produtos e rodapé.
+- Autores e Data de Criação: [Seu Nome] - [Data de Criação/Modificação]
+- Licenciamento: [Licença, se aplicável]
+
+* Bibliotecas Importadas:
+@import url('https://fonts.googleapis.com/css2?family=Poppins...'): Importa a fonte Poppins do Google Fonts.
+
+* Dependências Internas:
+Referência ao arquivo loja.html para aplicação dos estilos.
+
+* Descrição das Funções e Classes:
+- :root: Define variáveis CSS para cores usadas no projeto.
+- *: Define estilos globais para todos os elementos, como margens, preenchimentos e comportamento de rolagem.
+- html: Define a fonte e o tamanho padrão para o texto.
+- body: Define a cor de fundo e o texto padrão para a página.
+- header: Define a aparência da barra de navegação fixa no topo da página.
+- .nav: Estiliza a lista de navegação.
+- .logo: Estiliza o logotipo da barra de navegação.
+- .main-content: Define a estrutura e o layout do conteúdo principal.
+- .filters: Estiliza a seção de filtros, incluindo a disposição e aparência dos controles de filtro.
+- .products-container: Define o estilo para o container de produtos, incluindo espaçamento e layout.
+- .product-card: Estiliza o cartão de produto, incluindo a aparência da imagem, informações e rodapé.
+- footer: Estiliza o rodapé da página, incluindo o alinhamento e o espaçamento.
+
+* Comentários Inline:
+Comentários não incluídos no código. Incluir conforme necessário para partes complexas.
+
+* Notas sobre Desempenho:
+O código é otimizado para um layout responsivo e deve ser testado em diferentes dispositivos para garantir um bom
+desempenho.
+
+* Tratamento de Erros:
+Não aplicável diretamente ao CSS, pois não lida com exceções ou erros de runtime.
+
+* Casos de Uso:
+Aplicar o CSS à página HTML loja.html para estilizar a página de loja conforme descrito.
+
+
+
+4. Instruções de Configuração e Instalação
+* Dependências:
+- Google Fonts: Poppins
+
+* Instruções de Instalação:
+Inclua o link do Google Fonts no arquivo HTML para garantir que a fonte Poppins seja carregada.
+
+* Configurações Específicas:
+Certifique-se de que a estrutura de pastas do projeto esteja correta e que o arquivo CSS esteja acessível a partir
+do HTML.
+
+
+
+5. Guia de Uso Geral
+* Exemplos de Execução:
+O CSS será aplicado automaticamente quando a página HTML loja.html for carregada em um navegador.
+
+* Comandos Comuns:
+Não aplicável a arquivos CSS.
+
+
+
+6. Testes
+* Estratégia de Testes:
+Verifique a renderização da página em diferentes navegadores e tamanhos de tela.
+
+* Como Rodar os Testes:
+Teste visualmente a página para verificar se o estilo está sendo aplicado conforme esperado.
+
+* Cobertura de Testes:
+Verifica a aparência de todos os principais componentes da página.
+
+
+
+7. Erros e Solução de Problemas
+* Erros Comuns:
+- Problema: Estilos não aplicados.
+- Solução: Verifique se o caminho para o arquivo CSS está correto e se o navegador está carregando o arquivo.
+
+* Logs:
+Não aplicável a arquivos CSS.
+
+
+
+8. Histórico de Alterações
+* Changelog Local e Global:
+- [Data] - Criação do arquivo loja.css.
+- [Data] - Atualização dos estilos para a barra de navegação.
+
+* Planejamento Futuro:
+Adicionar novos estilos para funcionalidades futuras conforme necessário.
+
+
+
+9. Contribuição
+* Guia para Contribuidores:
+Adicione novos estilos conforme necessário e siga os padrões de codificação estabelecidos.
+
+* Estilo de Codificação:
+Siga as convenções de CSS e mantenha a consistência no uso de variáveis e seletores.
+
+
+
+10. Licenciamento e Direitos Autorais
+* Licença:
+[Tipo de Licença]
+
+* Avisos Legais:
+Todos os direitos reservados conforme a licença aplicável.
+
+
+
+11. Referências e Links Externos
+* Documentação Externa:
+Google Fonts - Poppins
+
+* Recursos de Aprendizado:
+MDN Web Docs - CSS

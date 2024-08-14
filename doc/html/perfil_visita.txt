@@ -1,0 +1,162 @@
+1. Visão Geral do Projeto
+* Descrição do Projeto
+O arquivo perfil.html faz parte de um sistema web que apresenta perfis de usuários e produtos associados. O objetivo é
+fornecer uma interface para que usuários possam visualizar e gerenciar suas informações pessoais, bem como explorar e
+comprar produtos oferecidos pela plataforma. O público-alvo inclui usuários registrados da plataforma, potenciais
+clientes e visitantes interessados nos produtos.
+
+* Arquitetura
+A arquitetura do sistema segue um modelo MVC (Model-View-Controller). O arquivo perfil.html pertence à camada de "View",
+sendo responsável pela apresentação dos dados ao usuário. As interações dinâmicas e a lógica de negócios são tratadas
+por arquivos de script e pelo backend.
+
+
+
+2. Estrutura do Código e Organização
+* Organização dos Arquivos e Pastas
+
+/static
+    /css
+        perfil_visita.css
+    /images
+        avatar.png
+        produto.png
+    /js
+        perfil_visita.js
+
+- perfil_visita.css: Folha de estilo específica para a página de perfil.
+- avatar.png, produto.png: Imagens usadas na interface.
+- perfil_visita.js: Scripts JavaScript relacionados ao comportamento da página.
+
+
+
+3. Descrição dos Módulos e Funções
+- HTML Estrutural: Define a estrutura da página, incluindo o cabeçalho, o corpo principal e o rodapé.
+- CSS: Estilos são aplicados através do arquivo perfil_visita.css para personalizar a aparência da página.
+- JavaScript: Scripts no arquivo perfil_visita.js adicionam interatividade e manipulação do DOM.
+
+
+
+4. Documentação Específica de Arquivos
+* Descrição das Funções e Classes
+- Header: Contém a barra de navegação com links dinâmicos para diferentes seções e páginas. Exibe opções diferentes
+para usuários autenticados e não autenticados.
+- PopUp de Mensagens: Exibe mensagens temporárias para o usuário usando a função get_flashed_messages do Flask.
+- Perfil: Exibe informações do perfil do usuário, como foto, nome, descrição e dados pessoais.
+- Cards de Produtos: Apresenta produtos disponíveis para compra com imagem, descrição e botão de compra.
+
+
+
+5. Comentários Inline
+
+<!-- Barra de Navegação-->
+<header>
+    <a href="{{  url_for('home')  }}" class="logo">Prática Sênior</a>
+    <!-- Links de navegação dinâmicos com base no estado de autenticação do usuário -->
+    <nav>
+        <ul class="nav">
+            <!-- Condicional para mostrar links baseados na sessão do usuário -->
+            {% if 'user_id' in session %}
+                <!-- Links para usuários autenticados -->
+                <li><a href="{{  url_for('vendas')  }}">Quero Vender</a></li>
+                <li><a href="{{  url_for('premium')  }}">Seja +</a></li>
+                <li><a href="{{  url_for('user')  }}">Meu Perfil</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% else %}
+                <!-- Links para visitantes não autenticados -->
+                <li><a href="{{  url_for('register')  }}">Quero Vender</a></li>
+                <li><a href="{{  url_for('register')  }}">Seja +</a></li>
+                <li><a href="{{  url_for('register')  }}">Meu Perfil</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</header>
+<!-- /Barra de Navegação-->
+
+
+
+6. Instruções de Configuração e Instalação
+* Dependências
+- Boxicons: Ícones usados na interface. Carregados via CDN.
+- CSS e JS: Arquivos perfil_visita.css e perfil_visita.js devem estar localizados em ../static/css/ e ../static/js/,
+respectivamente.
+
+* Configurações Específicas
+- Certifique-se de que as URLs para recursos estáticos estejam corretas e acessíveis.
+- Verifique a configuração do Flask para garantir que as rotas (e.g., url_for) estejam definidas corretamente.
+
+
+
+7. Guia de Uso Geral
+* Exemplos de Execução
+- Acesso ao Perfil: Navegar para /perfil para visualizar a página de perfil.
+- Compra de Produtos: Clique no botão "Comprar" nos cards de produtos para ser redirecionado para a página de pagamento.
+
+* Comandos Comuns
+- Iniciar o Servidor Flask: flask run
+- Testar a Aplicação: Execute testes automatizados definidos na configuração do projeto.
+
+
+
+8. Testes
+* Estratégia de Testes
+- Unitários: Testar a funcionalidade dos scripts JavaScript e a renderização das páginas.
+- Integração: Verificar a integração entre o frontend e o backend, especialmente a interação com o sistema de mensagens
+e sessões.
+
+* Cobertura de Testes
+Cobertura de Código: A cobertura deve ser revisada periodicamente. Utilize ferramentas como pytest e coverage.py para
+análise.
+
+
+
+9. Erros e Solução de Problemas
+* Erros Comuns
+- Erro 404 (Arquivo Não Encontrado): Verifique os caminhos para arquivos estáticos e rotas configuradas.
+- Mensagens de Sessão: Erros relacionados a sessões podem indicar problemas com a configuração de cookies ou sessão.
+
+* Logs
+Interpretação de Logs: Verifique o log do servidor para mensagens relacionadas a erros de renderização ou problemas
+com as rotas.
+
+
+
+10. Histórico de Alterações
+* Changelog Local e Global
+- Versão 1.0.0 - Data de Lançamento
+- Criação inicial do arquivo perfil.html
+- Implementação da estrutura de perfil de usuário e exibição de produtos
+
+* Planejamento Futuro
+Melhorias na UI/UX: Planejamento para melhorias visuais e funcionais baseadas em feedback dos usuários.
+
+
+
+11. Contribuição
+* Guia para Contribuidores
+- Código de Conduta: Respeitar as diretrizes de contribuição e manter uma comunicação respeitosa.
+- Diretrizes de Código: Seguir as práticas recomendadas de estilo de código.
+
+* Estilo de Codificação
+- HTML: Usar indentação consistente e comentários para clareza.
+- CSS/JS: Adotar convenções de nomenclatura e modularização.
+
+
+
+12. Licenciamento e Direitos Autorais
+* Licença
+Licença MIT
+
+* Avisos Legais
+Disclaimer: O código e os recursos são fornecidos "como estão" sem garantias de qualquer tipo.
+
+
+
+13. Referências e Links Externos
+* Documentação Externa
+- Documentação do Flask
+- Boxicons
+
+* Recursos de Aprendizado
+- Tutorial de HTML e CSS
+- Curso de JavaScript

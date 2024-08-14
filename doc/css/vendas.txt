@@ -1,0 +1,140 @@
+1. Visão Geral do Arquivo
+* Descrição do Arquivo:
+O arquivo vendas.css contém os estilos CSS para a página de vendas do projeto. Ele define a aparência e o layout dos
+elementos na página, incluindo a barra de navegação, formulários, seções de depoimentos, e mensagens de flash. O objetivo
+é garantir que a página tenha um design consistente e atraente, com uma experiência de usuário agradável.
+
+* Relação com Outros Arquivos:
+Este arquivo CSS está vinculado ao arquivo HTML vendas.html através da tag <link> no <head> do HTML. Ele estiliza
+elementos específicos da página de vendas, como a barra de navegação, formulários e seções de depoimentos. A interação
+entre o CSS e o HTML é direta, com os estilos aplicados aos elementos definidos no HTML.
+
+
+
+2. Estrutura do Código e Organização
+* Organização Interna:
+O código CSS é organizado de maneira a começar com a importação de fontes, seguida pela definição de variáveis de estilo
+padrão, e depois pelos estilos específicos para diferentes componentes da página.
+
+
+
+3. Blocos de Código e Funções:
+* Importação da Fonte
+- Descrição: Importa a fonte 'Poppins' do Google Fonts.
+
+* Definição de Variáveis
+- Descrição: Define variáveis de cor para uso em todo o CSS.
+- Parâmetros: Cores definidas como variáveis CSS.
+- Retorno: Valores de cor para serem usados nos estilos.
+
+* Estilos Globais
+- Descrição: Aplica margens e preenchimentos padrão, define o comportamento de rolagem e outras propriedades globais.
+- Retorno: Define estilos padrão para todos os elementos.
+
+* Estilos de Header
+- Descrição: Define o estilo da barra de navegação fixa no topo da página.
+- Parâmetros: Propriedades como position, padding, background-color.
+- Retorno: Estilo da barra de navegação.
+
+* Estilos de Mensagens de Flash
+- Descrição: Estiliza as mensagens de feedback (sucesso, erro, alerta, informação).
+- Parâmetros: Classes como .flash.success, .flash.error.
+- Retorno: Estilos para mensagens de diferentes categorias.
+
+* Estilos da Área de Início
+- Descrição: Estiliza a seção inicial da página com uma mensagem de boas-vindas.
+- Parâmetros: Propriedades de layout e tipografia.
+- Retorno: Estilo para a seção inicial.
+
+* Estilos de Formulários
+- Descrição: Define estilos para os formulários e campos de entrada.
+- Parâmetros: Propriedades para textarea, input, button.
+- Retorno: Estilos para a aparência dos formulários e botões.
+
+* Estilos de Depoimentos
+- Descrição: Estiliza a seção de depoimentos, incluindo cartões de depoimentos e informações.
+- Parâmetros: Propriedades para .testimonial-card, .testimonial-info.
+- Retorno: Estilos para a exibição de depoimentos.
+
+* Estilos de Footer
+- Descrição: Define o estilo do rodapé da página.
+- Parâmetros: Propriedades como padding, text-align.
+- Retorno: Estilo para o rodapé.
+
+
+
+4. Documentação Específica de Funções
+* Eventos e Manipuladores de Eventos:
+Descrição dos Eventos: Não aplicável para CSS, que é uma linguagem de estilo e não manipula eventos diretamente.
+
+* Funções Associadas: N/A
+Instruções de Configuração e Instalação
+
+* Dependências:
+Google Fonts: Poppins.
+
+* Configurações Específicas:
+Não há configurações específicas além das variáveis de cor definidas no :root.
+
+
+
+5. Guia de Uso Geral
+* Como Executar:
+O arquivo CSS é carregado automaticamente na página HTML através da tag <link>.
+
+* Comandos Comuns:
+N/A
+
+
+6. Testes
+* Como Testar:
+Testar a aparência e o layout dos elementos na página HTML vendas.html para garantir que todos os estilos sejam aplicados
+corretamente.
+
+* Cobertura de Testes:
+Testes visuais e de layout em diferentes navegadores e tamanhos de tela.
+
+
+
+7. Erros e Solução de Problemas
+* Erros Comuns:
+- Fontes não carregando: verificar a URL de importação da fonte.
+- Estilos não aplicados: verificar se o caminho para o arquivo CSS está correto no HTML.
+
+* Debugging:
+Verificar o console do navegador para erros relacionados ao carregamento de fontes ou ao CSS.
+
+
+
+8. Histórico de Alterações
+* Changelog Local:
+- Data: [Adicione a data]
+- Versão: [Adicione a versão]
+- Descrição: [Descreva as alterações feitas]
+
+
+
+9. Contribuição
+* Estilo de Codificação:
+Seguir as convenções de nomenclatura CSS e a estrutura organizada por seções de estilo.
+
+* Sugestões para Melhorias:
+Considerar a utilização de pré-processadores CSS como SASS para uma melhor organização e manutenção.
+
+
+
+10. Licenciamento e Direitos Autorais
+* Licença:
+[Adicione a licença]
+
+* Avisos Legais:
+[Adicione quaisquer disclaimers ou notas legais]
+
+
+
+11. Referências e Links Externos
+* Documentação Externa:
+Documentação oficial do Google Fonts
+
+* Recursos de Aprendizado:
+CSS Tricks

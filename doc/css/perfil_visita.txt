@@ -1,0 +1,126 @@
+1. Visão Geral do Projeto
+* Descrição do Projeto
+O arquivo perfil_visita.css define o estilo para a página de perfil de um usuário dentro de um sistema web. A página de
+perfil é parte de uma aplicação voltada para usuários que desejam visualizar e editar suas informações pessoais, bem
+como explorar produtos disponíveis. O público-alvo são usuários que acessam a plataforma para gerenciar seu perfil e
+interagir com a loja.
+
+* Arquitetura
+A arquitetura da página é composta por um cabeçalho fixo, uma seção de perfil com informações do usuário, e uma área
+para exibição de produtos. O estilo é modularizado para garantir a consistência visual e a manutenção fácil.
+
+
+
+2. Estrutura do Código e Organização
+* Organização dos Arquivos e Pastas
+- ../static/css/: Pasta onde estão localizados os arquivos CSS do projeto.
+- perfil_visita.css: Arquivo de estilos específicos para a página de perfil de visita.
+
+* Descrição dos Módulos e Funções
+--- O arquivo CSS é responsável por:
+- Definir a aparência geral da página de perfil.
+- Estilizar elementos específicos como o cabeçalho, perfil do usuário, e cards de produtos.
+
+* Descrição das Funções e Classes
+- @import: Importa a fonte Poppins do Google Fonts.
+- :root: Define variáveis de cores utilizadas em todo o CSS.
+- *: Define valores padrões para todos os elementos, como margem, preenchimento e box-sizing.
+- html: Define a fonte base e o tamanho da fonte.
+- body: Estiliza o fundo e a cor do texto da página.
+- header: Estiliza a barra de navegação fixa no topo da página.
+- .nav: Estiliza a lista de navegação.
+- .profile-container: Define o estilo do contêiner principal do perfil.
+- .profile-header: Estiliza a parte superior do perfil, incluindo a foto e informações do usuário.
+- .profile-details: Estiliza a seção que exibe detalhes do usuário.
+- .products-container: Define o estilo da seção de produtos.
+- .product-card: Estiliza os cartões de produtos.
+- .modal: Define o estilo do modal para exibição de informações adicionais.
+
+
+
+3. Comentários Inline
+Os comentários no CSS ajudam a entender a finalidade de cada seção de estilo. Por exemplo:
+Ex:
+/* Estilo para os produtos */
+.products-container {
+    width: 100%;
+    padding: 15px;
+    text-align: center; /* Centraliza os elementos dentro do container */
+}
+
+
+
+4. Instruções de Configuração e Instalação
+* Dependências
+O arquivo CSS utiliza a fonte "Poppins" do Google Fonts, portanto, é necessário ter uma conexão com a internet para
+carregar a fonte corretamente.
+
+* Configurações Específicas
+Certifique-se de que o arquivo perfil_visita.css esteja corretamente referenciado no arquivo HTML (perfil_visita.html).
+
+
+
+5. Guia de Uso Geral
+* Exemplos de Execução
+Não aplicável para arquivos CSS, mas certifique-se de que a página HTML está vinculada corretamente ao CSS para ver os
+estilos aplicados.
+
+* Comandos Comuns
+Não aplicável para CSS diretamente, mas verifique se o CSS é compilado corretamente se estiver usando pré-processadores
+como SASS.
+
+
+
+6. Testes
+* Estratégia de Testes
+O estilo pode ser testado visualmente para garantir que todos os elementos estejam alinhados e exibidos corretamente.
+
+* Cobertura de Testes
+Teste a compatibilidade em diferentes navegadores e dispositivos para garantir a responsividade e a consistência visual.
+
+
+
+7. Erros e Solução de Problemas
+* Erros Comuns
+- Problema: Fonte não carregada.
+- Solução: Verifique a conexão com a internet e a URL da fonte importada.
+
+* Logs
+Não aplicável para arquivos CSS.
+
+
+
+8. Histórico de Alterações
+* Changelog Local e Global
+- Versão 1.0 - Data: 2024-08-14
+- Inicialização do arquivo com estilos para a página de perfil e produtos.
+
+* Planejamento Futuro
+Adicionar estilos para novos componentes de interface conforme o projeto evolui.
+
+
+
+9. Contribuição
+* Guia para Contribuidores
+Não aplicável diretamente para arquivos CSS.
+
+* Estilo de Codificação
+Utilize variáveis de CSS para manter a consistência nas cores e fontes.
+
+
+
+10. Licenciamento e Direitos Autorais
+* Licença
+Não especificada. Adicione o link ou informações da licença se disponível.
+
+* Avisos Legais
+Forneça informações sobre qualquer isenção de responsabilidade se aplicável.
+
+
+
+11. Referências e Links Externos
+* Documentação Externa
+Google Fonts - Fonte utilizada.
+
+* Recursos de Aprendizado
+CSS Tricks - Recursos para aprendizado e melhores práticas de CSS.
