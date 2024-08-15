@@ -62,7 +62,7 @@ def send_prompts(driver, responses_file, tittle_file, name):
                 print("Botão de copiar não encontrado.")
                 time.sleep(1)
         except Exception as e:
-            print(f"Erro durante a automação: {e}")
+            print(f"Erro durante o copiar resposta da capa: {e}")
             time.sleep(1)
     copied_tittle = pyperclip.paste()
     with open(tittle_file, "w", encoding="utf-8") as file:
@@ -107,7 +107,7 @@ def send_prompts(driver, responses_file, tittle_file, name):
                 print("Botão de copiar não encontrado.")
                 time.sleep(1)
         except Exception as e:
-            print(f"Erro durante a automação: {e}")
+            print(f"Erro durante copiar a resposta do conteúdo do ebook: {e}")
             time.sleep(1)
     copied_text = pyperclip.paste()
     with open(output_file, "w", encoding="utf-8") as file:
