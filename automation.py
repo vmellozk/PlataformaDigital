@@ -7,10 +7,18 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import threading
 import pyautogui
+import os
 
 #
 image_check_thread = None
 error_check_thread = None
+
+def kill_chrome_processes():
+    try:
+        os.system("taskkill /im chrome.exe /f")
+        os.system("taskkill /im chromedriver.exe /f")
+    except Exception as e:
+        print(f"Erro ao encerrar os processos do Chrome: {e}")
 
 #
 def continuously_check_images():
@@ -41,7 +49,7 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
     try:
         driver.maximize_window()
         driver.get('https://chat.openai.com')
-        time.sleep(2)
+        time.sleep(3)
 
         while not pyautogui.locateCenterOnScreen('static/images/chatgpt.png'):
             print("Aguardando a imagem 'chatgpt.png' antes de continuar...")
@@ -72,6 +80,7 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
             driver.quit()
         except Exception as e:
             print(f"Erro ao encerrar o driver: {e}")
+        kill_chrome_processes()
 
 if __name__ == "__main__":
     responses_file = 'responses.txt'

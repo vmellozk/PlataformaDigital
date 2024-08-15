@@ -11,6 +11,13 @@ from selenium.webdriver.support import expected_conditions as EC
 MAX_ATTEMPTS = 3
 ATTEMPT_COUNTER_ENV_VAR = 'ATTEMPT_COUNTER'
 
+def kill_chrome_processes():
+    try:
+        os.system("taskkill /im chrome.exe /f")
+        os.system("taskkill /im chromedriver.exe /f")
+    except Exception as e:
+        print(f"Erro ao encerrar os processos do Chrome: {e}")
+
 # Apaga arquivos específicos
 def delete_files(file_paths):
     for file_path in file_paths:
@@ -40,15 +47,16 @@ def handle_error(driver, responses_file, tittle_file, name):
     attempt_counter = int(os.environ.get(ATTEMPT_COUNTER_ENV_VAR, 0))
 
     try:
-        # Verifica se o símbolo de erro está presente na tela
         if pyautogui.locateCenterOnScreen('static/error/error_symbol.png', confidence=0.7):
             time.sleep(1)
-            # Deleta os arquivos especificados se existirem
             delete_files(['output.txt', 'tittle.txt'])
             time.sleep(1)
             
-            # Fecha o navegador
-            driver.quit()
+            try:
+                driver.quit()
+            except Exception as e:
+                print(f"Erro ao encerrar o driver: {e}")
+            kill_chrome_processes()
             time.sleep(1)
             
             # Incrementa o contador de tentativas e salva na variável de ambiente
