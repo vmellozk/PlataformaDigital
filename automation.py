@@ -81,10 +81,3 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
         except Exception as e:
             print(f"Erro ao encerrar o driver: {e}")
         kill_chrome_processes()
-
-if __name__ == "__main__":
-    responses_file = 'responses.txt'
-    output_file = 'output.txt'
-    tittle_file = 'tittle.txt'
-    name = 'Victor Mello'
-    chatgpt_response(responses_file, output_file, tittle_file, name)
