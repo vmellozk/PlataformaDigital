@@ -34,8 +34,6 @@ para funcionalidades adicionais.
 * Cabeçalho do Arquivo
 - Nome do Arquivo: loja.html
 - Descrição Geral: Página HTML para exibição de produtos e filtros em uma loja online.
-- Autores e Data de Criação: [Seu Nome] - [Data de Criação]
-- Licenciamento: [Informações de Licença]
 
 
 
@@ -96,7 +94,7 @@ Variáveis de Ambiente: Configurações do Flask para definir URLs e mensagens.
 
 
 
-5. Guia de Uso Geral
+9. Guia de Uso Geral
 * Exemplos de Execução
 Executar o Código: Inicie o servidor Flask e acesse a página loja.html pelo navegador.
 
@@ -107,7 +105,7 @@ Executar o Código: Inicie o servidor Flask e acesse a página loja.html pelo na
 
 
 
-6. Testes
+10. Testes
 * Estratégia de Testes
 Testes Manuais: Verifique a funcionalidade dos filtros e a exibição dos produtos.
 
@@ -119,7 +117,7 @@ O que é coberto: Funcionamento dos filtros e exibição dos produtos.
 
 
 
-7. Erros e Solução de Problemas
+11. Erros e Solução de Problemas
 * Erros Comuns
 - Problemas com Links: Verifique se o Flask está configurado corretamente para gerar URLs.
 - Exibição de Imagens: Certifique-se de que os caminhos das imagens estão corretos.
@@ -129,37 +127,29 @@ Orientações: Verifique os logs do servidor Flask para mensagens de erro.
 
 
 
-8. Histórico de Alterações
-* Changelog Local e Global
-Mudanças Significativas: [Documentar alterações conforme necessário]
+12. Histórico de Alterações
+* Changelog Local:
+- 16/07/24 - Criado o arquivo com a estilização inicial.
+- 22/07/24 - Atualizado para incluir novos estilos e ajustar a aparência.
 
 * Planejamento Futuro
-Funcionalidades Planejadas: Adicionar funcionalidades de busca avançada ou categorias dinâmicas.
+- Adicionar funcionalidades de busca avançada ou categorias dinâmicas.
+- Fazer funcionar o filtro!
 
 
 
-9. Contribuição
-* Guia para Contribuidores
-Instruções: Envie pull requests para alterações no código e siga as diretrizes do projeto.
+13. Contribuição
+* Guia para Contribuidores:
+Sendo desenvolvedor da empresa: para contribuir com melhorias no estilo, edite o arquivo loja.html e envie um
+pull request com suas alterações.
 
-* Estilo de Codificação
-Padrões: Siga os padrões HTML e CSS recomendados.
-
-
-
-10. Licenciamento e Direitos Autorais
-* Licença
-Tipo de Licença: [Detalhes da licença]
-
-* Avisos Legais
-Informações: Direitos autorais e termos de uso.
+* Estilo de Codificação:
+Seguir convenções de nomenclatura CSS e manter comentários claros para facilitar a manutenção.
 
 
 
-11. Referências e Links Externos
-* Documentação Externa
-- Boxicons: [Link para a documentação dos ícones]
-- Flask: [Link para a documentação do Flask]
-
-* Recursos de Aprendizado
-Materiais Educativos: [Links para tutoriais sobre HTML, CSS, e Flask]
+14. Licenciamento e Direitos Autorais
+- Desenvolvedor: Victor Mello
+- Licenciamento: Este arquivo está sujeito aos termos e condições estabelecidos pela licença descrita abaixo.
+- Licença: Software Proprietário.
+- Avisos Gerais: Não é permitido o uso ou modificações sem autorização.

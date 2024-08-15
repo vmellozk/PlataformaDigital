@@ -87,28 +87,27 @@ há conflitos de CSS.
 
 8. Histórico de Alterações
 * Changelog Local:
-Comentário Pessoal: (Incluir detalhes de alterações específicas, como correções de bugs ou adições de novos estilos).
+- 13/07/24 - Criado o arquivo com a estilização inicial.
+- 16/07/24 - Atualizado para incluir novos estilos e ajustar a aparência.
+
+* Planejamento Futuro:
+- Incluir detalhes de alterações específicas, como correções de bugs ou adições de novos estilos
+- Incluir sugestões como melhorias na responsividade ou refatoração de estilos repetidos
 
 
 
 9. Contribuição
-* Estilo de Codificação:
-Utilize nomes de classes e IDs que seguem um padrão consistente e significativo, evitando conflitos com outros estilos.
+* Guia para Contribuidores:
+Sendo desenvolvedor da empresa: para contribuir com melhorias no estilo, edite o arquivo perfil.css e envie um
+pull request com suas alterações.
 
-* Sugestões para Melhorias:
-Comentário Pessoal: (Incluir sugestões como melhorias na responsividade ou refatoração de estilos repetidos).
+* Estilo de Codificação:
+Seguir convenções de nomenclatura CSS e manter comentários claros para facilitar a manutenção.
 
 
 
 10. Licenciamento e Direitos Autorais
-* Licença:
-Comentário Pessoal: (Incluir detalhes sobre a licença de uso, se necessário).
-
-* Referências e Links Externos
-Documentação Externa:
-
-* Documentação do Google Fonts
-Guia de CSS do MDN
-
-* Recursos de Aprendizado:
-Curso de CSS na W3Schools
+- Desenvolvedor: Victor Mello
+- Licenciamento: Este arquivo está sujeito aos termos e condições estabelecidos pela licença descrita abaixo.
+- Licença: Software Proprietário.
+- Avisos Gerais: Não é permitido o uso ou modificações sem autorização.

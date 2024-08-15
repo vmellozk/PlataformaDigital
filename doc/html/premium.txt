@@ -106,35 +106,29 @@ Use ferramentas de desenvolvedor do navegador para inspecionar e depurar problem
 
 8. Histórico de Alterações
 * Changelog Local:
-- Data: [Inserir data]
-- Versão: [Inserir versão]
-- Descrição: Adição da seção de depoimentos e formulário de pagamento.
+- 14/07/24 - Criado o arquivo com a estilização inicial.
+- 25/07/24 - Atualizado para incluir novos estilos e ajustar a aparência.
+
+* Planejamento Futuro:
+- Acessibilidade: Adicionar atributos ARIA para melhorar a acessibilidade.
+- Otimização de Performance: Revisar e otimizar o carregamento de imagens e recursos.
+- Fazer funcionar o pagamento via cartão
+- Adicionar funcionalidades aos usuários que adquirirem o premium
 
 
 
 9. Contribuição
-* Estilo de Codificação:
-- HTML: Seguir as melhores práticas de organização e semântica.
-- CSS/JS: Seguir as convenções de nomenclatura e estrutura recomendadas.
+* Guia para Contribuidores:
+Sendo desenvolvedor da empresa: para contribuir com melhorias no estilo, edite o arquivo premium.html e envie um
+pull request com suas alterações.
 
-* Sugestões para Melhorias:
-- Acessibilidade: Adicionar atributos ARIA para melhorar a acessibilidade.
-- Otimização de Performance: Revisar e otimizar o carregamento de imagens e recursos.
+* Estilo de Codificação:
+Seguir convenções de nomenclatura CSS e manter comentários claros para facilitar a manutenção.
 
 
 
 10. Licenciamento e Direitos Autorais
-* Licença:
-[Inserir licença]
-
-* Avisos Legais:
-[Inserir notas legais, se necessário]
-
-
-
-11. Referências e Links Externos
-* Documentação Externa:
-Boxicons Documentation
-
-* Recursos de Aprendizado:
-MDN Web Docs
+- Desenvolvedor: Victor Mello
+- Licenciamento: Este arquivo está sujeito aos termos e condições estabelecidos pela licença descrita abaixo.
+- Licença: Software Proprietário.
+- Avisos Gerais: Não é permitido o uso ou modificações sem autorização.

@@ -108,33 +108,27 @@ Verificar o console do navegador para erros relacionados ao carregamento de font
 
 8. Histórico de Alterações
 * Changelog Local:
-- Data: [Adicione a data]
-- Versão: [Adicione a versão]
-- Descrição: [Descreva as alterações feitas]
+- 16/07/24 - Criado o arquivo com a estilização inicial.
+- 19/07/24 - Atualizado para incluir novos estilos e ajustar a aparência.
+
+* Planejamento Futuro:
+- Adicionar mais variáveis para maior personalização.
+- Melhorar a responsividade para dispositivos móveis.
 
 
 
 9. Contribuição
-* Estilo de Codificação:
-Seguir as convenções de nomenclatura CSS e a estrutura organizada por seções de estilo.
+* Guia para Contribuidores:
+Sendo desenvolvedor da empresa: para contribuir com melhorias no estilo, edite o arquivo vendas.css e envie um
+pull request com suas alterações.
 
-* Sugestões para Melhorias:
-Considerar a utilização de pré-processadores CSS como SASS para uma melhor organização e manutenção.
+* Estilo de Codificação:
+Seguir convenções de nomenclatura CSS e manter comentários claros para facilitar a manutenção.
 
 
 
 10. Licenciamento e Direitos Autorais
-* Licença:
-[Adicione a licença]
-
-* Avisos Legais:
-[Adicione quaisquer disclaimers ou notas legais]
-
-
-
-11. Referências e Links Externos
-* Documentação Externa:
-Documentação oficial do Google Fonts
-
-* Recursos de Aprendizado:
-CSS Tricks
+- Desenvolvedor: Victor Mello
+- Licenciamento: Este arquivo está sujeito aos termos e condições estabelecidos pela licença descrita abaixo.
+- Licença: Software Proprietário.
+- Avisos Gerais: Não é permitido o uso ou modificações sem autorização.

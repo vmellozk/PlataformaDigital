@@ -1,6 +1,6 @@
 1. Visão Geral do Projeto
 * Descrição:
-O projeto é um site que apresenta uma página inicial estilizada com home.html e home.css. O CSS define o layout e
+O arquivo é um site que apresenta uma página inicial estilizada com home.html e home.css. O CSS define o layout e
 o estilo da página, incluindo tipografia, cores, e formatação para diversos elementos como cabeçalhos, botões, e
 seções de conteúdo.
 
@@ -29,12 +29,6 @@ Nome do Arquivo: home.css
 * Descrição Geral:
 Este arquivo contém regras de estilização para a página inicial do projeto. Define a aparência de elementos
 como o cabeçalho, mensagens de flash, e seções de conteúdo, além de configurar cores e fontes.
-
-Autor: Victor Mello
-Data de Criação: 
-Última Modificação: 
-Licenciamento:
-Licença: [Licença do Projeto, se houver]
 
 * Bibliotecas Importadas: 
 https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap: Importa a fonte "Poppins" do Google Fonts.
@@ -106,8 +100,8 @@ Verifica o estilo de todos os principais componentes da página inicial.
 
 7. Erros e Solução de Problemas
 * Erros Comuns:
-Problemas com a exibição de fontes podem ocorrer se o link para Google Fonts estiver incorreto.
-O estilo pode não ser aplicado corretamente se o arquivo home.css não estiver vinculado corretamente ao home.html.
+- Problemas com a exibição de fontes podem ocorrer se o link para Google Fonts estiver incorreto.
+- O estilo pode não ser aplicado corretamente se o arquivo home.css não estiver vinculado corretamente ao home.html.
 
 * Logs:
 Não aplicável a arquivos CSS.
@@ -115,9 +109,9 @@ Não aplicável a arquivos CSS.
 
 
 8. Histórico de Alterações
-* Changelog Local e Global:
-- [Data] - Criado o arquivo com a estilização inicial.
-- [Data] - Atualizado para incluir novos estilos e ajustar a aparência.
+* Changelog Local:
+- 08/07/24 - Criado o arquivo com a estilização inicial.
+- 19/07/24 - Atualizado para incluir novos estilos e ajustar a aparência.
 
 * Planejamento Futuro:
 - Adicionar mais variáveis para maior personalização.
@@ -127,7 +121,8 @@ Não aplicável a arquivos CSS.
 
 9. Contribuição
 * Guia para Contribuidores:
-Para contribuir com melhorias no estilo, edite o arquivo home.css e envie um pull request com suas alterações.
+Sendo desenvolvedor da empresa: para contribuir com melhorias no estilo, edite o arquivo home.css e envie um
+pull request com suas alterações.
 
 * Estilo de Codificação:
 Seguir convenções de nomenclatura CSS e manter comentários claros para facilitar a manutenção.
@@ -135,17 +130,7 @@ Seguir convenções de nomenclatura CSS e manter comentários claros para facili
 
 
 10. Licenciamento e Direitos Autorais
-* Licença:
-- [Tipo de licença do projeto]
-
-* Avisos Legais:
-- [Avisos legais, se houver]
-
-
-
-11. Referências e Links Externos
-* Documentação Externa:
-Link para a documentação do Google Fonts
-
-* Recursos de Aprendizado:
-Link para a documentação do CSS
+- Desenvolvedor: Victor Mello
+- Licenciamento: Este arquivo está sujeito aos termos e condições estabelecidos pela licença descrita abaixo.
+- Licença: Software Proprietário.
+- Avisos Gerais: Não é permitido o uso ou modificações sem autorização.

@@ -29,8 +29,6 @@ controle deslizante.
 * Cabeçalho do Arquivo:
 - Descrição Geral: Implementa a lógica para atualizar dinamicamente o valor do preço exibido com base na
 interação do usuário com um controle deslizante.
-- Autores e Data de Criação: [Seu Nome] - [Data de Criação/Modificação]
-- Licenciamento: [Informações sobre a licença, se houver]
 
 * Imports e Dependências:
 - Bibliotecas Importadas: Nenhuma biblioteca externa é utilizada.
@@ -38,7 +36,6 @@ interação do usuário com um controle deslizante.
 
 * Descrição das Funções e Classes:
 - Função Principal:
-
 document.addEventListener('DOMContentLoaded', (event) => {
     const rangeInput = document.getElementById('preco');
     const output = document.getElementById('preco-output');
@@ -59,7 +56,7 @@ controle deslizante e atualiza o valor do output conforme o controle deslizante 
 Comentários Inline:
 
 * Explicações de Trechos Complexos:
-- output.value = `R$ ${rangeInput.value}`; --> Atualiza o valor do output inicialmente
+- output.value = `R$ ${rangeInput.value}`; --> Atualiza o valor do output inicialmente.
 
 Este trecho inicializa o valor do elemento de saída com o valor atual do controle deslizante quando a página
 é carregada.
@@ -109,23 +106,27 @@ Elemento não encontrado: Certifique-se de que os IDs preco e preco-output exist
 
 
 8. Histórico de Alterações
-- Changelog Local e Global: [Adicionar aqui o histórico de mudanças]
-- Planejamento Futuro: Melhorar a robustez do código com tratamento de erros e verificações adicionais.
+* Changelog Local:
+- 12/07/24 - Criado o arquivo com a estilização inicial.
+- 19/07/24 - Atualizado para incluir novos estilos e ajustar a aparência.
+
+* Planejamento Futuro
+Melhorar a robustez do código com tratamento de erros e verificações adicionais.
 
 
 
 9. Contribuição
-- Guia para Contribuidores: [Instruções específicas sobre como contribuir com o código]
-- Estilo de Codificação: Seguir padrões de codificação JavaScript e convenções de nomenclatura.
+* Guia para Contribuidores:
+Sendo desenvolvedor da empresa: para contribuir com melhorias no estilo, edite o arquivo loja.js e envie um
+pull request com suas alterações.
+
+* Estilo de Codificação:
+Seguir convenções de nomenclatura CSS e manter comentários claros para facilitar a manutenção.
 
 
 
 10. Licenciamento e Direitos Autorais
-- Licença: [Tipo de licença do projeto]
-- Avisos Legais: [Informações sobre direitos autorais e aspectos legais]
-
-
-
-11. Referências e Links Externos
-- Documentação Externa: [Links para documentação adicional relevante]
-- Recursos de Aprendizado: [Materiais educativos relacionados às tecnologias utilizadas]
+- Desenvolvedor: Victor Mello
+- Licenciamento: Este arquivo está sujeito aos termos e condições estabelecidos pela licença descrita abaixo.
+- Licença: Software Proprietário.
+- Avisos Gerais: Não é permitido o uso ou modificações sem autorização.

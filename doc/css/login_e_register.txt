@@ -139,38 +139,27 @@ overrides indesejados.
 
 9. Histórico de Alterações
 * Changelog Local:
-- Data: [Exemplo: 2024-08-14]
-- Versão: [Exemplo: 1.0]
-- Descrição: [Exemplo: Primeira versão do arquivo CSS, estilização básica da página de registro].
+- 17/07/24 - Criado o arquivo com a estilização inicial.
+- 18/07/24 - Atualizado para incluir novos estilos e ajustar a aparência.
+
+* Planejamento Futuro:
+- Adicionar mais variáveis para maior personalização.
+- Melhorar a responsividade para dispositivos móveis.
 
 
 
 10. Contribuição
-* Estilo de Codificação:
-- Seguir convenções de nomenclatura CSS, como o uso de hífen para separar palavras em classes (ex.: form-group).
-- Organizar estilos em ordem hierárquica, começando por reset e estilos globais, seguidos por componentes específicos.
+* Guia para Contribuidores:
+Sendo desenvolvedor da empresa: para contribuir com melhorias no estilo, edite o arquivo register.css ou login.css
+e envie um pull request com suas alterações.
 
-* Sugestões para Melhorias:
-- Responsividade: Melhorar o layout para se adaptar ainda melhor a diferentes resoluções de tela.
-- Acessibilidade: Considerar o uso de media queries adicionais para acessibilidade, como prefers-color-scheme.
+* Estilo de Codificação:
+Seguir convenções de nomenclatura CSS e manter comentários claros para facilitar a manutenção.
 
 
 
 11. Licenciamento e Direitos Autorais
-* Licença:
-[Comentário de uso pessoal: Informar a licença do projeto]
-
-* Avisos Legais:
-[Comentário de uso pessoal: Inserir quaisquer avisos legais, se aplicável]
-
-
-
-12. Referências e Links Externos
-* Documentação Externa:
-Documentação Google Fonts
-
-* Guia de CSS da Mozilla
-Recursos de Aprendizado:
-
-* Curso de CSS Flexbox
-Animações CSS: Keyframes
+- Desenvolvedor: Victor Mello
+- Licenciamento: Este arquivo está sujeito aos termos e condições estabelecidos pela licença descrita abaixo.
+- Licença: Software Proprietário.
+- Avisos Gerais: Não é permitido o uso ou modificações sem autorização.

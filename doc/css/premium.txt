@@ -118,35 +118,27 @@ os estilos estão sendo aplicados conforme esperado.
 
 9. Histórico de Alterações
 * Changelog Local:
-Versão 1.0.0: Criação inicial do arquivo premium.css para estilizar a página de adesão ao plano premium.
+- 12/07/24 - Criado o arquivo com a estilização inicial.
+- 16/07/24 - Atualizado para incluir novos estilos e ajustar a aparência.
+
+* Planejamento Futuro:
+- Adicionar mais variáveis para maior personalização.
+- Melhorar a responsividade para dispositivos móveis.
 
 
 
 10. Contribuição
-* Estilo de Codificação:
-- Nomenclatura: Use nomes de classes que sejam descritivos e coesos com o restante do projeto.
-- Organização: Mantenha a modularidade e agrupamento lógico de estilos semelhantes.
+* Guia para Contribuidores:
+Sendo desenvolvedor da empresa: para contribuir com melhorias no estilo, edite o arquivo premium.css e envie um
+pull request com suas alterações.
 
-* Sugestões para Melhorias:
-- Melhorar Responsividade: Adicionar media queries para otimizar o layout para dispositivos móveis.
-- Otimização de Desempenho: Consolidar e minificar o CSS para melhorar o tempo de carregamento.
+* Estilo de Codificação:
+Seguir convenções de nomenclatura CSS e manter comentários claros para facilitar a manutenção.
 
 
 
 11. Licenciamento e Direitos Autorais
-* Licença:
-Licença do Projeto: Informe a licença sob a qual o projeto é distribuído.
-
-* Avisos Legais:
-Disclaimer: Inclua qualquer aviso relevante sobre o uso de terceiros, como fontes externas ou imagens.
-
-
-
-12. Referências e Links Externos
-* Documentação Externa:
-- Google Fonts: Poppins no Google Fonts
-- CSS Transitions: MDN Web Docs sobre Transições CSS
-
-* Recursos de Aprendizado:
-- Flexbox: A Complete Guide to Flexbox
-- Responsividade: Responsive Web Design Basics
+- Desenvolvedor: Victor Mello
+- Licenciamento: Este arquivo está sujeito aos termos e condições estabelecidos pela licença descrita abaixo.
+- Licença: Software Proprietário.
+- Avisos Gerais: Não é permitido o uso ou modificações sem autorização.

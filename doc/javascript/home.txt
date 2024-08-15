@@ -31,14 +31,12 @@ O arquivo home.js contém um único módulo que lida com a exibição e ocultaç
 * Cabeçalho do Arquivo
 - Nome do Arquivo: home.js
 - Descrição Geral: Script que controla a visibilidade de um pop-up de logout após um tempo definido.
-- Autores e Data de Criação: [Nome do Autor], [Data de Criação]
-- Licenciamento: [Informações sobre a licença, se aplicável]
 
 
 
 5. Imports e Dependências
 - Bibliotecas Importadas: Nenhuma.
-- Dependências Internas: Dependente de elementos HTML com ID flash-message e estilos definidos em home.css.
+- Dependências Internas: Dependente de elementos HTML com ID flash-message e estilos definidos em home.css
 
 
 
@@ -53,7 +51,6 @@ O arquivo home.js contém um único módulo que lida com a exibição e ocultaç
 
 
 7. Detalhes de Implementação
-
 document.addEventListener('DOMContentLoaded', function() {
     var flashMessage = document.getElementById('flash-message');
     
@@ -78,10 +75,10 @@ removido do layout após a transição.
 
 
 8. Tratamento de Erros
-Mecanismos de Exceções: O código não possui tratamento explícito de exceções, mas verifica se o elemento
+* Mecanismos de Exceções: O código não possui tratamento explícito de exceções, mas verifica se o elemento
 flash-message existe antes de tentar manipular seu estilo.
 
-Caso de Uso: Utilizar o script em uma página que exibe mensagens temporárias para feedback do usuário.
+* Caso de Uso: Utilizar o script em uma página que exibe mensagens temporárias para feedback do usuário.
 
 
 
@@ -131,9 +128,9 @@ Não há logs específicos no código. Use as ferramentas de desenvolvedor do na
 
 
 13. Histórico de Alterações
-* Changelog Local e Global
-- Data de Criação: [Data de Criação]
-- Última Modificação: [Data da Última Modificação]
+* Changelog Local:
+- 17/07/24 - Criado o arquivo com a estilização inicial.
+- 20/07/24 - Atualizado para incluir novos estilos e ajustar a aparência.
 
 * Planejamento Futuro
 Possível adição de opções de configuração para o tempo de exibição do pop-up.
@@ -141,26 +138,17 @@ Possível adição de opções de configuração para o tempo de exibição do p
 
 
 14. Contribuição
-* Guia para Contribuidores
-Para contribuir, faça um fork do repositório e envie pull requests com melhorias ou correções.
+* Guia para Contribuidores:
+Sendo desenvolvedor da empresa: para contribuir com melhorias no estilo, edite o arquivo home.js e envie um
+pull request com suas alterações.
 
-* Estilo de Codificação
-Siga as práticas de codificação JavaScript recomendadas e mantenha a consistência com o estilo existente.
+* Estilo de Codificação:
+Seguir convenções de nomenclatura CSS e manter comentários claros para facilitar a manutenção.
 
 
 
 15. Licenciamento e Direitos Autorais
-* Licença
-[Tipo de Licença]
-
-* Avisos Legais
-[Informações sobre direitos autorais e aspectos legais]
-
-
-
-16. Referências e Links Externos
-* Documentação Externa
-[Links para documentação adicional relevante, se houver]
-
-* Recursos de Aprendizado
-[Materiais educativos relacionados às tecnologias utilizadas]
+- Desenvolvedor: Victor Mello
+- Licenciamento: Este arquivo está sujeito aos termos e condições estabelecidos pela licença descrita abaixo.
+- Licença: Software Proprietário.
+- Avisos Gerais: Não é permitido o uso ou modificações sem autorização.

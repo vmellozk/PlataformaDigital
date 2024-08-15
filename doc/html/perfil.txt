@@ -55,11 +55,7 @@ perfil. Após preencher o formulário, ele pode clicar em "Salvar Alterações",
 
 
 
-4. Documentação Específica de Funções
-
-
-
-5. Eventos e Manipuladores de Eventos:
+4. Eventos e Manipuladores de Eventos:
 * Descrição dos Eventos:
 Este arquivo não contém diretamente manipuladores de eventos, mas depende de perfil.js para lidar com eventos como
 cliques nos botões de editar, fechar modais, e contagem de caracteres nos campos de formulário.
@@ -71,7 +67,7 @@ cliques nos botões de editar, fechar modais, e contagem de caracteres nos campo
 
 
 
-6. Instruções de Configuração e Instalação
+5. Instruções de Configuração e Instalação
 * Dependências:
 - Flask: Para renderizar o HTML dinâmico e gerenciar sessões de usuário.
 - Boxicons: Para ícones na barra de navegação.
@@ -82,8 +78,7 @@ Certifique-se de que o Flask esteja configurado corretamente para fornecer as ro
 renderizar este arquivo.
 
 
-
-7. Guia de Uso Geral
+6. Guia de Uso Geral
 * Como Executar:
 Este arquivo é carregado quando o usuário navega para a página de perfil. Não precisa ser importado manualmente, pois é
 gerenciado pelas rotas do Flask.
@@ -93,7 +88,7 @@ Nenhum comando específico é necessário para este arquivo além da configuraç
 
 
 
-8. Testes
+7. Testes
 * Como Testar:
 Testes podem ser realizados manualmente navegando até a página de perfil e interagindo com os elementos, como botões de
 editar, modais, e campos de formulário. Testes automatizados podem incluir simulação de sessões de usuário e verificação
@@ -106,7 +101,7 @@ de comportamento de formulários.
 
 
 
-9. Erros e Solução de Problemas
+8. Erros e Solução de Problemas
 * Erros Comuns:
 - Modal não abre: Certifique-se de que perfil.js está corretamente carregado e que os IDs dos modais estão corretos.
 - Dados do usuário não aparecem: Verifique se as variáveis de sessão e Jinja2 estão configuradas corretamente no Flask.
@@ -117,39 +112,29 @@ erros de JavaScript.
 
 
 
-10. Histórico de Alterações
+9. Histórico de Alterações
 * Changelog Local:
-- Versão 1.0 - [Data de Criação]: Criação do arquivo com estrutura inicial da página de perfil.
-- Versão 1.1 - [Data de Alteração]: Adicionada funcionalidade para edição de produtos no perfil.
+- 12/07/24 - Criado o arquivo com a estilização inicial.
+- 22/07/24 - Atualizado para incluir novos estilos e ajustar a aparência.
 
-
-
-11. Contribuição
-* Estilo de Codificação:
-- Utilize convenções de nomenclatura consistentes, como kebab-case para classes CSS e camelCase para IDs e funções
-JavaScript.
-- Mantenha o código HTML organizado em seções claras e use comentários para indicar diferentes blocos.
-
-* Sugestões para Melhorias:
+* Planejamento Futuro:
 - Aprimorar Acessibilidade: Considerar a adição de atributos ARIA e melhorar a navegação via teclado.
 - Otimização de Desempenho: Minificação dos arquivos CSS e JavaScript para melhorar o tempo de carregamento.
 
 
 
-12. Licenciamento e Direitos Autorais
-* Licença:
-Este arquivo é distribuído sob a licença [Nome da Licença], conforme indicado no repositório do projeto.
+10. Contribuição
+* Guia para Contribuidores:
+Sendo desenvolvedor da empresa: para contribuir com melhorias no estilo, edite o arquivo perfil.html e envie um
+pull request com suas alterações.
 
-* Avisos Legais:
-Este arquivo é fornecido "como está", sem garantias de qualquer tipo.
+* Estilo de Codificação:
+Seguir convenções de nomenclatura CSS e manter comentários claros para facilitar a manutenção.
 
 
 
-13. Referências e Links Externos
-* Documentação Externa:
-- Documentação do Flask
-- Boxicons Documentation
-
-* Recursos de Aprendizado:
-- Curso de HTML e CSS
-- Tutoriais de JavaScript
+11. Licenciamento e Direitos Autorais
+- Desenvolvedor: Victor Mello
+- Licenciamento: Este arquivo está sujeito aos termos e condições estabelecidos pela licença descrita abaixo.
+- Licença: Software Proprietário.
+- Avisos Gerais: Não é permitido o uso ou modificações sem autorização.

@@ -35,8 +35,6 @@ Boxicons para ícones e carrega arquivos CSS e JavaScript externos para estiliza
 - Nome do Arquivo: home.html
 - Descrição Geral: Página inicial do site da Prática Sênior, contendo navegação, conteúdo sobre a empresa, áreas de
 atuação, serviços e informações de contato.
-- Autores e Data de Criação: [Seu Nome], [Data de Criação/Modificação]
-- Licenciamento: [Informações sobre Licença, se houver]
 
 
 
@@ -58,24 +56,13 @@ Arquivos CSS e JavaScript internos referenciados via caminhos relativos.
 
 
 
-5. Comentários Inline
-- Explicações de Trechos Complexos: [Adicionar comentários onde necessário]
-- Notas sobre Desempenho: [Adicionar notas sobre otimizações se necessário]
-
-
-
-6. Tratamento de Erros
+5. Tratamento de Erros
 Mecanismos de Exceções: O HTML não possui tratamento de exceções nativo; erros são gerenciados via backend e validações
 de formulário.
 
 
 
-7. Exemplos de Uso
-Casos de Uso: [Adicionar exemplos conforme a necessidade]
-
-
-
-8. Instruções de Configuração e Instalação
+6. Instruções de Configuração e Instalação
 * Dependências
 Boxicons: CDN para ícones.
 
@@ -83,23 +70,15 @@ Boxicons: CDN para ícones.
 - Certifique-se de ter os arquivos CSS e JavaScript corretos no diretório ../static/.
 - Verifique a estrutura de diretórios para garantir que todos os caminhos relativos estejam corretos.
 
-* Configurações Específicas
-Variáveis de Ambiente: [Adicionar se necessário]
 
 
-
-9. Guia de Uso Geral
+7. Guia de Uso Geral
 * Exemplos de Execução
 Executar o Site: Abra o arquivo home.html em um navegador para visualizar a página inicial.
 
-* Comandos Comuns
-Iniciar: [Não aplicável]
-Parar: [Não aplicável]
-Testar: [Não aplicável]
 
 
-
-10. Testes
+8. Testes
 * Estratégia de Testes
 Tipos de Testes: Testes de funcionalidade e responsividade em diferentes navegadores e dispositivos.
 
@@ -111,45 +90,35 @@ O que é coberto: Navegação, conteúdo estático e interações básicas.
 
 
 
-11. Erros e Solução de Problemas
+9. Erros e Solução de Problemas
 * Erros Comuns
 Problemas com Links: Verifique se os caminhos relativos estão corretos e se os arquivos estão no local correto.
 
-* Logs
-Interpretação de Logs: [Adicionar se necessário]
+
+
+10. Histórico de Alterações
+* Changelog Local:
+- 08/07/24 - Criado o arquivo com a estilização inicial.
+- 22/07/24 - Atualizado para incluir novos estilos e ajustar a aparência.
+
+* Planejamento Futuro:
+- Adicionar mais variáveis para maior personalização.
+- Melhorar a responsividade para dispositivos móveis.
 
 
 
-12. Histórico de Alterações
-* Changelog Local e Global
-Registro de Mudanças: [Adicionar alterações significativas conforme necessário]
+11. Contribuição
+* Guia para Contribuidores:
+Sendo desenvolvedor da empresa: para contribuir com melhorias no estilo, edite o arquivo home.html e envie um
+pull request com suas alterações.
 
-* Planejamento Futuro
-Funcionalidades Planejadas: [Adicionar se houver]
-
-
-
-13. Contribuição
-* Guia para Contribuidores
-Instruções: [Adicionar se necessário]
-
-* Estilo de Codificação
-Padrões: [Adicionar se necessário]
+* Estilo de Codificação:
+Seguir convenções de nomenclatura CSS e manter comentários claros para facilitar a manutenção.
 
 
 
-14. Licenciamento e Direitos Autorais
-* Licença
-Tipo de Licença: [Adicionar tipo de licença]
-
-* Avisos Legais
-Informações sobre Direitos Autorais: [Adicionar informações legais]
-
-
-
-15. Referências e Links Externos
-* Documentação Externa
-Boxicons: [Link para documentação de Boxicons]
-
-* Recursos de Aprendizado
-Materiais Educativos: [Adicionar recursos adicionais se necessário]
+12. Licenciamento e Direitos Autorais
+- Desenvolvedor: Victor Mello
+- Licenciamento: Este arquivo está sujeito aos termos e condições estabelecidos pela licença descrita abaixo.
+- Licença: Software Proprietário.
+- Avisos Gerais: Não é permitido o uso ou modificações sem autorização.

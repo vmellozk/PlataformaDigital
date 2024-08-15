@@ -48,8 +48,10 @@ document.addEventListener('DOMContentLoaded', () => {
 - Nome da Função/Bloco: Limitação de caracteres
 - Interação com Outros Blocos: Este bloco interage com os elementos de entrada no HTML, utilizando IDs específicos
 para controlar o comprimento do texto e atualizar o contador.
+
 Exemplo Prático: Se o usuário digitar mais de 1000 caracteres em qualquer campo, o texto será truncado e o contador
 será atualizado.
+
 
 --- Ajuste de altura do textarea:
 document.addEventListener('DOMContentLoaded', function() {
@@ -70,7 +72,9 @@ document.addEventListener('DOMContentLoaded', function() {
 - Parâmetros: el --> O elemento textarea a ser ajustado.
 - Interação com Outros Blocos: Este bloco ajusta a altura dos elementos textarea conforme o usuário digita, garantindo
 que o texto visível se ajuste ao conteúdo.
+
 Exemplo Prático: O textarea expande automaticamente para mostrar todo o texto à medida que é digitado.
+
 
 --- Redirecionamento automático:
 function redirectAfterDelay() {
@@ -82,6 +86,7 @@ function redirectAfterDelay() {
 - Nome da Função/Bloco: Redirecionamento automático
 - Interação com Outros Blocos: Este bloco define uma função para redirecionar o usuário após um atraso de 3 segundos,
 utilizando uma URL gerada pelo servidor.
+
 Exemplo Prático: Após um atraso de 3 segundos, o usuário será redirecionado para a página inicial.
 
 
@@ -142,32 +147,27 @@ Console Logs: Utilize console.log para verificar o estado dos elementos e valore
 
 
 8. Histórico de Alterações
-* Changelog Local
-[Data] - [Descrição da alteração] - Adicionada a funcionalidade de ajuste automático do textarea.
+* Changelog Local:
+- 13/07/24 - Criado o arquivo com a estilização inicial.
+- 28/07/24 - Atualizado para incluir novos estilos e ajustar a aparência.
+
+* Planejamento Futuro
+Considere modularizar o código para separar a lógica de manipulação de eventos em funções distintas.
 
 
 
 9. Contribuição
-* Estilo de Codificação
-Convenções: Siga a convenção de nomenclatura camelCase para variáveis e funções.
+* Guia para Contribuidores:
+Sendo desenvolvedor da empresa: para contribuir com melhorias no estilo, edite o arquivo vendas.js e envie um
+pull request com suas alterações.
 
-* Sugestões para Melhorias
-Refatoração: Considere modularizar o código para separar a lógica de manipulação de eventos em funções distintas.
+* Estilo de Codificação:
+Seguir convenções de nomenclatura CSS e manter comentários claros para facilitar a manutenção.
 
 
 
 10. Licenciamento e Direitos Autorais
-* Licença
-[Licença] - O arquivo está sob a licença [inserir licença].
-
-* Avisos Legais
-[Avisos] - [Incluir quaisquer disclaimers ou notas legais, se necessário].
-
-
-
-11. Referências e Links Externos
-* Documentação Externa
-MDN Web Docs - Documentação oficial para JavaScript e DOM.
-
-* Recursos de Aprendizado
-JavaScript.info - Recursos educacionais sobre JavaScript.
+- Desenvolvedor: Victor Mello
+- Licenciamento: Este arquivo está sujeito aos termos e condições estabelecidos pela licença descrita abaixo.
+- Licença: Software Proprietário.
+- Avisos Gerais: Não é permitido o uso ou modificações sem autorização.

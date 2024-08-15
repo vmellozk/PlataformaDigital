@@ -48,7 +48,6 @@ para usuários autenticados e não autenticados.
 
 
 5. Comentários Inline
-
 <!-- Barra de Navegação-->
 <header>
     <a href="{{  url_for('home')  }}" class="logo">Prática Sênior</a>
@@ -122,10 +121,9 @@ com as rotas.
 
 
 10. Histórico de Alterações
-* Changelog Local e Global
-- Versão 1.0.0 - Data de Lançamento
-- Criação inicial do arquivo perfil.html
-- Implementação da estrutura de perfil de usuário e exibição de produtos
+* Changelog Local:
+- 12/07/24 - Criado o arquivo com a estilização inicial.
+- 22/07/24 - Atualizado para incluir novos estilos e ajustar a aparência.
 
 * Planejamento Futuro
 Melhorias na UI/UX: Planejamento para melhorias visuais e funcionais baseadas em feedback dos usuários.
@@ -133,30 +131,17 @@ Melhorias na UI/UX: Planejamento para melhorias visuais e funcionais baseadas em
 
 
 11. Contribuição
-* Guia para Contribuidores
-- Código de Conduta: Respeitar as diretrizes de contribuição e manter uma comunicação respeitosa.
-- Diretrizes de Código: Seguir as práticas recomendadas de estilo de código.
+* Guia para Contribuidores:
+Sendo desenvolvedor da empresa: para contribuir com melhorias no estilo, edite o arquivo perfil_visita.html e
+envie um pull request com suas alterações.
 
-* Estilo de Codificação
-- HTML: Usar indentação consistente e comentários para clareza.
-- CSS/JS: Adotar convenções de nomenclatura e modularização.
+* Estilo de Codificação:
+Seguir convenções de nomenclatura CSS e manter comentários claros para facilitar a manutenção.
 
 
 
 12. Licenciamento e Direitos Autorais
-* Licença
-Licença MIT
-
-* Avisos Legais
-Disclaimer: O código e os recursos são fornecidos "como estão" sem garantias de qualquer tipo.
-
-
-
-13. Referências e Links Externos
-* Documentação Externa
-- Documentação do Flask
-- Boxicons
-
-* Recursos de Aprendizado
-- Tutorial de HTML e CSS
-- Curso de JavaScript
+- Desenvolvedor: Victor Mello
+- Licenciamento: Este arquivo está sujeito aos termos e condições estabelecidos pela licença descrita abaixo.
+- Licença: Software Proprietário.
+- Avisos Gerais: Não é permitido o uso ou modificações sem autorização.

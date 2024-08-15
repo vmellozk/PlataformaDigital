@@ -118,32 +118,27 @@ desenvolvimento.
 
 
 8. Histórico de Alterações
-* Changelog Local e Global
-Versão 1.0: Implementação inicial das funcionalidades de edição de perfil, upload de foto e contagem de caracteres.
+* Changelog Local:
+- 18/07/24 - Criado o arquivo com a estilização inicial.
+- 26/07/24 - Atualizado para incluir novos estilos e ajustar a aparência.
+
+* Planejamento Futuro
+Possível adição de opções de configuração para o tempo de exibição do pop-up.
 
 
 
 9. Contribuição
-* Guia para Contribuidores
-- Padrões de Codificação: Siga o guia de estilo definido pelo projeto para garantir a consistência no código.
-- Código de Conduta: <!-- Uso pessoal. -->
+* Guia para Contribuidores:
+Sendo desenvolvedor da empresa: para contribuir com melhorias no estilo, edite o arquivo perfil_visita.js e
+envie um pull request com suas alterações.
 
-* Estilo de Codificação
-JavaScript ES6: Utilize as melhores práticas, como arrow functions e template literals, onde aplicável.
+* Estilo de Codificação:
+Seguir convenções de nomenclatura CSS e manter comentários claros para facilitar a manutenção.
 
 
 
 10. Licenciamento e Direitos Autorais
-* Licença
-Este projeto é licenciado sob a licença MIT. Consulte o arquivo de licença para mais detalhes.
-
-
-
-11. Referências e Links Externos
-* Documentação Externa
-- MDN Web Docs - Manipulação de DOM
-- JavaScript Info - Trabalhando com Forms
-
-* Recursos de Aprendizado
-Artigos e Tutoriais: Consulte recursos adicionais sobre manipulação de DOM e eventos em JavaScript para aprimorar
-o entendimento deste código.
+- Desenvolvedor: Victor Mello
+- Licenciamento: Este arquivo está sujeito aos termos e condições estabelecidos pela licença descrita abaixo.
+- Licença: Software Proprietário.
+- Avisos Gerais: Não é permitido o uso ou modificações sem autorização.

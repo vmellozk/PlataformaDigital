@@ -43,11 +43,7 @@ Exemplo Prático:
 
 
 
-3. Documentação Específica de Funções
-
-
-
-4. Eventos e Manipuladores de Eventos:
+3. Eventos e Manipuladores de Eventos:
 * Descrição dos Eventos:
 - O formulário pode ser submetido com o evento submit, que é tratado pelo servidor. Além disso, o script register.js pode
 manipular eventos de validação ou animação (detalhes do script devem ser consultados no respectivo arquivo register.js).
@@ -58,7 +54,7 @@ envio ou manipulação de DOM.
 
 
 
-5. Instruções de Configuração e Instalação
+4. Instruções de Configuração e Instalação
 * Dependências:
 - HTML/CSS: Nenhuma dependência externa necessária.
 - JavaScript: Supondo que register.js contenha scripts de validação ou manipulação de eventos, ele deve estar presente
@@ -70,7 +66,7 @@ O arquivo precisa ser renderizado dentro de um framework que suporte templating,
 
 
 
-6. Guia de Uso Geral
+5. Guia de Uso Geral
 * Como Executar:
 Este arquivo deve ser acessado como parte de uma aplicação web, provavelmente ao navegar para a URL que renderiza a
 página de registro.
@@ -80,7 +76,7 @@ Nenhum comando específico é necessário diretamente para este arquivo HTML.
 
 
 
-7. Testes
+6. Testes
 * Como Testar:
 - Teste Manual: Pode ser testado manualmente acessando a página e tentando se registrar, verificando se o formulário é
 submetido corretamente e se o backend processa os dados como esperado.
@@ -92,7 +88,7 @@ carregada corretamente e se os eventos de envio funcionam como esperado.
 
 
 
-8. Erros e Solução de Problemas
+7. Erros e Solução de Problemas
 * Erros Comuns:
 - Falha no Envio do Formulário: Pode ocorrer se a URL no action estiver incorreta ou se houver problemas de conexão com
 o backend.
@@ -104,34 +100,29 @@ o backend.
 
 
 
-* Histórico de Alterações
+8. Histórico de Alterações
 * Changelog Local:
-[Comentários de uso pessoal]
+- 16/07/24 - login.html - Criado o arquivo com a estilização inicial.
+- 18/07/24 - login.html - Atualizado para incluir novos estilos e ajustar a aparência.
+- 16/07/24 - register.html - Criado o arquivo com a estilização inicial.
+- 18/07/24 - register.html - Atualizado para incluir novos estilos e ajustar a aparência.
 
+* Planejamento Futuro:
+Implementar validações front-end diretamente no register.js para uma melhor experiência do usuário.
 
 
 9. Contribuição
-* Estilo de Codificação:
-[Comentários de uso pessoal]
+* Guia para Contribuidores:
+Sendo desenvolvedor da empresa: para contribuir com melhorias no estilo, edite o arquivo login.html ou register.html
+e envie um pull request com suas alterações.
 
-* Sugestões para Melhorias:
-Implementar validações front-end diretamente no register.js para uma melhor experiência do usuário.
+* Estilo de Codificação:
+Seguir convenções de nomenclatura CSS e manter comentários claros para facilitar a manutenção.
 
 
 
 10. Licenciamento e Direitos Autorais
-* Licença:
-[Comentários de uso pessoal]
-
-* Avisos Legais:
-[Comentários de uso pessoal]
-
-
-
-11. Referências e Links Externos
-* Documentação Externa:
-Flask Documentation: Flask URL Building
-
-* Recursos de Aprendizado:
-- Tutorial de HTML e CSS: W3Schools
-- Guia de Boas Práticas em JavaScript: Mozilla Developer Network
+- Desenvolvedor: Victor Mello
+- Licenciamento: Este arquivo está sujeito aos termos e condições estabelecidos pela licença descrita abaixo.
+- Licença: Software Proprietário.
+- Avisos Gerais: Não é permitido o uso ou modificações sem autorização.

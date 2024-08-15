@@ -1,13 +1,13 @@
 1. Visão Geral do Projeto
 * Descrição do Projeto
-O arquivo perfil_visita.css define o estilo para a página de perfil de um usuário dentro de um sistema web. A página de
-perfil é parte de uma aplicação voltada para usuários que desejam visualizar e editar suas informações pessoais, bem
-como explorar produtos disponíveis. O público-alvo são usuários que acessam a plataforma para gerenciar seu perfil e
-interagir com a loja.
+O arquivo perfil_visita.css define o estilo para a página de perfil de um usuário dentro de um sistema web. A
+página de perfil é parte de uma aplicação voltada para usuários que desejam visualizar e editar suas informações
+pessoais, bem como explorar produtos disponíveis. O público-alvo são usuários que acessam a plataforma para
+gerenciar seu perfil e interagir com a loja.
 
 * Arquitetura
-A arquitetura da página é composta por um cabeçalho fixo, uma seção de perfil com informações do usuário, e uma área
-para exibição de produtos. O estilo é modularizado para garantir a consistência visual e a manutenção fácil.
+A arquitetura da página é composta por um cabeçalho fixo, uma seção de perfil com informações do usuário, e uma
+área para exibição de produtos. O estilo é modularizado para garantir a consistência visual e a manutenção fácil.
 
 
 
@@ -91,9 +91,9 @@ Não aplicável para arquivos CSS.
 
 
 8. Histórico de Alterações
-* Changelog Local e Global
-- Versão 1.0 - Data: 2024-08-14
-- Inicialização do arquivo com estilos para a página de perfil e produtos.
+* Changelog Local:
+- 13/07/24 - Criado o arquivo com a estilização inicial.
+- 16/07/24 - Atualizado para incluir novos estilos e ajustar a aparência.
 
 * Planejamento Futuro
 Adicionar estilos para novos componentes de interface conforme o projeto evolui.
@@ -101,26 +101,17 @@ Adicionar estilos para novos componentes de interface conforme o projeto evolui.
 
 
 9. Contribuição
-* Guia para Contribuidores
-Não aplicável diretamente para arquivos CSS.
+* Guia para Contribuidores:
+Sendo desenvolvedor da empresa: para contribuir com melhorias no estilo, edite o arquivo perfil_visita.css e envie um
+pull request com suas alterações.
 
-* Estilo de Codificação
-Utilize variáveis de CSS para manter a consistência nas cores e fontes.
+* Estilo de Codificação:
+Seguir convenções de nomenclatura CSS e manter comentários claros para facilitar a manutenção.
 
 
 
 10. Licenciamento e Direitos Autorais
-* Licença
-Não especificada. Adicione o link ou informações da licença se disponível.
-
-* Avisos Legais
-Forneça informações sobre qualquer isenção de responsabilidade se aplicável.
-
-
-
-11. Referências e Links Externos
-* Documentação Externa
-Google Fonts - Fonte utilizada.
-
-* Recursos de Aprendizado
-CSS Tricks - Recursos para aprendizado e melhores práticas de CSS.
+- Desenvolvedor: Victor Mello
+- Licenciamento: Este arquivo está sujeito aos termos e condições estabelecidos pela licença descrita abaixo.
+- Licença: Software Proprietário.
+- Avisos Gerais: Não é permitido o uso ou modificações sem autorização.

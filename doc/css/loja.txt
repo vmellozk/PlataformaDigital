@@ -31,9 +31,8 @@ consistente e responsiva.
 3. Documentação Específica de Arquivos
 * Cabeçalho do Arquivo:
 - Nome do Arquivo: loja.css
-- Descrição Geral: Define os estilos e a aparência da página de loja, incluindo a barra de navegação, filtros, cards de produtos e rodapé.
-- Autores e Data de Criação: [Seu Nome] - [Data de Criação/Modificação]
-- Licenciamento: [Licença, se aplicável]
+- Descrição Geral: Define os estilos e a aparência da página de loja, incluindo a barra de navegação, filtros,
+cards de produtos e rodapé.
 
 * Bibliotecas Importadas:
 @import url('https://fonts.googleapis.com/css2?family=Poppins...'): Importa a fonte Poppins do Google Fonts.
@@ -115,9 +114,9 @@ Não aplicável a arquivos CSS.
 
 
 8. Histórico de Alterações
-* Changelog Local e Global:
-- [Data] - Criação do arquivo loja.css.
-- [Data] - Atualização dos estilos para a barra de navegação.
+* Changelog Local:
+- 15/07/24 - Criado o arquivo com a estilização inicial.
+- 16/07/24 - Atualizado para incluir novos estilos e ajustar a aparência.
 
 * Planejamento Futuro:
 Adicionar novos estilos para funcionalidades futuras conforme necessário.
@@ -126,25 +125,16 @@ Adicionar novos estilos para funcionalidades futuras conforme necessário.
 
 9. Contribuição
 * Guia para Contribuidores:
-Adicione novos estilos conforme necessário e siga os padrões de codificação estabelecidos.
+Sendo desenvolvedor da empresa: para contribuir com melhorias no estilo, edite o arquivo loja.css e envie um
+pull request com suas alterações.
 
 * Estilo de Codificação:
-Siga as convenções de CSS e mantenha a consistência no uso de variáveis e seletores.
+Seguir convenções de nomenclatura CSS e manter comentários claros para facilitar a manutenção.
 
 
 
 10. Licenciamento e Direitos Autorais
-* Licença:
-[Tipo de Licença]
-
-* Avisos Legais:
-Todos os direitos reservados conforme a licença aplicável.
-
-
-
-11. Referências e Links Externos
-* Documentação Externa:
-Google Fonts - Poppins
-
-* Recursos de Aprendizado:
-MDN Web Docs - CSS
+- Desenvolvedor: Victor Mello
+- Licenciamento: Este arquivo está sujeito aos termos e condições estabelecidos pela licença descrita abaixo.
+- Licença: Software Proprietário.
+- Avisos Gerais: Não é permitido o uso ou modificações sem autorização.

@@ -62,9 +62,6 @@ Não há variáveis de ambiente ou configurações específicas necessárias par
 Este arquivo é normalmente incluído no documento HTML através de uma tag <script>. Ele é executado automaticamente
 quando o documento é carregado, preparando o formulário para a interação do usuário.
 
-* Comandos Comuns:
-Nenhum comando específico é necessário para este arquivo.
-
 
 
 4. Testes
@@ -95,34 +92,27 @@ Inspecione o elemento do formulário para garantir que o ID correto esteja sendo
 
 6. Histórico de Alterações
 * Changelog Local:
-- Data: [Comentário Pessoal]
-- Versão: [Comentário Pessoal]
-- Descrição da Alteração: Implementação inicial do manipulador de evento de submissão do formulário.
+- 19/07/24 - Criado o arquivo com a estilização inicial.
+- 25/07/24 - Atualizado para incluir novos estilos e ajustar a aparência.
 
-
-
-7. Contribuição
-* Estilo de Codificação:
-Comentário Pessoal: [Inserir convenções de nomenclatura e estrutura]
-
-* Sugestões para Melhorias:
+* Planejamento Futuro
 - Adicionar validação de campos antes de exibir o alerta.
 - Integrar a função de submissão com um backend para processar o pagamento real.
 
 
 
+7. Contribuição
+* Guia para Contribuidores:
+Sendo desenvolvedor da empresa: para contribuir com melhorias no estilo, edite o arquivo premium.js e envie um
+pull request com suas alterações.
+
+* Estilo de Codificação:
+Seguir convenções de nomenclatura CSS e manter comentários claros para facilitar a manutenção.
+
+
+
 8. Licenciamento e Direitos Autorais
-* Licença:
-Comentário Pessoal: [Inserir licença do projeto]
-
-* Avisos Legais:
-Comentário Pessoal: [Inserir disclaimers ou notas legais]
-
-
-
-9. Referências e Links Externos
-* Documentação Externa:
-MDN Web Docs - EventTarget.addEventListener()
-
-* Recursos de Aprendizado:
-JavaScript Event Handling - W3Schools
+- Desenvolvedor: Victor Mello
+- Licenciamento: Este arquivo está sujeito aos termos e condições estabelecidos pela licença descrita abaixo.
+- Licença: Software Proprietário.
+- Avisos Gerais: Não é permitido o uso ou modificações sem autorização.

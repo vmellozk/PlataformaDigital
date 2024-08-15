@@ -75,7 +75,7 @@ no DOM.
 4. Instruções de Configuração e Instalação
 * Dependências:
 Não há bibliotecas externas ou frameworks explícitos necessários para o funcionamento deste arquivo, além das
-que o projeto já utiliza (se houver).
+que o projeto já utiliza.
 
 * Configurações Específicas:
 Comentário de uso pessoal.
@@ -114,31 +114,26 @@ sendo acionados corretamente.
 
 8. Histórico de Alterações
 * Changelog Local:
-Comentário de uso pessoal.
+- 17/07/24 - Criado o arquivo com a estilização inicial.
+- 20/07/24 - Atualizado para incluir novos estilos e ajustar a aparência.
+
+* Planejamento Futuro
+- Fazer funcionar a edição dos produtos
 
 
 
 9. Contribuição
-* Estilo de Codificação:
-Comentário de uso pessoal.
+* Guia para Contribuidores:
+Sendo desenvolvedor da empresa: para contribuir com melhorias no estilo, edite o arquivo perfil.js e envie um
+pull request com suas alterações.
 
-* Sugestões para Melhorias:
-Comentário de uso pessoal.
+* Estilo de Codificação:
+Seguir convenções de nomenclatura CSS e manter comentários claros para facilitar a manutenção.
 
 
 
 10. Licenciamento e Direitos Autorais
-* Licença:
-Comentário de uso pessoal.
-
-* Avisos Legais:
-Comentário de uso pessoal.
-
-
-
-11. Referências e Links Externos
-* Documentação Externa:
-Comentário de uso pessoal.
-
-* Recursos de Aprendizado:
-Comentário de uso pessoal.
+- Desenvolvedor: Victor Mello
+- Licenciamento: Este arquivo está sujeito aos termos e condições estabelecidos pela licença descrita abaixo.
+- Licença: Software Proprietário.
+- Avisos Gerais: Não é permitido o uso ou modificações sem autorização.

@@ -100,33 +100,25 @@ e JS estão sendo carregados corretamente.
 
 9. Histórico de Alterações
 * Changelog Local:
-- Data: [Adicionar Data]
-- Versão: [Adicionar Versão]
-- Descrição da Alteração: [Adicionar Descrição]
+- 26/07/24 - Criado o arquivo com a estilização inicial.
+- 29/07/24 - Atualizado para incluir novos estilos e ajustar a aparência.
 
+* Planejamento Futuro:
+Considerar a adição de validações de formulário mais robustas.
 
 
 10. Contribuição
-* Estilo de Codificação:
-Use indentação consistente e mantenha a organização das seções HTML clara.
+* Guia para Contribuidores:
+Sendo desenvolvedor da empresa: para contribuir com melhorias no estilo, edite o arquivo vendas.html e envie um
+pull request com suas alterações.
 
-* Sugestões para Melhorias:
-Considerar a adição de validações de formulário mais robustas.
+* Estilo de Codificação:
+Seguir convenções de nomenclatura CSS e manter comentários claros para facilitar a manutenção.
 
 
 
 11. Licenciamento e Direitos Autorais
-* Licença:
-[Adicionar Detalhes da Licença]
-
-* Avisos Legais:
-[Adicionar Avisos Legais, se necessário]
-
-
-
-12. Referências e Links Externos
-* Documentação Externa:
-[Adicionar Links para Documentação de Jinja e Tecnologias Usadas]
-
-* Recursos de Aprendizado:
-[Adicionar Links para Materiais Educacionais Relevantes]
+- Desenvolvedor: Victor Mello
+- Licenciamento: Este arquivo está sujeito aos termos e condições estabelecidos pela licença descrita abaixo.
+- Licença: Software Proprietário.
+- Avisos Gerais: Não é permitido o uso ou modificações sem autorização.
