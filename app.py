@@ -2,9 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from database import init_db
 from models import insert_user, get_user_by_email, insert_survey_response
 from generate_Ebook import generate_ebook
-from time import sleep
 import threading
-import sqlite3
 
 app = Flask(__name__)
 app.secret_key = 'chave_secreta'
