@@ -8,6 +8,26 @@ from selenium.webdriver.support import expected_conditions as EC
 
 output_file = 'output.txt'
 
+#
+def copy_text(driver, button_xpath):
+    while True:
+        try:
+            button_element = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, button_xpath))
+            )
+            if button_element:
+                button_element.click()
+                time.sleep(2)
+                break
+            else:
+                print("Botão de copiar não encontrado.")
+                time.sleep(1)
+        except Exception as e:
+            print(f"Erro durante o copiar resposta: {e}")
+            time.sleep(1)
+    copied_text = pyperclip.paste()
+    return copied_text
+
 def send_prompts(driver, responses_file, tittle_file, name):
     # Reencontrar o campo de entrada para garantir que ele seja válido
     def get_input_field():
@@ -49,27 +69,12 @@ def send_prompts(driver, responses_file, tittle_file, name):
     input_field = get_input_field()
 
     # Aguarda a resposta ser gerada e o botão de copiar estar disponível e salvar num arquivo txt
-    while True:
-        try:
-            button_element = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[6]/div/div/div[2]/div/div[2]/div/div/span/button'))
-        )
-            if button_element:
-                button_element.click()
-                time.sleep(2)
-                break
-            else:
-                print("Botão de copiar não encontrado.")
-                time.sleep(1)
-        except Exception as e:
-            print(f"Erro durante o copiar resposta da capa: {e}")
-            time.sleep(1)
-    copied_tittle = pyperclip.paste()
+    tittle_button_xpath = '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[6]/div/div/div[2]/div/div[2]/div/div/span/button'
+    copied_tittle = copy_text(driver, tittle_button_xpath)
     with open(tittle_file, "w", encoding="utf-8") as file:
         file.write(copied_tittle)
     time.sleep(1)
 
-    #
     confirmacao = 'OK, agora me forneça o restante do conteúdo. Lembrando da hash antes de: ####Introdução, ####Sumário, ####Conteúdo e ####Conclusão. Forneça esses tópicos assim e tudo em um único texto! Apenas responda o que foi pedido, sem "essa foi a resposta, se precisar de mais..." não quero nada disso. '
     input_field.send_keys(confirmacao)
     time.sleep(1)
@@ -100,23 +105,8 @@ def send_prompts(driver, responses_file, tittle_file, name):
             time.sleep(2)
 
     # Aguarda a resposta ser gerada e o botão de copiar estar disponível e salvar num arquivo txt
-    while True:
-        try:
-            button_element = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span/button'))
-        )
-            if button_element:
-                time.sleep(1)
-                button_element.click()
-                time.sleep(1)
-                break
-            else:
-                print("Botão de copiar não encontrado.")
-                time.sleep(1)
-        except Exception as e:
-            print(f"Erro durante o copiar resposta da capa: {e}")
-            time.sleep(1)
-    copied_text = pyperclip.paste()
+    response_button_xpath = '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span/button'
+    copied_text = copy_text(driver, response_button_xpath)
     with open(output_file, "w", encoding="utf-8") as file:
         file.write(copied_text)
     time.sleep(1)
