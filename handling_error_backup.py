@@ -25,21 +25,20 @@ def delete_files(file_paths):
             os.remove(file_path)
 
 # Verifica se a imagem 'image_path' está na tela e clica na imagem 'click_image_path' se encontrada
-def click_image_if_found(image_path, click_image_path):
+def click_element_if_found(driver):
     try:
-        image_location = pyautogui.locateCenterOnScreen(image_path, confidence=0.7)
-        if image_location:
+        # Espera até que o elemento esteja presente
+        element = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, 'div.flex-grow.overflow-y-auto'))
+        )
+        if element:
+            print("DIV de loguin encontrado.")
             time.sleep(1)
-            click_location = pyautogui.locateCenterOnScreen(click_image_path, confidence=0.7)
-            if click_location:
-                pyautogui.click(click_location)
-                time.sleep(1)
-                return True
+
+            return True
         return False
-    except pyautogui.ImageNotFoundException:
-        pass
     except Exception as e:
-        pass
+        print(f"Erro ao tentar identificar ou clicar no elemento HTML: {e}")
     return False
 
 # Atualiza a página e chama a função de envio de prompts
