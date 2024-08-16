@@ -45,11 +45,10 @@ def click_image_if_found(image_path, click_image_path):
 # Atualiza a página e chama a função de envio de prompts
 def handle_error(driver, responses_file, tittle_file, name):
     attempt_counter = int(os.environ.get(ATTEMPT_COUNTER_ENV_VAR, 0))
-    
     try:
         # Aguarda até que o elemento SVG esteja presente
         svg_element = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "svg.icon-lg"))
+            EC.presence_of_element_located((By.CSS_SELECTOR, ".flex.max-w-full.flex-col.flex-grow .text-token-text-error svg.icon-lg"))
         )
         
         if svg_element:
