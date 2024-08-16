@@ -1,7 +1,7 @@
 import time
 from selenium.webdriver.common.by import By
 import undetected_chromedriver as uc
-from handling_error import click_image_if_found, handle_error
+from handling_error import click_element_if_found, handle_error
 from send_prompt import send_prompts
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -21,14 +21,15 @@ def kill_chrome_processes():
         print(f"Erro ao encerrar os processos do Chrome: {e}")
 
 #
-def continuously_check_images():
+def continuously_check_elements(driver):
     while True:
         try:
-            found = click_image_if_found('static/error/thanks_for_use_error.png', 'static/error/continue_desconected.png')
+            # Identifica e clica no elemento de erro, se necessário
+            found = click_element_if_found(driver)
             if found:
-                pass
+                print("Elemento HTML de loguin identificado.")
         except Exception as e:
-            pass
+            print(f"Erro ao tentar identificar o elemento HTML: {e}")
         time.sleep(2)
 
 #
@@ -62,7 +63,7 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
         input_field.click()
         time.sleep(1)
 
-        image_check_thread = threading.Thread(target=continuously_check_images, daemon=True)
+        image_check_thread = threading.Thread(target=continuously_check_elements, args=(driver,), daemon=True)
         image_check_thread.start()
         
         # Passa os argumentos como uma tupla
@@ -73,8 +74,10 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
 
     finally:
         if image_check_thread is not None:
+            print("Aguardando o término da thread image_check_thread")
             image_check_thread.join(timeout=5)
         if error_check_thread is not None:
+            print("Aguardando o término da thread error_check_thread")
             error_check_thread.join(timeout=5)
         try:
             driver.quit()

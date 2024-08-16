@@ -25,35 +25,50 @@ def delete_files(file_paths):
             os.remove(file_path)
 
 # Verifica se a imagem 'image_path' está na tela e clica na imagem 'click_image_path' se encontrada
-def click_image_if_found(image_path, click_image_path):
+def click_element_if_found(driver):
     try:
-        image_location = pyautogui.locateCenterOnScreen(image_path, confidence=0.7)
-        if image_location:
-            time.sleep(1)
-            click_location = pyautogui.locateCenterOnScreen(click_image_path, confidence=0.7)
-            if click_location:
-                pyautogui.click(click_location)
+        # Espera até que o elemento div esteja presente
+        div_element = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, 'div.flex-grow.overflow-y-auto'))
+        )
+        if div_element:
+            print("Elemento HTML 'div' encontrado.")
+            
+            # Agora, tenta encontrar e clicar no link 'Permanecer desconectado'
+            link_element = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.LINK_TEXT, "Permanecer desconectado"))
+            )
+            if link_element:
+                time.sleep(1)
+                link_element.click()
+                print("Link 'Permanecer desconectado' encontrado e clicado.")
                 time.sleep(1)
                 return True
+
         return False
-    except pyautogui.ImageNotFoundException:
-        pass
     except Exception as e:
-        pass
+        print(f"Erro ao tentar identificar ou clicar no elemento HTML: {e}")
     return False
+
 
 # Atualiza a página e chama a função de envio de prompts
 def handle_error(driver, responses_file, tittle_file, name):
     attempt_counter = int(os.environ.get(ATTEMPT_COUNTER_ENV_VAR, 0))
-
     try:
-        if pyautogui.locateCenterOnScreen('static/error/error_symbol.png', confidence=0.7):
+        # Aguarda até que o elemento SVG esteja presente
+        svg_element = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, ".flex.max-w-full.flex-col.flex-grow .text-token-text-error svg.icon-lg"))
+        )
+        
+        if svg_element:
+            print("Elemento SVG encontrado.")
             time.sleep(1)
             delete_files(['output.txt', 'tittle.txt'])
             time.sleep(1)
             
             try:
                 driver.quit()
+                print("Driver encerrado com sucesso.")
             except Exception as e:
                 print(f"Erro ao encerrar o driver: {e}")
             kill_chrome_processes()
@@ -68,6 +83,9 @@ def handle_error(driver, responses_file, tittle_file, name):
                 sys.exit(1)
             
             # Reinicia o script
-            os.execv(sys.executable, ['python'] + ['automation.py'] + sys.argv[1:])
+            print("Reiniciando o script...")
+            os.execv(sys.executable, ['python'] + ['generate_Ebook.py'] + sys.argv[1:])
+        else:
+            print("Elemento SVG não encontrado.")
     except Exception as e:
-        pass
+        print(f"Erro ao tentar detectar o elemento SVG: {e}")
