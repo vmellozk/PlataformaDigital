@@ -1,8 +1,6 @@
 import time
-import pyautogui
 import os
 import sys
-from send_prompt import send_prompts
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
