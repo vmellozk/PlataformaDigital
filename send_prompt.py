@@ -1,7 +1,5 @@
 import time
-import pyautogui
 import pyperclip
-from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from prompt import get_initial_prompt, responses, tittle
 from selenium.webdriver.support.ui import WebDriverWait
@@ -53,9 +51,11 @@ def send_prompts(driver, responses_file, tittle_file, name):
     # Aguarda a resposta ser gerada e o botão de copiar estar disponível e salvar num arquivo txt
     while True:
         try:
-            copy_button_location = pyautogui.locateCenterOnScreen('static/images/button_copy_chat_gpt.png')
-            if copy_button_location:
-                pyautogui.click(copy_button_location)
+            button_element = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[6]/div/div/div[2]/div/div[2]/div/div/span/button'))
+        )
+            if button_element:
+                button_element.click()
                 time.sleep(2)
                 break
             else:
@@ -97,21 +97,24 @@ def send_prompts(driver, responses_file, tittle_file, name):
                 time.sleep(1)
         except Exception as e:
             print(f"Erro para descer a página: {e}")
-            time.sleep(1)
+            time.sleep(2)
 
     # Aguarda a resposta ser gerada e o botão de copiar estar disponível e salvar num arquivo txt
     while True:
         try:
-            copy_button_location = pyautogui.locateCenterOnScreen('static/images/button_copy_chat_gpt.png')
-            if copy_button_location:
-                pyautogui.click(copy_button_location)
-                time.sleep(2)
+            button_element = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span/button'))
+        )
+            if button_element:
+                time.sleep(1)
+                button_element.click()
+                time.sleep(1)
                 break
             else:
                 print("Botão de copiar não encontrado.")
                 time.sleep(1)
         except Exception as e:
-            print(f"Erro durante copiar a resposta do conteúdo do ebook: {e}")
+            print(f"Erro durante o copiar resposta da capa: {e}")
             time.sleep(1)
     copied_text = pyperclip.paste()
     with open(output_file, "w", encoding="utf-8") as file:
