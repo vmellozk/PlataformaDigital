@@ -76,16 +76,20 @@ def send_prompts(driver, responses_file, tittle_file, name):
     input_field.send_keys(Keys.ENTER)
     time.sleep(60)
 
-    # 
+    # Clique no elemento encontrado e rola até o final da página
     while True:
         try:
-            button_location = pyautogui.locateCenterOnScreen('static/images/chatgpt.png')
+            button_location = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, '//div[contains(text(),"ChatGPT")]//span[contains(text(),"4o mini")]'))
+            )
             if button_location:
-                pyautogui.click(button_location)
+                button_location.click()
                 time.sleep(1)
-                pyautogui.click(button_location)
+                button_location.click()
                 time.sleep(1)
-                pyautogui.press('end')
+                
+                body = driver.find_element(By.TAG_NAME, 'body')
+                body.send_keys(Keys.END)
                 time.sleep(3)
                 break
             else:
