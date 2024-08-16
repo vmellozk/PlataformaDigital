@@ -27,19 +27,29 @@ def delete_files(file_paths):
 # Verifica se a imagem 'image_path' está na tela e clica na imagem 'click_image_path' se encontrada
 def click_element_if_found(driver):
     try:
-        # Espera até que o elemento esteja presente
-        element = WebDriverWait(driver, 10).until(
+        # Espera até que o elemento div esteja presente
+        div_element = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, 'div.flex-grow.overflow-y-auto'))
         )
-        if element:
-            print("DIV de loguin encontrado.")
-            time.sleep(1)
+        if div_element:
+            print("Elemento HTML 'div' encontrado.")
+            
+            # Agora, tenta encontrar e clicar no link 'Permanecer desconectado'
+            link_element = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.LINK_TEXT, "Permanecer desconectado"))
+            )
+            if link_element:
+                time.sleep(1)
+                link_element.click()
+                print("Link 'Permanecer desconectado' encontrado e clicado.")
+                time.sleep(1)
+                return True
 
-            return True
         return False
     except Exception as e:
         print(f"Erro ao tentar identificar ou clicar no elemento HTML: {e}")
     return False
+
 
 # Atualiza a página e chama a função de envio de prompts
 def handle_error(driver, responses_file, tittle_file, name):
