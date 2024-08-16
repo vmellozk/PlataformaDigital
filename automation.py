@@ -6,13 +6,13 @@ from send_prompt import send_prompts
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import threading
-import pyautogui
 import os
 
 #
 image_check_thread = None
 error_check_thread = None
 
+#
 def kill_chrome_processes():
     try:
         os.system("taskkill /im chrome.exe /f")
@@ -48,14 +48,25 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
     driver = uc.Chrome(version_main=126)
 
     try:
+        #
         driver.maximize_window()
         driver.get('https://chat.openai.com')
         time.sleep(3)
 
-        while not pyautogui.locateCenterOnScreen('static/images/chatgpt.png'):
-            print("Aguardando a imagem 'chatgpt.png' antes de continuar...")
-            time.sleep(2)
+        #
+        while True:
+            try:
+                element = WebDriverWait(driver, 10).until(
+                    EC.presence_of_element_located((By.XPATH, '//div[contains(text(),"ChatGPT")]//span[contains(text(),"4o mini")]'))
+                )
+                if element:
+                    print("Elemento 'ChatGPT 4o mini' encontrado, continuando...")
+                    break
+            except Exception as e:
+                print("Aguardando o elemento 'ChatGPT 4o mini' antes de continuar...")
+                time.sleep(2)
 
+        #
         input_field = WebDriverWait(driver, 15).until(
             EC.presence_of_element_located((By.XPATH, '//*[@id="prompt-textarea"]'))
         )
@@ -63,16 +74,17 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
         input_field.click()
         time.sleep(1)
 
+        #
         image_check_thread = threading.Thread(target=continuously_check_elements, args=(driver,), daemon=True)
         image_check_thread.start()
-        
-        # Passa os argumentos como uma tupla
         error_check_thread = threading.Thread(target=continuously_check_errors, args=(driver, responses_file, tittle_file, name), daemon=True)
         error_check_thread.start()
 
+        #
         send_prompts(driver, responses_file, tittle_file, name)
 
     finally:
+        #
         if image_check_thread is not None:
             print("Aguardando o término da thread image_check_thread")
             image_check_thread.join(timeout=5)
