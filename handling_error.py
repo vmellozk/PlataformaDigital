@@ -45,7 +45,7 @@ def click_element_if_found(driver):
 
         return False
     except Exception as e:
-        print(f"Erro ao tentar identificar ou clicar no elemento HTML: {e}")
+        pass
     return False
 
 
@@ -86,4 +86,4 @@ def handle_error(driver, responses_file, tittle_file, name):
         else:
             print("Elemento SVG não encontrado.")
     except Exception as e:
-        print(f"Erro ao tentar detectar o elemento SVG: {e}")
+        pass
