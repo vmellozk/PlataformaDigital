@@ -1,6 +1,8 @@
 def get_initial_prompt():
     return (f'Olá! Você está prestes a criar um eBook para um cliente. Você receberá instruções para gerar um eBook completo e detalhado, seguindo um padrão específico. '
-            f'Primeiro, você irá receber os prompts, e depois vou mandar as respostas. Com base nessas respostas, eu vou te pedir para criar o ebook no padrão fornecido. Enquanto não houver pedido de prompt sobre o ebook responda "OK" para tudo que vier, ou seja; responda OK nessa mensagem e na próxima, onde virá as respostas. '
+            f'Primeiro, você irá receber os prompts, e depois vou mandar as respostas. Essas respostas vêm de uma formulário que o usuário preecheu. Com base nessas respostas, eu vou te pedir para criar o ebook no padrão fornecido. '
+            f'Detalhe: quanto mais conteúdo for fornecido na resposta, mais conteúdo será gerado. '
+            f'Enquanto não houver pedido de prompt sobre o ebook responda "OK" para tudo que vier, ou seja; responda OK nessa mensagem e na próxima, onde virá as respostas. '
             f'O eBook será dividido nas seguintes partes: Capa, Sumário, Introdução, Conteúdo Principal e Conclusão. '
             f'Agora eu vou te passar os prompts, e depois vou passar as respostas. '
             f'####Capa: (vou pedir de forma separada)'
