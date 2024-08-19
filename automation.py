@@ -29,7 +29,7 @@ def continuously_check_elements(driver):
             if found:
                 print("Elemento HTML de loguin identificado.")
         except Exception as e:
-            print(f"Erro ao tentar identificar o elemento HTML: {e}")
+            pass
         time.sleep(2)
 
 #
@@ -60,7 +60,6 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
                     EC.presence_of_element_located((By.XPATH, '//div[contains(text(),"ChatGPT")]//span[contains(text(),"4o mini")]'))
                 )
                 if element:
-                    print("Elemento 'ChatGPT 4o mini' encontrado, continuando...")
                     break
             except Exception as e:
                 print("Aguardando o elemento 'ChatGPT 4o mini' antes de continuar...")

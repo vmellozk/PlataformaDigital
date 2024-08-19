@@ -28,6 +28,13 @@ def copy_text(driver, button_xpath):
     copied_text = pyperclip.paste()
     return copied_text
 
+#
+def send_text_with_line_breaks(input_field, text):
+    for chunk in text.split('\n'):
+        input_field.send_keys(chunk)
+        input_field.send_keys(Keys.SHIFT + Keys.ENTER)
+    input_field.send_keys(Keys.ENTER)
+
 def send_prompts(driver, responses_file, tittle_file, name):
     # Reencontrar o campo de entrada para garantir que ele seja válido
     def get_input_field():
@@ -54,11 +61,8 @@ def send_prompts(driver, responses_file, tittle_file, name):
     responses_prompt = responses(responses_text)
     full_responses = ''.join(responses_prompt)
     full_responses += '\n Ok, passei as respostas, mas não faça nada ainda. Responda apenas OK, nada mais! Aguarde as instruções.\n'
-    for i in range(0, len(full_responses), 10000):
-        input_field.send_keys(full_responses[i:i + 10000])
-        time.sleep(1)
-    input_field.send_keys(Keys.ENTER)
-    time.sleep(15)
+    send_text_with_line_breaks(input_field, full_responses)
+    time.sleep(10)
     input_field = get_input_field()
 
     # Prompt 3
