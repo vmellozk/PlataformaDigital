@@ -52,8 +52,8 @@ def send_prompts(driver, responses_file, tittle_file, name):
     
     # Prompt 2
     responses_prompt = responses(responses_text)
-    for i in range(0, len(responses_prompt), 5000):
-        input_field.send_keys(responses_prompt[i:i + 5000])
+    for i in range(0, len(responses_prompt), 7000):
+        input_field.send_keys(responses_prompt[i:i + 7000])
         time.sleep(1)
     input_field.send_keys(Keys.ENTER)
     time.sleep(15)
