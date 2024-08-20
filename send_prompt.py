@@ -56,6 +56,7 @@ def send_prompts(driver, responses_file, tittle_file, name):
     time.sleep(5)
     # Reencontrar o campo de entrada
     input_field = get_input_field()
+    button_copy_1 = '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[2]/div/div/div[2]/div/div[2]/div/div/span[1]/button'
     
     # Prompt 2
     responses_prompt = responses(responses_text)
@@ -64,6 +65,7 @@ def send_prompts(driver, responses_file, tittle_file, name):
     send_text_with_line_breaks(input_field, full_responses)
     time.sleep(10)
     input_field = get_input_field()
+    button_copy_2 = '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[4]/div/div/div[2]/div/div[2]/div/div/span[1]/button'
 
     # Prompt 3
     tittle_prompt = tittle(name)
@@ -73,10 +75,8 @@ def send_prompts(driver, responses_file, tittle_file, name):
     input_field.send_keys(Keys.ENTER)
     time.sleep(8)
     input_field = get_input_field()
-
-    # Aguarda a resposta ser gerada e o botão de copiar estar disponível e salvar num arquivo txt
-    tittle_button_xpath = '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[6]/div/div/div[2]/div/div[2]/div/div/span/button'
-    copied_tittle = copy_text(driver, tittle_button_xpath)
+    button_copy_3 = '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[6]/div/div/div[2]/div/div[2]/div/div/span/button'
+    copied_tittle = copy_text(driver, button_copy_3)
     with open(tittle_file, "w", encoding="utf-8") as file:
         file.write(copied_tittle)
     time.sleep(1)
@@ -86,12 +86,13 @@ def send_prompts(driver, responses_file, tittle_file, name):
     time.sleep(1)
     input_field.send_keys(Keys.ENTER)
     time.sleep(60)
+    button_copy_4 = '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span/button'
 
     # Clique no elemento encontrado e rola até o final da página
     while True:
         try:
             button_location = WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.XPATH, '//div[contains(text(),"ChatGPT")]//span[contains(text(),"4o mini")]'))
+                EC.presence_of_element_located((By.XPATH, '//*[@id="radix-:r4:"]/div'))
             )
             if button_location:
                 button_location.click()
@@ -109,10 +110,7 @@ def send_prompts(driver, responses_file, tittle_file, name):
         except Exception as e:
             print(f"Erro para descer a página: {e}")
             time.sleep(2)
-
-    # Aguarda a resposta ser gerada e o botão de copiar estar disponível e salvar num arquivo txt
-    response_button_xpath = '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span/button'
-    copied_text = copy_text(driver, response_button_xpath)
+    copied_text = copy_text(driver, button_copy_4)
     with open(output_file, "w", encoding="utf-8") as file:
         file.write(copied_text)
     time.sleep(1)
