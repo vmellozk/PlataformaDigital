@@ -51,18 +51,18 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
         #
         driver.maximize_window()
         driver.get('https://chat.openai.com')
-        time.sleep(3)
+        time.sleep(5)
 
         #
         while True:
             try:
-                element = WebDriverWait(driver, 10).until(
-                    EC.presence_of_element_located((By.XPATH, '//*[@id="radix-:r4:"]/div'))
+                element = WebDriverWait(driver, 20).until(
+                    EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div[1]/div/div[2]'))
                 )
                 if element:
                     break
             except Exception as e:
-                print("Aguardando o elemento 'ChatGPT 4o mini' antes de continuar...")
+                print("Aguardando o elemento 'ChatGPT' antes de continuar...")
                 time.sleep(2)
 
         #
