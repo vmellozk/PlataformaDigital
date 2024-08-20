@@ -57,7 +57,7 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
         while True:
             try:
                 element = WebDriverWait(driver, 10).until(
-                    EC.presence_of_element_located((By.XPATH, '//div[contains(text(),"ChatGPT")]//span[contains(text(),"4o mini")]'))
+                    EC.presence_of_element_located((By.XPATH, '//*[@id="radix-:r4:"]/div'))
                 )
                 if element:
                     break
