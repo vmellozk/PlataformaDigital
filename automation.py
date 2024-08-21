@@ -9,10 +9,6 @@ import threading
 import os
 
 #
-image_check_thread = None
-error_check_thread = None
-
-#
 def kill_chrome_processes():
     try:
         os.system("taskkill /im chrome.exe /f")
@@ -21,31 +17,34 @@ def kill_chrome_processes():
         print(f"Erro ao encerrar os processos do Chrome: {e}")
 
 #
-def continuously_check_elements(driver):
+def continuously_check_elements(driver, lock):
     while True:
         try:
-            # Identifica e clica no elemento de erro, se necessário
-            found = click_element_if_found(driver)
-            if found:
-                print("Elemento HTML de loguin identificado.")
+            with lock:  # Sincroniza acesso ao driver
+                found = click_element_if_found(driver)
+                if found:
+                    print("Elemento HTML de loguin identificado.")
         except Exception as e:
-            pass
+            print(f"Erro durante a verificação contínua de elementos: {e}")
         time.sleep(2)
 
 #
-def continuously_check_errors(driver, responses_file, tittle_file, name):
+def continuously_check_errors(driver, responses_file, tittle_file, name, lock):
     while True:
         try:
-            handle_error(driver, responses_file, tittle_file, name)
+            with lock:  # Sincroniza acesso ao driver
+                handle_error(driver, responses_file, tittle_file, name)
             time.sleep(10)
         except Exception as e:
-            pass
+            print(f"Erro durante a verificação contínua de erros: {e}")
         time.sleep(2)
 
 #
 def chatgpt_response(responses_file, output_file, tittle_file, name):
-    global image_check_thread, error_check_thread
     driver = uc.Chrome(version_main=126)
+    image_check_thread = None
+    error_check_thread = None
+    lock = threading.Lock()
 
     try:
         #
@@ -74,13 +73,13 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
         time.sleep(1)
 
         #
-        image_check_thread = threading.Thread(target=continuously_check_elements, args=(driver,), daemon=True)
+        image_check_thread = threading.Thread(target=continuously_check_elements, args=(driver, lock), daemon=True)
         image_check_thread.start()
-        error_check_thread = threading.Thread(target=continuously_check_errors, args=(driver, responses_file, tittle_file, name), daemon=True)
+        error_check_thread = threading.Thread(target=continuously_check_errors, args=(driver, responses_file, tittle_file, name, lock), daemon=True)
         error_check_thread.start()
 
         #
-        send_prompts(driver, responses_file, tittle_file, name)
+        send_prompts(driver, responses_file, tittle_file, output_file, name)
 
     finally:
         #

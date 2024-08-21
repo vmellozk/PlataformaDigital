@@ -3,19 +3,42 @@ from database import init_db
 from models import insert_user, get_user_by_email, insert_survey_response
 from generate_Ebook import generate_ebook
 import threading
+import queue
 
+#
 app = Flask(__name__)
 app.secret_key = 'chave_secreta'
+MAX_QUEUE_SIZE = 100
+task_queue = queue.Queue(maxsize=MAX_QUEUE_SIZE)
+semaphore = threading.Semaphore(5)
 
+#
+def process_queue():
+    while True:
+        user_id = task_queue.get()
+        if user_id is None:
+            break
+        with semaphore:
+            print(f"Gerando eBook para o usuário_id: {user_id}")
+            generate_ebook(user_id)
+        task_queue.task_done()
+
+#
+queue_processor_thread = threading.Thread(target=process_queue, daemon=True)
+queue_processor_thread.start()
+
+#
 @app.route('/')
 @app.route('/home')
 def home():
     return render_template('home.html')
 
+#
 @app.route('/loja')
 def loja():
     return render_template('loja.html')
 
+#
 @app.route('/user/visitante')
 def visit_user():
     if 'user_id' in session:
@@ -23,6 +46,7 @@ def visit_user():
     else:
         return redirect(url_for('login'))
 
+#
 @app.route('/user')
 def user():
     if 'user_id' in session:
@@ -30,6 +54,7 @@ def user():
     else:
         return redirect(url_for('login'))
 
+#
 @app.route('/premium')
 def premium():
     if 'user_id' in session:
@@ -37,6 +62,7 @@ def premium():
     else:
         return redirect(url_for('login'))
 
+#
 @app.route('/formulario', methods=['GET', 'POST'])
 def vendas():
     if 'user_id' in session:
@@ -44,6 +70,7 @@ def vendas():
     else:
         return redirect(url_for('login'))
 
+#
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -60,6 +87,7 @@ def register():
     
     return render_template('register.html')
 
+#
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -78,6 +106,7 @@ def login():
 
     return render_template('login.html')
 
+#
 @app.route('/submit', methods=['POST'])
 def submit():
     if 'user_id' in session:
@@ -98,25 +127,25 @@ def submit():
         )
 
         try:
-            print(f"Inserindo resposta do formulário: {data}")  # Print para verificar os dados
+            print(f"Inserindo resposta do formulário: {data}")
             insert_survey_response(data)
 
-            # Iniciando uma thread para gerar o ebook em segundo plano
-            def generate_ebook_in_thread(user_id):
-                print(f"Gerando eBook para o usuário_id: {user_id}")
-                generate_ebook(user_id)
-            thread = threading.Thread(target=generate_ebook_in_thread, args=(user_id,))
-            thread.start()
-            flash('Formulário enviado com sucesso! Aguarde o eBook gerado.', 'success')
+            # Adiciona o user_id à fila de tarefas
+            if not task_queue.full():
+                task_queue.put(user_id)
+                flash('Formulário enviado com sucesso! Aguarde o eBook gerado.', 'success')
+            else:
+                flash('A fila está cheia. Tente novamente mais tarde.', 'warning')
 
         except Exception as e:
-            print(f"Erro durante a submissão do formulário ou geração do eBook: {e}")  # Print para erro
+            print(f"Erro durante a submissão do formulário ou geração do eBook: {e}")
             flash('Houve um erro ao enviar o formulário. Tente novamente ou entre em contato.', 'warning')
 
         return redirect(url_for('home'))
 
     return redirect(url_for('login'))
 
+#
 @app.route('/logout')
 def logout():
     session.clear()

@@ -4,6 +4,7 @@ import pandas as pd
 from pdf_base import PDF
 from automation import chatgpt_response
 from clear_caracters import clean_text
+from datetime import datetime
 
 # Diretório para o eBook
 ebook_directory = 'ebooks'
@@ -11,12 +12,14 @@ if not os.path.exists(ebook_directory):
     os.makedirs(ebook_directory)
 
 def generate_ebook(user_id):
-    responses_file = 'responses.txt'
-    output_file = 'output.txt'
-    tittle_file = 'tittle.txt'
+    # Gera um timestamp único para os arquivos
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    responses_file = f'responses_{user_id}_{timestamp}.txt'
+    output_file = f'output_{user_id}_{timestamp}.txt'
+    tittle_file = f'tittle_{user_id}_{timestamp}.txt'
 
     try:
-        # Conexão com o banco de dados
+        # Conexão com o banco de dados e obtém os dados do usuário e as respostas
         conn = sqlite3.connect('database.db')
         df = pd.read_sql_query("SELECT * FROM survey_responses WHERE user_id = ?", conn, params=(user_id,))
         df_user = pd.read_sql_query("SELECT email, name FROM users WHERE id = ?", conn, params=(user_id,))
@@ -53,20 +56,20 @@ def generate_ebook(user_id):
         # Executa a função de automação para gerar o conteúdo
         chatgpt_response(responses_file, output_file, tittle_file, formatted_name)
 
-        # Verifica se o arquivo de resposta foi criado e lê o conteúdo do arquivo de resposta e çimpa o conteúdo do arquivo de resposta
+        # Verifica se o arquivo de resposta foi criado e lê o conteúdo do arquivo de resposta
         if not os.path.exists(output_file):
             raise FileNotFoundError(f"O arquivo de resposta '{output_file}' não foi criado.")
         with open(output_file, 'r', encoding='utf-8') as file:
             content = file.read()
         content = clean_text(content)
 
-        # Lê o conteúdo do arquivo de título e Limpa o título também
+        # Lê o conteúdo do arquivo de título e limpa o título
         if os.path.exists(tittle_file):
             with open(tittle_file, 'r', encoding='utf-8') as file:
                 tittle_content = file.read().strip()
         title = clean_text(tittle_content)
 
-        # Cria o PDF e Adiciona as seções ao PDF com base nas palavras-chave
+        # Cria o PDF e adiciona as seções ao PDF com base nas palavras-chave
         pdf = PDF()
         pdf.add_cover(title)
         sections = {
@@ -107,11 +110,11 @@ def generate_ebook(user_id):
         # Salva o arquivo PDF e verifica a numeração atual dos arquivos
         counter = 1
         while True:
-            file_path = f'ebooks/{email_base}_{counter}.pdf'
+            file_path = f'ebooks/{user_id}_{email_base}_{counter}_{timestamp}.pdf'
             if not os.path.exists(file_path):
+                pdf.output(file_path)
                 break
             counter += 1
-        pdf.output(file_path)
 
         # Atualiza o banco de dados
         cursor = conn.cursor()

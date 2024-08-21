@@ -5,11 +5,12 @@ from prompt import get_initial_prompt, responses, tittle
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from selenium.common.exceptions import TimeoutException
+from threading import Lock
 
-output_file = 'output.txt'
+# Criação de um mutex para garantir que não haja conflitos entre múltiplas instâncias
+mutex = Lock()
 
-#
 def copy_text(driver, button_xpath):
     while True:
         try:
@@ -31,26 +32,22 @@ def copy_text(driver, button_xpath):
     copied_text = pyperclip.paste()
     return copied_text
 
-#
 def send_text_with_line_breaks(input_field, text):
     for chunk in text.split('\n'):
         input_field.send_keys(chunk)
         input_field.send_keys(Keys.SHIFT + Keys.ENTER)
     input_field.send_keys(Keys.ENTER)
 
-def send_prompts(driver, responses_file, tittle_file, name):
-    # Reencontrar o campo de entrada para garantir que ele seja válido
+def send_prompts(driver, responses_file, tittle_file, output_file, name):
     def get_input_field():
         return WebDriverWait(driver, 30).until(
             EC.presence_of_element_located((By.XPATH, '//*[@id="prompt-textarea"]'))
         )
     input_field = get_input_field()
 
-    # Lê o texto do arquivo de respostas
     with open(responses_file, 'r', encoding='utf-8') as file:
         responses_text = file.read()
 
-    # Prompt 1
     full_prompt = get_initial_prompt()
     for i in range(0, len(full_prompt), 5000):
         input_field.send_keys(full_prompt[i:i + 5000])
@@ -71,7 +68,6 @@ def send_prompts(driver, responses_file, tittle_file, name):
             print(f"Erro ao encontrar o button_copy_1: {e}")
             time.sleep(1)
 
-    # Prompt 2
     responses_prompt = responses(responses_text)
     full_responses = ''.join(responses_prompt)
     full_responses += '\n Ok, passei as respostas, mas não faça nada ainda. Responda apenas OK, nada mais! Aguarde as instruções.\n'
@@ -92,7 +88,6 @@ def send_prompts(driver, responses_file, tittle_file, name):
             print(f"Erro ao encontrar o button_copy_2: {e}")
             time.sleep(1)
 
-    # Prompt 3
     tittle_prompt = tittle(name)
     for i in range(0, len(tittle_prompt), 1000):
         input_field.send_keys(tittle_prompt[i:i + 1000])
@@ -106,8 +101,10 @@ def send_prompts(driver, responses_file, tittle_file, name):
                 print("button_copy_3 encontrado")
                 time.sleep(2)
                 copied_tittle = copy_text(driver, button_copy_3)
-                with open(tittle_file, "w", encoding="utf-8") as file:
-                    file.write(copied_tittle)
+                
+                with mutex:
+                    with open(tittle_file, "w", encoding="utf-8") as file:
+                        file.write(copied_tittle)
                 time.sleep(1)
                 break
             else:
@@ -122,35 +119,32 @@ def send_prompts(driver, responses_file, tittle_file, name):
     input_field.send_keys(Keys.ENTER)
     while True:
         try:
-            # Verifica a presença do botão "keep_generate"
-            try:
-                keep_generate = WebDriverWait(driver, 10).until(
-                    EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div[1]/div/main/div[1]/div[2]/div[1]/div/form/div/div[1]/div/div/div/div/button'))
-                )
-                if keep_generate:
-                    print("Botão de continuar gerando texto encontrado")
-                    time.sleep(2)
-                    keep_generate.click()
-                    # Aguarda a presença do botão "response_button_xpath" após clicar em "keep_generate"
-                    try:
-                        response_button_xpath = WebDriverWait(driver, 20).until(
-                            EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span/button'))
-                        )
-                        if response_button_xpath:
-                            print("Botão de copiar resposta encontrado")
-                            time.sleep(2)
-                            copied_text = copy_text(driver, '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span/button')
+            keep_generate = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div[1]/div/main/div[1]/div[2]/div[1]/div/form/div/div[1]/div/div/div/div/button'))
+            )
+            if keep_generate:
+                print("Botão de continuar gerando texto encontrado")
+                time.sleep(2)
+                keep_generate.click()
+
+                try:
+                    response_button_xpath = WebDriverWait(driver, 20).until(
+                        EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span/button'))
+                    )
+                    if response_button_xpath:
+                        print("Botão de copiar resposta encontrado")
+                        time.sleep(2)
+                        copied_text = copy_text(driver, '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span/button')
+                        with mutex:
                             with open(output_file, "w", encoding="utf-8") as file:
                                 file.write(copied_text)
-                            time.sleep(1)
-                            break
-                    except TimeoutException:
-                        print("Tempo limite esgotado para encontrar o botão de copiar resposta após clicar em 'keep_generate'. Tentando novamente...")
-            except TimeoutException:
-                # Se o botão "keep_generate" não for encontrado, continua para verificar o "response_button_xpath"
+                        time.sleep(1)
+                        break
+                except TimeoutException:
+                    print("Tempo limite esgotado para encontrar o botão de copiar resposta após clicar em 'keep_generate'. Tentando novamente...")
+            else:
                 print("Botão de continuar gerando texto não foi encontrado")
 
-                # Tenta encontrar o botão "response_button_xpath" diretamente
                 try:
                     response_button_xpath = WebDriverWait(driver, 10).until(
                         EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span/button'))
@@ -159,8 +153,9 @@ def send_prompts(driver, responses_file, tittle_file, name):
                         print("Botão de copiar resposta encontrado")
                         time.sleep(2)
                         copied_text = copy_text(driver, '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span/button')
-                        with open(output_file, "w", encoding="utf-8") as file:
-                            file.write(copied_text)
+                        with mutex:
+                            with open(output_file, "w", encoding="utf-8") as file:
+                                file.write(copied_text)
                         time.sleep(1)
                         break
                 except TimeoutException:
