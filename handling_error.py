@@ -4,7 +4,6 @@ import sys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from generate_Ebook import generate_ebook
 
 # Função para obter o contador de tentativas a partir de uma variável de ambiente
 def get_attempt_counter(user_id):
@@ -63,6 +62,7 @@ def click_element_if_found(driver):
 
 # Atualiza a página e chama a função de envio de prompts
 def handle_error(driver, responses_file, output_file, tittle_file, name, user_id):
+    from generate_Ebook import generate_ebook
     attempt_counter = get_attempt_counter(user_id)
     try:
         # Aguarda até que o elemento SVG esteja presente
