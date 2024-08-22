@@ -4,7 +4,7 @@ __pycache__
 *.pdf
 ebooks/*.pdf
 *.db
-ebooks/
+users/
 .env
 output/
 responses.txt
