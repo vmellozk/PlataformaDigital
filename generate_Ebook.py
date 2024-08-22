@@ -11,12 +11,22 @@ ebook_directory = 'ebooks'
 if not os.path.exists(ebook_directory):
     os.makedirs(ebook_directory)
 
+#
+output_directory = 'output'
+if not os.path.exists(output_directory):
+    os.makedirs(output_directory)
+
+#
 def generate_ebook(user_id):
-    # Gera um timestamp único para os arquivos
+    # Diretório específico para o usuário
+    user_directory = os.path.join(output_directory, str(user_id))
+    if not os.path.exists(user_directory):
+        os.makedirs(user_directory)
+
+    # Gera um timestamp único para os arquivos e coloca os arquivos dentro da pasta de cada usuário
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    responses_file = f'responses_{user_id}_{timestamp}.txt'
-    output_file = f'output_{user_id}_{timestamp}.txt'
-    tittle_file = f'tittle_{user_id}_{timestamp}.txt'
+    output_file = os.path.join(user_directory, f'output_{user_id}_{timestamp}.txt')
+    tittle_file = os.path.join(user_directory, f'tittle_{user_id}_{timestamp}.txt')
 
     try:
         # Conexão com o banco de dados e obtém os dados do usuário e as respostas
@@ -48,8 +58,9 @@ def generate_ebook(user_id):
             email_base = email
 
         # Salva as respostas em um arquivo
-        with open(responses_file, 'w', encoding='utf-8') as file:
-            for index, row in df.iterrows():
+        for index, row in df.iterrows():
+            responses_file = os.path.join(user_directory, f'response_{index + 1}_{timestamp}.txt')
+            with open(responses_file, 'w', encoding='utf-8') as file:
                 questions_answers = '\n'.join([f"{col}: {row[col]}" for col in df.columns if col not in ['id', 'user_id']])
                 file.write(f"Response {index + 1}:\n{questions_answers}\n\n")
 
