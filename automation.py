@@ -7,8 +7,11 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import threading
 import os
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
 
-#
+# Função
 def kill_chrome_processes():
     try:
         os.system("taskkill /im chrome.exe /f")
@@ -25,7 +28,7 @@ def continuously_check_elements(driver, lock):
                 if found:
                     print("Elemento HTML de loguin identificado.")
         except Exception as e:
-            print(f"Erro durante a verificação contínua de elementos: {e}")
+            pass
         time.sleep(2)
 
 #
@@ -36,19 +39,22 @@ def continuously_check_errors(driver, responses_file, tittle_file, name, lock):
                 handle_error(driver, responses_file, tittle_file, name)
             time.sleep(10)
         except Exception as e:
-            print(f"Erro durante a verificação contínua de erros: {e}")
+            pass
         time.sleep(2)
 
 #
 def chatgpt_response(responses_file, output_file, tittle_file, name):
+    #
     driver = uc.Chrome(version_main=126)
+
+    #
     image_check_thread = None
     error_check_thread = None
     lock = threading.Lock()
 
     try:
         #
-        driver.maximize_window()
+        driver.minimize_window()
         driver.get('https://chat.openai.com')
         time.sleep(5)
 
@@ -59,15 +65,28 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
                     EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div[1]/div/div[2]'))
                 )
                 if element:
+                    print("elemento chatgpt encontrado")
                     break
+                else:
+                    print("elemento chatgpt não encontrado")
             except Exception as e:
                 print("Aguardando o elemento 'ChatGPT' antes de continuar...")
                 time.sleep(2)
 
-        #
-        input_field = WebDriverWait(driver, 15).until(
-            EC.presence_of_element_located((By.XPATH, '//*[@id="prompt-textarea"]'))
-        )
+        while True:
+            try:
+                input_field = WebDriverWait(driver, 20).until(
+                    EC.presence_of_element_located((By.XPATH, '//*[@id="prompt-textarea"]'))
+                )
+                if input_field:
+                    print("elemento textarea encontrado")
+                    break
+                else:
+                    print("elemento textarea não encontrado")
+            except Exception as e:
+                print("Aguardando o elemento 'textarea' antes de continuar...")
+                time.sleep(2)
+
         time.sleep(1)
         input_field.click()
         time.sleep(1)
@@ -94,3 +113,4 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
         except Exception as e:
             print(f"Erro ao encerrar o driver: {e}")
         kill_chrome_processes()
+ 
