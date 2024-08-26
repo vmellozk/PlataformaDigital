@@ -9,4 +9,4 @@ users/
 output/
 responses.txt
 tools/
-*.jar
+*.jar 
