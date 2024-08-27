@@ -45,77 +45,76 @@ def continuously_check_errors(driver, responses_file, tittle_file, name, lock):
 
 #
 def chatgpt_response(responses_file, output_file, tittle_file, name):
-    #
-    chrome_options = Options()
-    chrome_options.add_argument("--window-position=-10000,0")
-    chrome_options.add_argument("--window-size=1920,1080")
-    driver = uc.Chrome(version_main=126, options=chrome_options)
+    offsets = [
+        (0, 0), (960, 0),
+        (0, 540), (960, 540)
+    ]
+    window_width = 960
+    window_height = 540
 
-    #
-    image_check_thread = None
-    error_check_thread = None
+    drivers = []
+    threads = []
     lock = threading.Lock()
 
     try:
-        #
-        driver.maximize_window()
-        driver.get('https://chat.openai.com')
-        print("abrindo o site")
-        time.sleep(5)
+        for offset in offsets:
+            # Configurar o navegador com tamanho inicial pequeno
+            chrome_options = Options()
+            chrome_options.add_argument(f'--window-position={offset[0]},{offset[1]}')
+            chrome_options.add_argument(f'--window-size={window_width},{window_height}')
+            driver = uc.Chrome(version_main=126, options=chrome_options)
+            
+            # Abrir o navegador e ajustar a posição e o tamanho
+            driver.get('about:blank')  # Carregar uma página em branco para garantir que o navegador seja inicializado
+            driver.set_window_size(window_width, window_height)
+            driver.set_window_position(offset[0], offset[1])
 
-        #
-        while True:
-            try:
-                element = WebDriverWait(driver, 20).until(
-                    EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div[1]/div/div[2]'))
-                )
-                if element:
-                    print("elemento chatgpt encontrado")
-                    break
-                else:
-                    print("elemento chatgpt não encontrado")
-            except Exception as e:
-                print("Aguardando o elemento 'ChatGPT' antes de continuar...")
-                time.sleep(2)
+            drivers.append(driver)
 
-        while True:
-            try:
-                input_field = WebDriverWait(driver, 20).until(
-                    EC.presence_of_element_located((By.XPATH, '//*[@id="prompt-textarea"]'))
-                )
-                if input_field:
-                    print("elemento textarea encontrado")
-                    break
-                else:
-                    print("elemento textarea não encontrado")
-            except Exception as e:
-                print("Aguardando o elemento 'textarea' antes de continuar...")
-                time.sleep(2)
+            # Criar e iniciar a thread para automação
+            thread = threading.Thread(target=lambda d=driver, o=offset: (
+                (lambda: (
+                    d.get('https://chat.openai.com'),
+                    print(f"Abrindo o site na posição {o}"),
+                    time.sleep(5),
+                    (lambda: (
+                        WebDriverWait(d, 20).until(
+                            EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div[1]/div/div[2]'))
+                        ),
+                        print("Elemento chatgpt encontrado")
+                    ))(),
+                    (lambda: (
+                        WebDriverWait(d, 20).until(
+                            EC.presence_of_element_located((By.XPATH, '//*[@id="prompt-textarea"]'))
+                        ),
+                        print("Elemento textarea encontrado")
+                    ))(),
+                    time.sleep(1),
+                    d.find_element(By.XPATH, '//*[@id="prompt-textarea"]').click(),
+                    time.sleep(1),
+                    threading.Thread(target=continuously_check_elements, args=(d, lock), daemon=True).start(),
+                    threading.Thread(target=continuously_check_errors, args=(d, responses_file, tittle_file, name, lock), daemon=True).start(),
+                    print("Chamando send_prompts()"),
+                    send_prompts(d, responses_file, tittle_file, output_file, name),
+                    d.quit()
+                ))()
+            ))
+            threads.append(thread)
+            thread.start()
 
-        time.sleep(1)
-        input_field.click()
-        time.sleep(1)
-
-        #
-        image_check_thread = threading.Thread(target=continuously_check_elements, args=(driver, lock), daemon=True)
-        image_check_thread.start()
-        error_check_thread = threading.Thread(target=continuously_check_errors, args=(driver, responses_file, tittle_file, name, lock), daemon=True)
-        error_check_thread.start()
-
-        #
-        print("chamando send_prompts()")
-        send_prompts(driver, responses_file, tittle_file, output_file, name)
+        for thread in threads:
+            thread.join()
 
     finally:
-        #
-        if image_check_thread is not None:
-            print("Aguardando o término da thread image_check_thread")
-            image_check_thread.join(timeout=5)
-        if error_check_thread is not None:
-            print("Aguardando o término da thread error_check_thread")
-            error_check_thread.join(timeout=5)
-        try:
-            driver.quit()
-        except Exception as e:
-            print(f"Erro ao encerrar o driver: {e}")
+        # Garantir que todos os drivers sejam encerrados
+        for driver in drivers:
+            try:
+                driver.quit()
+            except Exception as e:
+                print(f"Erro ao encerrar o driver: {e}")
+
+        # Função fictícia para garantir que todos os processos do Chrome sejam encerrados
         kill_chrome_processes()
+
+if __name__ == "__main__":
+    chatgpt_response('responses.txt', 'output.txt', 'tittle.txt', name='Victor Mello')
