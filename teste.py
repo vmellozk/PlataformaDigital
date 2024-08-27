@@ -8,7 +8,14 @@ import pyperclip
 from selenium.webdriver.common.keys import Keys
 from prompt import get_initial_prompt, responses, tittle
 from selenium.common.exceptions import TimeoutException
-from threading import Lock
+from threading import Lock, Thread
+import pygetwindow as gw
+
+# Configurações
+window_width = 960
+window_height = 540
+x_offset = 0
+y_offset = 0
 
 mutex = Lock()
 
@@ -33,7 +40,6 @@ def copy_text(driver, button_xpath):
     copied_text = pyperclip.paste()
     return copied_text
 
-#
 def send_text_with_line_breaks(input_field, text):
     for chunk in text.split('\n'):
         input_field.send_keys(chunk)
@@ -41,7 +47,6 @@ def send_text_with_line_breaks(input_field, text):
     input_field.send_keys(Keys.ENTER)
 
 def send_prompts(driver, responses_file, tittle_file, output_file, name):
-    #
     def get_input_field():
         return WebDriverWait(driver, 30).until(
             EC.presence_of_element_located((By.XPATH, '//*[@id="prompt-textarea"]'))
@@ -51,12 +56,12 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name):
     with open(responses_file, 'r', encoding='utf-8') as file:
         responses_text = file.read()
 
-    #
     full_prompt = get_initial_prompt()
     for i in range(0, len(full_prompt), 5000):
         input_field.send_keys(full_prompt[i:i + 5000])
         time.sleep(1)
     input_field.send_keys(Keys.ENTER)
+
     while True:
         try:
             button_copy_1 = WebDriverWait(driver, 10).until(
@@ -64,7 +69,7 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name):
             )
             if button_copy_1:
                 print("button_copy_1 encontrado")
-                time.sleep(1)
+                time.sleep(2)
                 break
             else:
                 print("button_copy_1 não encontrado")
@@ -72,12 +77,12 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name):
             print(f"Erro ao encontrar o button_copy_1: {e}")
             time.sleep(1)
 
-    #
     responses_prompt = responses(responses_text)
     full_responses = ''.join(responses_prompt)
     full_responses += '\n Ok, passei as respostas, mas não faça nada ainda. Responda apenas OK, nada mais! Aguarde as instruções.\n'
     send_text_with_line_breaks(input_field, full_responses)
     input_field = get_input_field()
+
     while True:
         try:
             button_copy_2 = WebDriverWait(driver, 10).until(
@@ -93,13 +98,13 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name):
             print(f"Erro ao encontrar o button_copy_2: {e}")
             time.sleep(1)
 
-    #
     tittle_prompt = tittle(name)
     for i in range(0, len(tittle_prompt), 1000):
         input_field.send_keys(tittle_prompt[i:i + 1000])
         time.sleep(2)
     input_field.send_keys(Keys.ENTER)
     input_field = get_input_field()
+
     while True:
         try:
             button_copy_3 = '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[6]/div/div/div[2]/div/div[2]/div/div/span/button'
@@ -119,11 +124,11 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name):
             print(f"Erro ao encontrar o button_copy_3: {e}")
             time.sleep(1)
 
-    #
     confirmacao = 'OK, agora me forneça o restante do conteúdo. Faça com que seja algo mais pessoal, abordando as respostas e, em alguns momentos em primeira pessoa, mas mantendo o profissionalismo. Lembrando da hash antes de: ####Introdução, ####Sumário, ####Conteúdo e ####Conclusão. Forneça esses tópicos assim e tudo em um único texto! Lembrando que quanto mais conteúdo foi fornecido de resposta, mais conteúdo será gerado. Apenas responda o que foi pedido, sem "essa foi a resposta, se precisar de mais..." não quero nada disso. Triplique o tamanho do conteúdo do ebook para cada tópico. Ou seja, me dê 3x mais de conteúdo para cada tópico do ebook do que o normal, tornando o ebook completo.'
     input_field.send_keys(confirmacao)
     time.sleep(1)
     input_field.send_keys(Keys.ENTER)
+
     while True:
         try:
             keep_generate = WebDriverWait(driver, 10).until(
@@ -171,52 +176,67 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name):
         except Exception as e:
             print(f"Erro inesperado durante a execução: {e}")
 
-#
-chrome_options = Options()
-chrome_options.add_argument("--window-position=-10000,0")
-chrome_options.add_argument("--window-size=1920,1080")
-driver = uc.Chrome(version_main=126, options=chrome_options)
+def open_browser_instance():
+    # Configurar o navegador com tamanho inicial pequeno
+    chrome_options = Options()
+    chrome_options.add_argument('--window-size=100,100')  # Tamanho inicial pequeno
+    chrome_options.add_argument(f'--window-position={x_offset},{y_offset}')
+    
+    driver = uc.Chrome(version_main=126, options=chrome_options)
+    
+    # Abrir o navegador
+    driver.get('about:blank')  # Carregar uma página em branco para garantir que o navegador seja inicializado
+    
+    # Ajustar o tamanho e a posição da janela
+    driver.set_window_size(window_width, window_height)
+    driver.set_window_position(x_offset, y_offset)
+    
+    # Carregar a página desejada após o ajuste
+    driver.get('https://www.chatgpt.com')
+    
+    return driver
 
-#
-driver.minimize_window()
-driver.get('https://chat.openai.com')
-print("abrindo o site")
-time.sleep(5)
+def automate_browser(driver):
+    # Aguarde o elemento e inicie a automação
+    while True:
+        try:
+            element = WebDriverWait(driver, 20).until(
+                EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div[1]/div/div[2]'))
+            )
+            if element:
+                print("elemento chatgpt encontrado")
+                time.sleep(2)
+                break
+            else:
+                print("elemento chatgpt não encontrado")
+        except Exception as e:
+            print("Aguardando o elemento 'ChatGPT' antes de continuar...")
+            time.sleep(2)
 
-#
-while True:
-    try:
-        element = WebDriverWait(driver, 20).until(
-            EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div[1]/div/div[2]'))
-        )
-        if element:
-            print("elemento chatgpt encontrado")
-            break
-        else:
-            print("elemento chatgpt não encontrado")
-    except Exception as e:
-        print("Aguardando o elemento 'ChatGPT' antes de continuar...")
-        time.sleep(2)
+    while True:
+        try:
+            input_field = WebDriverWait(driver, 20).until(
+                EC.presence_of_element_located((By.XPATH, '//*[@id="prompt-textarea"]'))
+            )
+            if input_field:
+                print("elemento textarea encontrado")
+                time.sleep(2)
+                break
+            else:
+                print("elemento textarea não encontrado")
+        except Exception as e:
+            print("Aguardando o elemento 'textarea' antes de continuar...")
+            time.sleep(2)
 
-while True:
-    try:
-        input_field = WebDriverWait(driver, 20).until(
-            EC.presence_of_element_located((By.XPATH, '//*[@id="prompt-textarea"]'))
-        )
-        if input_field:
-            print("elemento textarea encontrado")
-            break
-        else:
-            print("elemento textarea não encontrado")
-    except Exception as e:
-        print("Aguardando o elemento 'textarea' antes de continuar...")
-        time.sleep(2)
+    time.sleep(1)
+    input_field.click()
+    print("chamando send_prompts()")
+    send_prompts(driver, responses_file='responses.txt', tittle_file='tittle.txt', output_file='output.txt', name='Victor Mello')
+    time.sleep(5)
+    driver.quit()
 
-time.sleep(1)
-input_field.click()
-print("chamando send_prompts()")
-responses_file = 'responses.txt'
-tittle_file = 'tittle.txt'
-output_file = 'output.txt'
-send_prompts(driver, responses_file, tittle_file, output_file, name='Victor Mello')
-driver.quit()
+# Iniciar o navegador e organizar a janela
+driver = open_browser_instance()
+
+# Executar a função de automação para o navegador
+automate_browser(driver)
