@@ -14,8 +14,7 @@ import pygetwindow as gw
 # Configurações
 window_width = 960
 window_height = 540
-x_offset = 0
-y_offset = 0
+offsets = [(0, 0), (960, 0), (0, 540), (960, 540)]
 
 mutex = Lock()
 
@@ -176,11 +175,11 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name):
         except Exception as e:
             print(f"Erro inesperado durante a execução: {e}")
 
-def open_browser_instance():
+def open_browser_instance(offset):
     # Configurar o navegador com tamanho inicial pequeno
     chrome_options = Options()
     chrome_options.add_argument('--window-size=100,100')  # Tamanho inicial pequeno
-    chrome_options.add_argument(f'--window-position={x_offset},{y_offset}')
+    chrome_options.add_argument(f'--window-position={offset[0]},{offset[1]}')
     
     driver = uc.Chrome(version_main=126, options=chrome_options)
     
@@ -189,7 +188,7 @@ def open_browser_instance():
     
     # Ajustar o tamanho e a posição da janela
     driver.set_window_size(window_width, window_height)
-    driver.set_window_position(x_offset, y_offset)
+    driver.set_window_position(offset[0], offset[1])
     
     # Carregar a página desejada após o ajuste
     driver.get('https://www.chatgpt.com')
@@ -235,8 +234,17 @@ def automate_browser(driver):
     time.sleep(5)
     driver.quit()
 
-# Iniciar o navegador e organizar a janela
-driver = open_browser_instance()
+# Iniciar o navegador e organizar as abas
+drivers = []
+threads = []
 
-# Executar a função de automação para o navegador
-automate_browser(driver)
+for offset in offsets:
+    driver = open_browser_instance(offset)
+    drivers.append(driver)
+    thread = Thread(target=automate_browser, args=(driver,))
+    threads.append(thread)
+    thread.start()
+
+for thread in threads:
+    thread.join()
+ 
