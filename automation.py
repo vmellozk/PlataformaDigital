@@ -10,6 +10,7 @@ import os
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 
 # Função
 def kill_chrome_processes():
@@ -35,7 +36,7 @@ def continuously_check_elements(driver, lock):
 def continuously_check_errors(driver, responses_file, tittle_file, name, lock):
     while True:
         try:
-            with lock:  # Sincroniza acesso ao driver
+            with lock:
                 handle_error(driver, responses_file, tittle_file, name)
             time.sleep(10)
         except Exception as e:
@@ -45,7 +46,10 @@ def continuously_check_errors(driver, responses_file, tittle_file, name, lock):
 #
 def chatgpt_response(responses_file, output_file, tittle_file, name):
     #
-    driver = uc.Chrome(version_main=126)
+    chrome_options = Options()
+    chrome_options.add_argument("--window-position=-10000,0")
+    chrome_options.add_argument("--window-size=1920,1080")
+    driver = uc.Chrome(version_main=126, options=chrome_options)
 
     #
     image_check_thread = None
@@ -54,8 +58,9 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
 
     try:
         #
-        driver.minimize_window()
+        driver.maximize_window()
         driver.get('https://chat.openai.com')
+        print("abrindo o site")
         time.sleep(5)
 
         #
@@ -98,6 +103,7 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
         error_check_thread.start()
 
         #
+        print("chamando send_prompts()")
         send_prompts(driver, responses_file, tittle_file, output_file, name)
 
     finally:
@@ -113,4 +119,3 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
         except Exception as e:
             print(f"Erro ao encerrar o driver: {e}")
         kill_chrome_processes()
- 

@@ -6,13 +6,8 @@ from automation import chatgpt_response
 from clear_caracters import clean_text
 from datetime import datetime
 
-# Diretório para o eBook
-ebook_directory = 'ebooks'
-if not os.path.exists(ebook_directory):
-    os.makedirs(ebook_directory)
-
-#
-output_directory = 'output'
+# Diretório para OutPut
+output_directory = 'users'
 if not os.path.exists(output_directory):
     os.makedirs(output_directory)
 
@@ -22,6 +17,11 @@ def generate_ebook(user_id):
     user_directory = os.path.join(output_directory, str(user_id))
     if not os.path.exists(user_directory):
         os.makedirs(user_directory)
+
+    # Diretório para armazenar os eBooks dentro da pasta do usuário
+    ebook_directory = os.path.join(user_directory, 'ebook')
+    if not os.path.exists(ebook_directory):
+        os.makedirs(ebook_directory)
 
     # Gera um timestamp único para os arquivos e coloca os arquivos dentro da pasta de cada usuário
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -121,7 +121,7 @@ def generate_ebook(user_id):
         # Salva o arquivo PDF e verifica a numeração atual dos arquivos
         counter = 1
         while True:
-            file_path = f'ebooks/{user_id}_{email_base}_{counter}_{timestamp}.pdf'
+            file_path = os.path.join(ebook_directory, f'{counter}_{email_base}_{timestamp}.pdf')
             if not os.path.exists(file_path):
                 pdf.output(file_path)
                 break
@@ -134,7 +134,7 @@ def generate_ebook(user_id):
 
         # Remove arquivos temporários
         if os.path.exists(file_path):
-            #os.remove(responses_file)
+            os.remove(responses_file)
             os.remove(output_file)
             os.remove(tittle_file)
         else:

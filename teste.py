@@ -247,4 +247,3 @@ for offset in offsets:
 
 for thread in threads:
     thread.join()
- 

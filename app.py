@@ -106,7 +106,7 @@ def login():
 
     return render_template('login.html')
 
-#
+# Rota para
 @app.route('/submit', methods=['POST'])
 def submit():
     if 'user_id' in session:

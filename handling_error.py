@@ -1,9 +1,9 @@
 import time
 import os
-import sys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
 
 # Função para obter o contador de tentativas a partir de uma variável de ambiente
 def get_attempt_counter(user_id):
@@ -73,7 +73,7 @@ def handle_error(driver, responses_file, output_file, tittle_file, name, user_id
             print("Elemento SVG encontrado.")
             time.sleep(1)
             
-            # Apaga os arquivos gerados
+            # Apaga os arquivos gerados se eles existirem
             files_to_delete = [responses_file, output_file, tittle_file]
             delete_files(files_to_delete)
             print("Arquivos temporários apagados.")
