@@ -4,28 +4,56 @@ from models import insert_user, get_user_by_email, insert_survey_response
 from generate_Ebook import generate_ebook
 import threading
 import queue
+import time
+from selenium import webdriver  # Importar o driver para automação
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 
 #
 app = Flask(__name__)
 app.secret_key = 'chave_secreta'
 MAX_QUEUE_SIZE = 100
+MAX_TABS = 4
 task_queue = queue.Queue(maxsize=MAX_QUEUE_SIZE)
-semaphore = threading.Semaphore(5)
+tab_queue = queue.Queue(maxsize=MAX_TABS)
+semaphore = threading.Semaphore(MAX_TABS)
 
-#
-def process_queue():
+# Inicializa o driver
+def setup_driver():
+    chrome_options = Options()
+    chrome_options.add_argument("--start-maximized")
+    chrome_options.add_argument("--disable-infobars")
+    chrome_options.add_argument("--disable-extensions")
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=chrome_options)
+    return driver
+
+# Função para processar cada usuário
+def process_user(user_id):
+    driver = setup_driver()
+    try:
+        # Aqui você deve chamar a função de automação, passando o driver e o user_id
+        from automation import chatgpt_response
+        chatgpt_response(driver, user_id)
+        generate_ebook(user_id)
+    finally:
+        driver.quit()
+
+# Função para processar a fila de abas
+def process_tabs():
     while True:
-        user_id = task_queue.get()
+        user_id = tab_queue.get()
         if user_id is None:
             break
         with semaphore:
-            print(f"Gerando eBook para o usuário_id: {user_id}")
-            generate_ebook(user_id)
-        task_queue.task_done()
+            print(f"Processando eBook para o usuário_id: {user_id}")
+            process_user(user_id)
+        tab_queue.task_done()
 
-#
-queue_processor_thread = threading.Thread(target=process_queue, daemon=True)
-queue_processor_thread.start()
+# Inicia o thread para processar abas
+tab_processor_thread = threading.Thread(target=process_tabs, daemon=True)
+tab_processor_thread.start()
 
 #
 @app.route('/')
@@ -130,12 +158,12 @@ def submit():
             print(f"Inserindo resposta do formulário: {data}")
             insert_survey_response(data)
 
-            # Adiciona o user_id à fila de tarefas
-            if not task_queue.full():
-                task_queue.put(user_id)
+            # Adiciona o user_id à fila de tarefas e à fila de abas
+            if not tab_queue.full():
+                tab_queue.put(user_id)
                 flash('Formulário enviado com sucesso! Aguarde o eBook gerado.', 'success')
             else:
-                flash('A fila está cheia. Tente novamente mais tarde.', 'warning')
+                flash('A fila de abas está cheia. Tente novamente mais tarde.', 'warning')
 
         except Exception as e:
             print(f"Erro durante a submissão do formulário ou geração do eBook: {e}")
