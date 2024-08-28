@@ -45,7 +45,7 @@ def continuously_check_errors(driver, responses_file, tittle_file, name):
 #
 def chatgpt_response(responses_file, output_file, tittle_file, name):
     global image_check_thread, error_check_thread
-    driver = uc.Chrome(version_main=126)
+    driver = uc.Chrome()
 
     try:
         #
@@ -57,7 +57,7 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
         while True:
             try:
                 element = WebDriverWait(driver, 20).until(
-                    EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div[1]/div/div[2]'))
+                    EC.presence_of_element_located((By.XPATH, '//*[@id="radix-:r8:"]'))
                 )
                 if element:
                     break
@@ -80,7 +80,7 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
         error_check_thread.start()
 
         #
-        send_prompts(driver, responses_file, tittle_file, name)
+        send_prompts(driver, responses_file, tittle_file, output_file, name='Victor Mello')
 
     finally:
         #
@@ -95,3 +95,6 @@ def chatgpt_response(responses_file, output_file, tittle_file, name):
         except Exception as e:
             print(f"Erro ao encerrar o driver: {e}")
         kill_chrome_processes()
+
+if __name__ == "__main__":
+    chatgpt_response('responses.txt', 'output.txt', 'tittle.txt', name='Victor Mello')
