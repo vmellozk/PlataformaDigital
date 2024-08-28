@@ -5,6 +5,7 @@ from pdf_base import PDF
 from automation import chatgpt_response
 from clear_caracters import clean_text
 from datetime import datetime
+import undetected_chromedriver as uc
 
 # Diretório para OutPut
 output_directory = 'users'
@@ -13,6 +14,8 @@ if not os.path.exists(output_directory):
 
 #
 def generate_ebook(user_id):
+    driver = uc.Chrome()
+
     # Diretório específico para o usuário
     user_directory = os.path.join(output_directory, str(user_id))
     if not os.path.exists(user_directory):
@@ -65,7 +68,7 @@ def generate_ebook(user_id):
                 file.write(f"Response {index + 1}:\n{questions_answers}\n\n")
 
         # Executa a função de automação para gerar o conteúdo
-        chatgpt_response(responses_file, output_file, tittle_file, formatted_name)
+        chatgpt_response(driver, user_id, responses_file, output_file, tittle_file, formatted_name, name)
 
         # Verifica se o arquivo de resposta foi criado e lê o conteúdo do arquivo de resposta
         if not os.path.exists(output_file):
