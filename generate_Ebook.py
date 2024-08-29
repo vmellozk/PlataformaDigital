@@ -5,7 +5,6 @@ from pdf_base import PDF
 from automation import chatgpt_response
 from clear_caracters import clean_text
 from datetime import datetime
-import undetected_chromedriver as uc
 
 # Diretório para OutPut
 output_directory = 'users'
@@ -13,9 +12,7 @@ if not os.path.exists(output_directory):
     os.makedirs(output_directory)
 
 #
-def generate_ebook(user_id):
-    driver = uc.Chrome()
-
+def generate_ebook(user_id, driver):
     # Diretório específico para o usuário
     user_directory = os.path.join(output_directory, str(user_id))
     if not os.path.exists(user_directory):
@@ -147,6 +144,3 @@ def generate_ebook(user_id):
         print(f"Erro durante a geração do eBook: {e}")
     finally:
         conn.close()
-
-if __name__ == "__main__":
-    generate_ebook(user_id=1)

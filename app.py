@@ -4,13 +4,11 @@ from models import insert_user, get_user_by_email, insert_survey_response
 from generate_Ebook import generate_ebook
 import threading
 import queue
-import time
-from selenium import webdriver  # Importar o driver para automação
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
+import undetected_chromedriver as uc
 
-#
 app = Flask(__name__)
 app.secret_key = 'chave_secreta'
 MAX_QUEUE_SIZE = 100
@@ -19,24 +17,24 @@ task_queue = queue.Queue(maxsize=MAX_QUEUE_SIZE)
 tab_queue = queue.Queue(maxsize=MAX_TABS)
 semaphore = threading.Semaphore(MAX_TABS)
 
-# Inicializa o driver
-def setup_driver():
-    chrome_options = Options()
-    chrome_options.add_argument("--start-maximized")
+# Função para processar cada usuário
+def process_user(user_id):
+    chrome_options = uc.ChromeOptions()
     chrome_options.add_argument("--disable-infobars")
     chrome_options.add_argument("--disable-extensions")
     service = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service, options=chrome_options)
-    return driver
+    
+    # Inicia o navegador
+    driver = uc.Chrome(service=service, options=chrome_options)
 
-# Função para processar cada usuário
-def process_user(user_id):
-    driver = setup_driver()
+    # Configura o tamanho e a posição da janela após o navegador ser iniciado
+    driver.set_window_size(960, 540)
+    offsets = [(0, 0), (960, 0), (0, 540), (960, 540)]
+    position = offsets[len(tab_queue.queue) % 4]
+    driver.set_window_position(position[0], position[1])
+    
     try:
-        # Aqui você deve chamar a função de automação, passando o driver e o user_id
-        from automation import chatgpt_response
-        chatgpt_response(driver, user_id)
-        generate_ebook(user_id)
+        generate_ebook(user_id, driver)
     finally:
         driver.quit()
 
@@ -49,24 +47,31 @@ def process_tabs():
         with semaphore:
             print(f"Processando eBook para o usuário_id: {user_id}")
             process_user(user_id)
+
+            # Verificar se há novas solicitações na fila de tarefas
+            if not task_queue.empty():
+                next_user_id = task_queue.get()
+                if not tab_queue.full():
+                    tab_queue.put(next_user_id)
+                    flash('Nova solicitação adicionada à fila de abas.', 'info')
+                else:
+                    task_queue.put(next_user_id)
+                      
         tab_queue.task_done()
 
 # Inicia o thread para processar abas
 tab_processor_thread = threading.Thread(target=process_tabs, daemon=True)
 tab_processor_thread.start()
 
-#
 @app.route('/')
 @app.route('/home')
 def home():
     return render_template('home.html')
 
-#
 @app.route('/loja')
 def loja():
     return render_template('loja.html')
 
-#
 @app.route('/user/visitante')
 def visit_user():
     if 'user_id' in session:
@@ -74,7 +79,6 @@ def visit_user():
     else:
         return redirect(url_for('login'))
 
-#
 @app.route('/user')
 def user():
     if 'user_id' in session:
@@ -82,7 +86,6 @@ def user():
     else:
         return redirect(url_for('login'))
 
-#
 @app.route('/premium')
 def premium():
     if 'user_id' in session:
@@ -90,7 +93,6 @@ def premium():
     else:
         return redirect(url_for('login'))
 
-#
 @app.route('/formulario', methods=['GET', 'POST'])
 def vendas():
     if 'user_id' in session:
@@ -98,7 +100,6 @@ def vendas():
     else:
         return redirect(url_for('login'))
 
-#
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -115,7 +116,6 @@ def register():
     
     return render_template('register.html')
 
-#
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -134,7 +134,6 @@ def login():
 
     return render_template('login.html')
 
-# Rota para
 @app.route('/submit', methods=['POST'])
 def submit():
     if 'user_id' in session:
@@ -158,12 +157,16 @@ def submit():
             print(f"Inserindo resposta do formulário: {data}")
             insert_survey_response(data)
 
-            # Adiciona o user_id à fila de tarefas e à fila de abas
             if not tab_queue.full():
-                tab_queue.put(user_id)
-                flash('Formulário enviado com sucesso! Aguarde o eBook gerado.', 'success')
+                if user_id not in tab_queue.queue:
+                    tab_queue.put(user_id)
+                    flash('Formulário enviado com sucesso! Aguarde o eBook gerado.', 'success')
+                else:
+                    flash('Sua solicitação já está na fila de abas.', 'info')
             else:
-                flash('A fila de abas está cheia. Tente novamente mais tarde.', 'warning')
+                flash('A fila de abas está cheia. Sua solicitação foi adicionada à fila de espera.', 'warning')
+                if user_id not in task_queue.queue:
+                    task_queue.put(user_id)
 
         except Exception as e:
             print(f"Erro durante a submissão do formulário ou geração do eBook: {e}")
@@ -173,7 +176,6 @@ def submit():
 
     return redirect(url_for('login'))
 
-#
 @app.route('/logout')
 def logout():
     session.clear()
