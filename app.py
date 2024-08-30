@@ -35,8 +35,12 @@ def process_user(user_id):
     
     try:
         generate_ebook(user_id, driver)
+    except Exception as e:
+        print(f"Erro ao processar o usuário {user_id}: {e}")
     finally:
         driver.quit()
+        print(f"Processamento concluído para o usuário {user_id}. Fechando o navegador.")
+        tab_queue.task_done()
 
 # Função para processar a fila de abas
 def process_tabs():
@@ -164,9 +168,11 @@ def submit():
                 else:
                     flash('Sua solicitação já está na fila de abas.', 'info')
             else:
-                flash('A fila de abas está cheia. Sua solicitação foi adicionada à fila de espera.', 'warning')
                 if user_id not in task_queue.queue:
                     task_queue.put(user_id)
+                    flash('A fila de abas está cheia. Sua solicitação foi adicionada à fila de espera.', 'warning')
+                else:
+                    flash('Sua solicitação já está na fila de espera.', 'info')
 
         except Exception as e:
             print(f"Erro durante a submissão do formulário ou geração do eBook: {e}")
@@ -175,7 +181,7 @@ def submit():
         return redirect(url_for('home'))
 
     return redirect(url_for('login'))
-
+    
 @app.route('/logout')
 def logout():
     session.clear()
