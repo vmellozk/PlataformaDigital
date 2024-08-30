@@ -23,7 +23,7 @@ def process_user(user_id):
     chrome_options.add_argument("--disable-infobars")
     chrome_options.add_argument("--disable-extensions")
     service = Service(ChromeDriverManager().install())
-    
+
     # Inicia o navegador
     driver = uc.Chrome(service=service, options=chrome_options)
 
@@ -32,7 +32,7 @@ def process_user(user_id):
     offsets = [(0, 0), (960, 0), (0, 540), (960, 540)]
     position = offsets[len(tab_queue.queue) % 4]
     driver.set_window_position(position[0], position[1])
-    
+
     try:
         generate_ebook(user_id, driver)
     except Exception as e:
