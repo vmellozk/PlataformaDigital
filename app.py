@@ -164,7 +164,10 @@ def submit():
             if not tab_queue.full():
                 if user_id not in tab_queue.queue:
                     tab_queue.put(user_id)
-                    flash('Formulário enviado com sucesso! Aguarde o eBook gerado.', 'success')
+                    flash('Formulário enviado com sucesso! Iniciando automação.', 'success')
+                    # Verifica se há espaço na fila de abas e inicia a automação
+                    if semaphore.acquire(blocking=False):  # Tenta adquirir o semáforo
+                        threading.Thread(target=process_user, args=(user_id,)).start()
                 else:
                     flash('Sua solicitação já está na fila de abas.', 'info')
             else:
