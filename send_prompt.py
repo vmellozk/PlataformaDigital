@@ -59,7 +59,7 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name):
     while True:
         try:
             button_copy_1 = WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[2]/div/div/div[2]/div/div[2]/div/div/span[1]/button'))
+                EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div[1]/div/main/div/div[1]/div[1]/div/div/div/div/article[2]/div/div/div[2]/div/div[2]/div/div/span[1]'))
             )
             if button_copy_1:
                 print("button_copy_1 encontrado")
@@ -80,7 +80,7 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name):
     while True:
         try:
             button_copy_2 = WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[4]/div/div/div[2]/div/div[2]/div/div/span[1]/button'))
+                EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div[1]/div/main/div/div[1]/div[1]/div/div/div/div/article[4]/div/div/div[2]/div/div[2]/div/div/span[1]'))
             )
             if button_copy_2:
                 print("button_copy_2 encontrado")
@@ -101,7 +101,7 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name):
 
     while True:
         try:
-            button_copy_3 = '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[6]/div/div/div[2]/div/div[2]/div/div/span[1]/button'
+            button_copy_3 = '//*[@id="__next"]/div[1]/div/main/div/div[1]/div[1]/div/div/div/div/article[6]/div/div/div[2]/div/div[2]/div/div/span[1]'
             if button_copy_3:
                 print("button_copy_3 encontrado")
                 time.sleep(2)
@@ -126,7 +126,7 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name):
     while True:
         try:
             keep_generate = WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div[1]/div/main/div[1]/div[2]/div/div[1]/div/form/div/div[1]/div/div/div/div/button'))
+                EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div[1]/div/main/div/div[1]/div[2]/div/div[2]/div/form/div/div[1]/div/div/div/div'))
             )
             if keep_generate:
                 print("Botão de continuar gerando texto encontrado")
@@ -135,12 +135,12 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name):
 
                 try:
                     response_button_xpath = WebDriverWait(driver, 20).until(
-                        EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span[1]/button'))
+                        EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div[1]/div/main/div/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span[1]'))
                     )
                     if response_button_xpath:
                         print("Botão de copiar resposta encontrado")
                         time.sleep(2)
-                        copied_text = copy_text(driver, '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span[1]/button')
+                        copied_text = copy_text(driver, '//*[@id="__next"]/div[1]/div/main/div/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span[1]')
                         with mutex:
                             with open(output_file, "w", encoding="utf-8") as file:
                                 file.write(copied_text)
@@ -153,12 +153,12 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name):
 
                 try:
                     response_button_xpath = WebDriverWait(driver, 10).until(
-                        EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span[1]/button'))
+                        EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div[1]/div/main/div/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span[1]'))
                     )
                     if response_button_xpath:
                         print("Botão de copiar resposta encontrado")
                         time.sleep(2)
-                        copied_text = copy_text(driver, '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span[1]/button')
+                        copied_text = copy_text(driver, '//*[@id="__next"]/div[1]/div/main/div/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span[1]')
                         with mutex:
                             with open(output_file, "w", encoding="utf-8") as file:
                                 file.write(copied_text)
@@ -169,3 +169,23 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name):
 
         except Exception as e:
             print(f"Erro inesperado durante a execução: {e}")
+
+'''
+Variações dos elementos iteráveis:
+
+
+button1 --> //*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[2]/div/div/div[2]/div/div[2]/div/div/span[1]/button
+button1 --> //*[@id="__next"]/div[1]/div/main/div/div[1]/div[1]/div/div/div/div/article[2]/div/div/div[2]/div/div[2]/div/div/span[1]/button
+
+button2 --> //*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[4]/div/div/div[2]/div/div[2]/div/div/span[1]/button
+button2 --> //*[@id="__next"]/div[1]/div/main/div/div[1]/div[1]/div/div/div/div/article[4]/div/div/div[2]/div/div[2]/div/div/span[1]/button
+
+button3 --> //*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[6]/div/div/div[2]/div/div[2]/div/div/span[1]/button
+button3 --> //*[@id="__next"]/div[1]/div/main/div/div[1]/div[1]/div/div/div/div/article[6]/div/div/div[2]/div/div[2]/div/div/span[1]/button
+
+keep_generate --> //*[@id="__next"]/div[1]/div/main/div[1]/div[2]/div/div[1]/div/form/div/div[1]/div/div/div/div/button
+keep_generate --> //*[@id="__next"]/div[1]/div/main/div/div[1]/div[2]/div/div[2]/div/form/div/div[1]/div/div/div/div/button
+
+button4 --> //*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span[1]/button
+button4 --> //*[@id="__next"]/div[1]/div/main/div/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span[1]/button
+'''
