@@ -40,7 +40,7 @@ def chatgpt_response(driver, user_id, responses_file, output_file, tittle_file, 
         while True:
             try:
                 element = WebDriverWait(driver, 20).until(
-                    EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div[1]'))
+                    EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/main/div/div[1]/div[1]/div/div[1]/div/div[3]'))
                 )
                 if element:
                     print("Elemento chatgpt encontrado")
@@ -93,4 +93,12 @@ def kill_chrome_processes():
         os.system("taskkill /im chromedriver.exe /f")
     except Exception as e:
         print(f"Erro ao encerrar os processos do Chrome: {e}")
- 
+
+
+'''
+Elementos Variáveis
+
+
+element --> //*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div[1]
+element --> /html/body/div[1]/div/main/div/div[1]/div[1]/div/div[1]/div/div[3]
+'''
