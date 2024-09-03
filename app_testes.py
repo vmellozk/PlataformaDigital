@@ -62,12 +62,13 @@ def process_tabs():
         user_id = tab_queue.get()
         if user_id is None:
             break
+
         with semaphore:
             print(f"Processando eBook para o usuário_id: {user_id}")
             threading.Thread(target=process_user, args=(user_id,)).start()
 
-            # Verificar se há novas solicitações na fila de tarefas
-            time.sleep(1)  # Adicione um pequeno delay para permitir o processamento paralelo
+            # Verificar se há novas solicitações na fila de tarefas com um pequeno atraso
+            time.sleep(5)  # Atraso de 5 segundos antes de verificar a fila
             while not task_queue.empty() and not tab_queue.full():
                 next_user_id = task_queue.get()
                 tab_queue.put(next_user_id)
@@ -171,22 +172,16 @@ def submit():
             print(f"Inserindo resposta do formulário: {data}")
             insert_survey_response(data)
 
-            if not tab_queue.full():
-                if user_id not in tab_queue.queue:
+            if user_id not in tab_queue.queue and user_id not in task_queue.queue:
+                if not tab_queue.full():
                     tab_queue.put(user_id)
                     flash('Formulário enviado com sucesso! Iniciando automação.', 'success')
-                    # Verifica se há espaço na fila de abas e inicia a automação
-                    if semaphore.acquire(blocking=False):  # Tenta adquirir o semáforo
-                        # A nova aba será processada pelo thread process_tabs
-                        print(f'Aba aberta para o usuário {user_id}')
+                    print(f'Aba aberta para o usuário {user_id}')
                 else:
-                    flash('Sua solicitação já está na fila de abas.', 'info')
-            else:
-                if user_id not in task_queue.queue:
                     task_queue.put(user_id)
                     flash('A fila de abas está cheia. Sua solicitação foi adicionada à fila de espera.', 'warning')
-                else:
-                    flash('Sua solicitação já está na fila de espera.', 'info')
+            else:
+                flash('Sua solicitação já está na fila.', 'info')
 
         except Exception as e:
             print(f"Erro durante a submissão do formulário ou geração do eBook: {e}")
