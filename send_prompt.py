@@ -133,7 +133,7 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name):
             time.sleep(2)
             keep_generate.click()
         except TimeoutException:
-            print("Botão de continuar gerando texto não foi encontrado. Seguindo em frente...")
+            pass
 
         try:
             # Tentar encontrar o botão de copiar resposta
@@ -150,7 +150,7 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name):
             time.sleep(1)
             break
         except TimeoutException:
-            print("Tempo limite esgotado para encontrar o botão de copiar resposta. Tentando novamente...")
+            pass
 
         except Exception as e:
             print(f"Erro inesperado durante a execução: {e}")
