@@ -40,7 +40,7 @@ def chatgpt_response(driver, user_id, responses_file, output_file, tittle_file, 
         while True:
             try:
                 element = WebDriverWait(driver, 20).until(
-                    EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/main/div/div[1]/div[1]/div/div[1]/div/div[3]'))
+                    EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/main/div[1]/div[1]/div/div[1]/div/div[2]/div[1]'))
                 )
                 if element:
                     print("Elemento chatgpt encontrado")
@@ -101,4 +101,5 @@ Elementos Variáveis
 
 element --> //*[@id="__next"]/div[1]/div/main/div[1]/div[1]/div/div[1]
 element --> /html/body/div[1]/div/main/div/div[1]/div[1]/div/div[1]/div/div[3]
+element --> /html/body/div[1]/div/main/div[1]/div[1]/div/div[1]/div/div[2]/div[1]
 '''
