@@ -43,24 +43,16 @@ def process_user(user_id):
     finally:
         driver.quit()
         print(f"Processamento concluído para o usuário {user_id}. Fechando o navegador.")
-        tab_semaphore.release()  # Libera a vaga quando o processamento é concluído
+        # Libera a vaga e chama o próximo item da fila
+        release_tab_and_process_queue()
 
-# Função para gerenciar a fila de abas
-def manage_tabs():
-    while True:
-        user_id = task_queue.get()
-        if user_id is None:
-            break
-
-        with tab_semaphore:
-            print(f"Processando eBook para o usuário {user_id}")
-            threading.Thread(target=process_user, args=(user_id,)).start()
-
-        task_queue.task_done()
-
-# Inicia o thread para gerenciar a fila de abas
-tab_manager_thread = threading.Thread(target=manage_tabs, daemon=True)
-tab_manager_thread.start()
+# Função para liberar vaga e chamar o próximo item da fila
+def release_tab_and_process_queue():
+    tab_semaphore.release()
+    if not task_queue.empty():
+        next_user_id = task_queue.get()
+        print(f"Chamando a fila para processar o usuário {next_user_id}")
+        threading.Thread(target=process_user, args=(next_user_id,)).start()
 
 @app.route('/')
 @app.route('/home')
@@ -164,6 +156,7 @@ def submit():
             else:
                 # Se todas as abas estão ocupadas, adiciona à fila
                 task_queue.put(user_id)
+                print(f"Solicitação do usuário {user_id} adicionada à fila de espera.")
                 flash('A fila de abas está cheia. Sua solicitação foi adicionada à fila de espera.', 'warning')
 
         except Exception as e:
