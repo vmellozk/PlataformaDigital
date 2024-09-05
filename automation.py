@@ -1,5 +1,6 @@
 import time
 import threading
+import psutil
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -31,11 +32,20 @@ def continuously_check_errors(driver, responses_file, tittle_file, name):
             pass
         time.sleep(2)
 
-# Função para encerrar processos do Chrome
-def kill_chrome_processes():
+# Função para encerrar processos do Chrome relacionados ao driver específico
+def kill_chrome_processes(driver):
     try:
-        os.system("taskkill /im chrome.exe /f")
-        os.system("taskkill /im chromedriver.exe /f")
+        # Obtém o ID do processo do ChromeDriver associado ao driver
+        driver_pid = driver.service.process.pid
+        for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
+            if proc.info['name'] == 'chrome.exe' and 'chrome' in proc.info['cmdline']:
+                # Verifica se o processo do Chrome é associado ao driver específico
+                if str(driver_pid) in ' '.join(proc.info['cmdline']):
+                    proc.terminate()  # Ou use proc.kill() se necessário
+                    print(f"Terminando processo do Chrome: PID {proc.info['pid']}")
+            elif proc.info['name'] == 'chromedriver.exe' and str(driver_pid) in ' '.join(proc.info['cmdline']):
+                proc.terminate()  # Ou use proc.kill() se necessário
+                print(f"Terminando processo do Chromedriver: PID {proc.info['pid']}")
     except Exception as e:
         print(f"Erro ao encerrar os processos do Chrome: {e}")
 
@@ -91,7 +101,7 @@ def chatgpt_response(driver, user_id, responses_file, output_file, tittle_file, 
     finally:
         driver.close()
         time.sleep(1)
-        kill_chrome_processes()
+        kill_chrome_processes(driver)
 
 '''
 Elementos Variáveis
