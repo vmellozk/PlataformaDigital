@@ -78,10 +78,10 @@ def chatgpt_response(driver, user_id, responses_file, output_file, tittle_file, 
         
         print("Chamando send_prompts()")
         send_prompts(driver, responses_file, tittle_file, output_file, name)
-        driver.quit()
+        driver.close()
 
     finally:
-        driver.quit()
+        driver.close()
 
         # Função fictícia para garantir que todos os processos do Chrome sejam encerrados
         kill_chrome_processes()

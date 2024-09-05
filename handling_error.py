@@ -80,7 +80,7 @@ def handle_error(driver, responses_file, output_file, tittle_file, name, user_id
 
             # Tenta encerrar o driver e matar os processos do Chrome
             try:
-                driver.quit()
+                driver.close()
                 print("Driver encerrado com sucesso.")
             except Exception as e:
                 print(f"Erro ao encerrar o driver: {e}")
