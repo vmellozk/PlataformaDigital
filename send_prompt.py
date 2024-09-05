@@ -129,31 +129,37 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name):
             keep_generate = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/main/div[1]/div[2]/div/div[1]/div/form/div/div[1]/div/div/div/div/button'))
             )
-            print("keep_generate encontrado")
+            if keep_generate:
+                print("keep_generate encontrado")
+                keep_generate.click()
+            else:
+                print("keep_generate não encontrado")
             time.sleep(2)
-            keep_generate.click()
+            
         except TimeoutException:
             pass
 
-        try:
-            # Tentar encontrar o botão de copiar resposta
-            button_copy_4 = WebDriverWait(driver, 20).until(
-                EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span[1]/button'))
-            )
-            if button_copy_4:
-                print("button_copy_4 encontrado")
-            time.sleep(2)
-            copied_text = copy_text(driver, '/html/body/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span[1]/button')
-            with mutex:
-                with open(output_file, "w", encoding="utf-8") as file:
-                    file.write(copied_text)
-            time.sleep(1)
-            break
-        except TimeoutException:
-            pass
+            try:
+                # Tentar encontrar o botão de copiar resposta
+                button_copy_4 = WebDriverWait(driver, 20).until(
+                    EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span[1]/button'))
+                )
+                if button_copy_4:
+                    print("button_copy_4 encontrado")
+                else:
+                    print("button_copy_4 não encontrado")
+                time.sleep(2)
+                copied_text = copy_text(driver, '/html/body/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span[1]/button')
+                with mutex:
+                    with open(output_file, "w", encoding="utf-8") as file:
+                        file.write(copied_text)
+                time.sleep(1)
+                break
+            except TimeoutException:
+                pass
 
-        except Exception as e:
-            print(f"Erro inesperado durante a execução: {e}")
+            except Exception as e:
+                print(f"Erro inesperado durante a execução: {e}")
 
 '''
 Variações dos elementos iteráveis:
