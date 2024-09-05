@@ -31,6 +31,14 @@ def continuously_check_errors(driver, responses_file, tittle_file, name):
             pass
         time.sleep(2)
 
+# Função para encerrar processos do Chrome
+def kill_chrome_processes():
+    try:
+        os.system("taskkill /im chrome.exe /f")
+        os.system("taskkill /im chromedriver.exe /f")
+    except Exception as e:
+        print(f"Erro ao encerrar os processos do Chrome: {e}")
+
 # Função de automação para cada usuário
 def chatgpt_response(driver, user_id, responses_file, output_file, tittle_file, formatted_name, name):
     try:
@@ -78,22 +86,12 @@ def chatgpt_response(driver, user_id, responses_file, output_file, tittle_file, 
         
         print("Chamando send_prompts()")
         send_prompts(driver, responses_file, tittle_file, output_file, name)
-        driver.close()
+        time.sleep(5)
 
     finally:
         driver.close()
-
-        # Função fictícia para garantir que todos os processos do Chrome sejam encerrados
+        time.sleep(1)
         kill_chrome_processes()
-
-# Função para encerrar processos do Chrome
-def kill_chrome_processes():
-    try:
-        os.system("taskkill /im chrome.exe /f")
-        os.system("taskkill /im chromedriver.exe /f")
-    except Exception as e:
-        print(f"Erro ao encerrar os processos do Chrome: {e}")
-
 
 '''
 Elementos Variáveis
