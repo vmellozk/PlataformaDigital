@@ -12,14 +12,11 @@ from generate_Ebook import generate_ebook
 
 app = Flask(__name__)
 app.secret_key = 'chave_secreta'
-MAX_QUEUE_SIZE = 100
-MAX_TABS = 4
-task_queue = queue.Queue(maxsize=MAX_QUEUE_SIZE)
-tab_queue = queue.Queue(maxsize=MAX_TABS)
-semaphore = threading.Semaphore(MAX_TABS)
 
-# Armazena a posição de cada usuário
-user_positions = {}
+# Configurações
+MAX_TABS = 4
+task_queue = queue.Queue()
+tab_semaphore = threading.Semaphore(MAX_TABS)
 
 # Função para processar cada usuário
 def process_user(user_id):
@@ -28,23 +25,15 @@ def process_user(user_id):
     chrome_options.add_argument("--disable-extensions")
     service = Service(ChromeDriverManager().install())
 
-    # Inicia o navegador
     driver = uc.Chrome(service=service, options=chrome_options)
-
-    # Configura o tamanho da janela
     driver.set_window_size(960, 540)
 
     # Aguarda um curto período para garantir que a janela esteja pronta
     time.sleep(2)
 
-    # Obtém a posição do usuário ou define uma nova posição
-    position = user_positions.get(user_id, None)
-    if position is None:
-        # Defina a posição das janelas para um layout de 2x2
-        positions = [(0, 0), (960, 0), (0, 540), (960, 540)]
-        position = positions[len(user_positions) % len(positions)]
-        user_positions[user_id] = position
-    
+    # Define a posição da aba
+    positions = [(0, 0), (960, 0), (0, 540), (960, 540)]
+    position = positions[user_id % len(positions)]
     driver.set_window_position(position[0], position[1])
 
     try:
@@ -54,29 +43,24 @@ def process_user(user_id):
     finally:
         driver.quit()
         print(f"Processamento concluído para o usuário {user_id}. Fechando o navegador.")
-        tab_queue.task_done()
+        tab_semaphore.release()  # Libera a vaga quando o processamento é concluído
 
-# Função para processar a fila de abas
-def process_tabs():
+# Função para gerenciar a fila de abas
+def manage_tabs():
     while True:
-        user_id = tab_queue.get()
+        user_id = task_queue.get()
         if user_id is None:
             break
 
-        with semaphore:
-            print(f"Processando eBook para o usuário_id: {user_id}")
+        with tab_semaphore:
+            print(f"Processando eBook para o usuário {user_id}")
             threading.Thread(target=process_user, args=(user_id,)).start()
 
-            # Verificar se há novas solicitações na fila de tarefas com um pequeno atraso
-            time.sleep(5)  # Atraso de 5 segundos antes de verificar a fila
-            while not task_queue.empty() and not tab_queue.full():
-                next_user_id = task_queue.get()
-                tab_queue.put(next_user_id)
-                print(f'Nova solicitação adicionada à fila de abas: {next_user_id}')
+        task_queue.task_done()
 
-# Inicia o thread para processar abas
-tab_processor_thread = threading.Thread(target=process_tabs, daemon=True)
-tab_processor_thread.start()
+# Inicia o thread para gerenciar a fila de abas
+tab_manager_thread = threading.Thread(target=manage_tabs, daemon=True)
+tab_manager_thread.start()
 
 @app.route('/')
 @app.route('/home')
@@ -172,16 +156,15 @@ def submit():
             print(f"Inserindo resposta do formulário: {data}")
             insert_survey_response(data)
 
-            if user_id not in tab_queue.queue and user_id not in task_queue.queue:
-                if not tab_queue.full():
-                    tab_queue.put(user_id)
-                    flash('Formulário enviado com sucesso! Iniciando automação.', 'success')
-                    print(f'Aba aberta para o usuário {user_id}')
-                else:
-                    task_queue.put(user_id)
-                    flash('A fila de abas está cheia. Sua solicitação foi adicionada à fila de espera.', 'warning')
+            if tab_semaphore.acquire(blocking=False):
+                # Se uma vaga está disponível, processa imediatamente
+                print(f'Aba aberta para o usuário {user_id}')
+                threading.Thread(target=process_user, args=(user_id,)).start()
+                flash('Formulário enviado com sucesso! Aguarde o eBook gerado.', 'success')
             else:
-                flash('Sua solicitação já está na fila.', 'info')
+                # Se todas as abas estão ocupadas, adiciona à fila
+                task_queue.put(user_id)
+                flash('A fila de abas está cheia. Sua solicitação foi adicionada à fila de espera.', 'warning')
 
         except Exception as e:
             print(f"Erro durante a submissão do formulário ou geração do eBook: {e}")
@@ -190,7 +173,7 @@ def submit():
         return redirect(url_for('home'))
 
     return redirect(url_for('login'))
-    
+
 @app.route('/logout')
 def logout():
     session.clear()
