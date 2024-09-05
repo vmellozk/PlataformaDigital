@@ -1,21 +1,56 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
-from database import init_db
-from models import insert_user, get_user_by_email, insert_survey_response
-from generate_Ebook import generate_ebook
+import time
 import threading
 import queue
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 import undetected_chromedriver as uc
+from database import init_db
+from models import insert_user, get_user_by_email, insert_survey_response
+from generate_Ebook import generate_ebook
 
 app = Flask(__name__)
 app.secret_key = 'chave_secreta'
-MAX_QUEUE_SIZE = 100
+
+# Configurações
 MAX_TABS = 4
-task_queue = queue.Queue(maxsize=MAX_QUEUE_SIZE)
-tab_queue = queue.Queue(maxsize=MAX_TABS)
-semaphore = threading.Semaphore(MAX_TABS)
+task_queue = queue.Queue()
+tab_semaphore = threading.Semaphore(MAX_TABS)
+
+# Posições da janela do navegador (grade 2x2)
+positions = [
+    (0, 0),        # Canto superior esquerdo
+    (960, 0),      # Canto superior direito
+    (0, 540),      # Inferior esquerdo
+    (960, 540)     # Inferior direito
+]
+
+# Lista para rastrear quais posições estão ocupadas (False = livre, True = ocupada)
+occupied_positions = [False, False, False, False]
+
+# Tamanho da janela do navegador
+window_width = 960
+window_height = 540
+
+# Função para encontrar a primeira posição livre
+def find_free_position():
+    for index, occupied in enumerate(occupied_positions):
+        if not occupied:
+            return index
+    return None  # Se todas as posições estiverem ocupadas
+
+# Função que ajusta a posição e o tamanho da janela
+def set_window_position_and_size(driver, position_index):
+    x, y = positions[position_index]
+    driver.set_window_size(window_width, window_height)
+    driver.set_window_position(x, y)
+    # Marcar a posição como ocupada
+    occupied_positions[position_index] = True
+
+# Função para liberar a posição quando a aba é fechada
+def release_position(position_index):
+    occupied_positions[position_index] = False
 
 # Função para processar cada usuário
 def process_user(user_id):
@@ -24,48 +59,39 @@ def process_user(user_id):
     chrome_options.add_argument("--disable-extensions")
     service = Service(ChromeDriverManager().install())
 
-    # Inicia o navegador
     driver = uc.Chrome(service=service, options=chrome_options)
+    
+    # Aguarda um curto período para garantir que a janela esteja pronta
+    time.sleep(2)
 
-    # Configura o tamanho e a posição da janela após o navegador ser iniciado
-    driver.set_window_size(960, 540)
-    offsets = [(0, 0), (960, 0), (0, 540), (960, 540)]
-    position = offsets[len(tab_queue.queue) % 4]
-    driver.set_window_position(position[0], position[1])
+    # Encontre a primeira posição livre
+    free_position = find_free_position()
+    
+    if free_position is not None:
+        # Define a posição e o tamanho da aba
+        set_window_position_and_size(driver, free_position)
 
-    try:
-        generate_ebook(user_id, driver)
-    except Exception as e:
-        print(f"Erro ao processar o usuário {user_id}: {e}")
-    finally:
-        driver.quit()
-        print(f"Processamento concluído para o usuário {user_id}. Fechando o navegador.")
-        tab_queue.task_done()
+        try:
+            generate_ebook(user_id, driver)
+        except Exception as e:
+            print(f"Erro ao processar o usuário {user_id}: {e}")
+        finally:
+            driver.quit()
+            print(f"Processamento concluído para o usuário {user_id}. Fechando o navegador.")
+            # Libera a vaga e chama o próximo item da fila
+            release_position(free_position)
+            release_tab_and_process_queue()
 
-# Função para processar a fila de abas
-def process_tabs():
-    while True:
-        user_id = tab_queue.get()
-        if user_id is None:
-            break
-        with semaphore:
-            print(f"Processando eBook para o usuário_id: {user_id}")
-            process_user(user_id)
-
-            # Verificar se há novas solicitações na fila de tarefas
-            if not task_queue.empty():
-                next_user_id = task_queue.get()
-                if not tab_queue.full():
-                    tab_queue.put(next_user_id)
-                    flash('Nova solicitação adicionada à fila de abas.', 'info')
-                else:
-                    task_queue.put(next_user_id)
-                      
-        tab_queue.task_done()
-
-# Inicia o thread para processar abas
-tab_processor_thread = threading.Thread(target=process_tabs, daemon=True)
-tab_processor_thread.start()
+# Função para liberar vaga e chamar o próximo item da fila
+def release_tab_and_process_queue():
+    # Libera uma vaga no semáforo
+    tab_semaphore.release()
+    
+    if not task_queue.empty():
+        next_user_id = task_queue.get()
+        print(f"Chamando a fila para processar o usuário {next_user_id}")
+        # Inicia um novo thread para processar o próximo usuário
+        threading.Thread(target=process_user, args=(next_user_id,)).start()
 
 @app.route('/')
 @app.route('/home')
@@ -161,21 +187,16 @@ def submit():
             print(f"Inserindo resposta do formulário: {data}")
             insert_survey_response(data)
 
-            if not tab_queue.full():
-                if user_id not in tab_queue.queue:
-                    tab_queue.put(user_id)
-                    flash('Formulário enviado com sucesso! Iniciando automação.', 'success')
-                    # Verifica se há espaço na fila de abas e inicia a automação
-                    if semaphore.acquire(blocking=False):  # Tenta adquirir o semáforo
-                        threading.Thread(target=process_user, args=(user_id,)).start()
-                else:
-                    flash('Sua solicitação já está na fila de abas.', 'info')
+            if tab_semaphore.acquire(blocking=False):
+                # Se uma vaga está disponível, processa imediatamente
+                print(f'Aba aberta para o usuário {user_id}')
+                threading.Thread(target=process_user, args=(user_id,)).start()
+                flash('Formulário enviado com sucesso! Aguarde o eBook gerado.', 'success')
             else:
-                if user_id not in task_queue.queue:
-                    task_queue.put(user_id)
-                    flash('A fila de abas está cheia. Sua solicitação foi adicionada à fila de espera.', 'warning')
-                else:
-                    flash('Sua solicitação já está na fila de espera.', 'info')
+                # Se todas as abas estão ocupadas, adiciona à fila
+                task_queue.put(user_id)
+                print(f"Solicitação do usuário {user_id} adicionada à fila de espera.")
+                flash('A fila de abas está cheia. Sua solicitação foi adicionada à fila de espera.', 'warning')
 
         except Exception as e:
             print(f"Erro durante a submissão do formulário ou geração do eBook: {e}")
@@ -184,7 +205,7 @@ def submit():
         return redirect(url_for('home'))
 
     return redirect(url_for('login'))
-    
+
 @app.route('/logout')
 def logout():
     session.clear()
