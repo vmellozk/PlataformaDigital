@@ -15,8 +15,12 @@ app.secret_key = 'chave_secreta'
 
 # Configurações
 MAX_TABS = 4
+TASK_QUEUE_DELAY = 3  # Tempo em segundos para aguardar antes de processar a próxima aba
+STARTUP_DELAY = 3    # Tempo em segundos para aguardar antes de iniciar o processamento de qualquer aba
 task_queue = queue.Queue()
 tab_semaphore = threading.Semaphore(MAX_TABS)
+position_lock = threading.Lock()
+startup_lock = threading.Lock()  # Lock para controlar o atraso global
 
 # Posições da janela do navegador (grade 2x2)
 positions = [
@@ -64,23 +68,30 @@ def process_user(user_id):
     # Aguarda um curto período para garantir que a janela esteja pronta
     time.sleep(2)
 
-    # Encontre a primeira posição livre
-    free_position = find_free_position()
-    
-    if free_position is not None:
-        # Define a posição e o tamanho da aba
-        set_window_position_and_size(driver, free_position)
-
-        try:
-            generate_ebook(user_id, driver)
-        except Exception as e:
-            print(f"Erro ao processar o usuário {user_id}: {e}")
-        finally:
+    # Use um lock para garantir que apenas uma aba seja aberta e posicionada por vez
+    with position_lock:
+        # Encontre a primeira posição livre
+        free_position = find_free_position()
+        
+        if free_position is not None:
+            # Define a posição e o tamanho da aba
+            set_window_position_and_size(driver, free_position)
+        else:
+            # Caso não haja posição livre, fecha o driver
             driver.quit()
-            print(f"Processamento concluído para o usuário {user_id}. Fechando o navegador.")
-            # Libera a vaga e chama o próximo item da fila
-            release_position(free_position)
-            release_tab_and_process_queue()
+            return
+
+    try:
+        generate_ebook(user_id, driver)
+    except Exception as e:
+        print(f"Erro ao processar o usuário {user_id}: {e}")
+    finally:
+        driver.quit()
+        print(f"Processamento concluído para o usuário {user_id}. Fechando o navegador.")
+        # Libera a vaga e chama o próximo item da fila com um atraso
+        release_position(free_position)
+        time.sleep(TASK_QUEUE_DELAY)  # Aguarda um tempo antes de processar o próximo
+        release_tab_and_process_queue()
 
 # Função para liberar vaga e chamar o próximo item da fila
 def release_tab_and_process_queue():
@@ -187,24 +198,34 @@ def submit():
             print(f"Inserindo resposta do formulário: {data}")
             insert_survey_response(data)
 
-            if tab_semaphore.acquire(blocking=False):
-                # Se uma vaga está disponível, processa imediatamente
-                print(f'Aba aberta para o usuário {user_id}')
-                threading.Thread(target=process_user, args=(user_id,)).start()
-                flash('Formulário enviado com sucesso! Aguarde o eBook gerado.', 'success')
-            else:
-                # Se todas as abas estão ocupadas, adiciona à fila
-                task_queue.put(user_id)
-                print(f"Solicitação do usuário {user_id} adicionada à fila de espera.")
-                flash('A fila de abas está cheia. Sua solicitação foi adicionada à fila de espera.', 'warning')
+            # Fornece feedback imediato ao usuário
+            flash('Formulário enviado com sucesso! Aguarde o eBook gerado.', 'success')
+
+            # Inicia o processamento da automação em um thread separado
+            def process():
+                with startup_lock:
+                    time.sleep(STARTUP_DELAY)
+
+                if tab_semaphore.acquire(blocking=False):
+                    # Se uma vaga está disponível, processa imediatamente
+                    print(f'Aba aberta para o usuário {user_id}')
+                    threading.Thread(target=process_user, args=(user_id,)).start()
+                else:
+                    # Se todas as abas estão ocupadas, adiciona à fila
+                    task_queue.put(user_id)
+                    print(f"Solicitação do usuário {user_id} adicionada à fila de espera.")
+                    flash('A fila de abas está cheia. Sua solicitação foi adicionada à fila de espera.', 'warning')
+
+            threading.Thread(target=process).start()
 
         except Exception as e:
             print(f"Erro durante a submissão do formulário ou geração do eBook: {e}")
             flash('Houve um erro ao enviar o formulário. Tente novamente ou entre em contato.', 'warning')
-
+        
         return redirect(url_for('home'))
 
     return redirect(url_for('login'))
+
 
 @app.route('/logout')
 def logout():
