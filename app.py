@@ -10,6 +10,7 @@ from database import init_db
 from models import insert_user, get_user_by_email, insert_survey_response
 from generate_Ebook import generate_ebook
 
+#
 app = Flask(__name__)
 app.secret_key = 'chave_secreta'
 
@@ -104,15 +105,17 @@ def release_tab_and_process_queue():
         # Inicia um novo thread para processar o próximo usuário
         threading.Thread(target=process_user, args=(next_user_id,)).start()
 
+#
 @app.route('/')
 @app.route('/home')
 def home():
     return render_template('home.html')
-
+#
 @app.route('/loja')
 def loja():
     return render_template('loja.html')
 
+#
 @app.route('/user/visitante')
 def visit_user():
     if 'user_id' in session:
@@ -120,6 +123,7 @@ def visit_user():
     else:
         return redirect(url_for('login'))
 
+#
 @app.route('/user')
 def user():
     if 'user_id' in session:
@@ -127,6 +131,7 @@ def user():
     else:
         return redirect(url_for('login'))
 
+#
 @app.route('/premium')
 def premium():
     if 'user_id' in session:
@@ -134,6 +139,7 @@ def premium():
     else:
         return redirect(url_for('login'))
 
+#
 @app.route('/formulario', methods=['GET', 'POST'])
 def vendas():
     if 'user_id' in session:
@@ -141,6 +147,7 @@ def vendas():
     else:
         return redirect(url_for('login'))
 
+#
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -157,6 +164,7 @@ def register():
     
     return render_template('register.html')
 
+#
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -175,6 +183,7 @@ def login():
 
     return render_template('login.html')
 
+#
 @app.route('/submit', methods=['POST'])
 def submit():
     if 'user_id' in session:
@@ -198,25 +207,23 @@ def submit():
             print(f"Inserindo resposta do formulário: {data}")
             insert_survey_response(data)
 
-            # Fornece feedback imediato ao usuário
-            flash('Formulário enviado com sucesso! Aguarde o eBook gerado.', 'success')
-
-            # Inicia o processamento da automação em um thread separado
-            def process():
-                with startup_lock:
-                    time.sleep(STARTUP_DELAY)
-
-                if tab_semaphore.acquire(blocking=False):
-                    # Se uma vaga está disponível, processa imediatamente
-                    print(f'Aba aberta para o usuário {user_id}')
+            # Verifica se há uma vaga disponível
+            if tab_semaphore.acquire(blocking=False):
+                # Se uma vaga está disponível, processa imediatamente
+                flash('Formulário enviado com sucesso! Aguarde o eBook gerado.', 'success')
+                print(f'Aba aberta para o usuário {user_id}')
+                
+                def process():
+                    with startup_lock:
+                        time.sleep(STARTUP_DELAY)
                     threading.Thread(target=process_user, args=(user_id,)).start()
-                else:
-                    # Se todas as abas estão ocupadas, adiciona à fila
-                    task_queue.put(user_id)
-                    print(f"Solicitação do usuário {user_id} adicionada à fila de espera.")
-                    flash('A fila de abas está cheia. Sua solicitação foi adicionada à fila de espera.', 'warning')
 
-            threading.Thread(target=process).start()
+                threading.Thread(target=process).start()
+            else:
+                # Se todas as abas estão ocupadas, adiciona à fila
+                flash('A fila de abas está cheia. Sua solicitação foi adicionada à fila de espera.', 'warning')
+                print(f"Solicitação do usuário {user_id} adicionada à fila de espera.")
+                task_queue.put(user_id)
 
         except Exception as e:
             print(f"Erro durante a submissão do formulário ou geração do eBook: {e}")
@@ -226,13 +233,14 @@ def submit():
 
     return redirect(url_for('login'))
 
-
+#
 @app.route('/logout')
 def logout():
     session.clear()
     flash('Você foi desconectado com sucesso!', 'success')
     return redirect(url_for('home'))
 
+#
 if __name__ == '__main__':
     init_db()
     app.run(debug=True)
