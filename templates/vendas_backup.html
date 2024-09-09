@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prática Sênior</title>
+    <!-- Link Ref CSS -->
+    <link rel="stylesheet" href="../static/css/vendas.css">
+    <!-- /Link Ref CSS -->
+</head>
+<body>
+    <!-- Barra de Navegação-->
+    <header>
+        <a href="{{  url_for('home')  }}" class="logo">Prática Sênior</a>
+        
+        <nav>
+            <ul class="nav">
+                <li><a href="{{ url_for('home')  }}#produtos">Nossos Serviços</a></li>
+                <li><a href="{{ url_for('home')  }}#contact">Contato</a></li>
+                <li><a href="{{  url_for('loja')  }}">Loja Sênior</a></li>
+
+                {% if 'user_id' in session %}
+                    <li><a href="{{  url_for('premium')  }}">Seja +</a></li>
+                    <li><a href="{{  url_for('user')  }}">Meu Perfil</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{  url_for('register')  }}">Seja +</a></li>
+                    <li><a href="{{  url_for('register')  }}">Meu Perfil</a></li>
+                {% endif %}
+                
+            </ul>
+        </nav>
+    </header>
+    <!-- /Barra de Navegação -->
+
+    <!-- PopUp de Mensagens -->
+    {% with messages = get_flashed_messages(with_categories=True) %}    
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}" id="flash-message">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    <!-- /PopUp de Mensagens -->
+
+    <!-- Área de Início -->
+    <section class="home" id="home">
+        <div class="text-container-home">
+            <h1>A experiência da prática dos variados especialistas no mundo.</h1>
+            <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus nam sed molestiae vero eius? Mollitia ex in nemo beatae, dolorem impedit non ad magni praesentium alias recusandae totam laudantium inventore numquam nam maxime rerum officia. Atque itaque harum eveniet eos obcaecati placeat sunt impedit vero minima ipsa quae molestiae, nostrum ipsum quam, ducimus adipisci excepturi fugit repellendus. Eveniet unde recusandae quod nulla sapiente, repellendus dicta saepe neque voluptates tenetur consequuntur aut, facilis inventore expedita, iure fugiat. Distinctio mollitia fugiat ab eius eveniet magni praesentium sed saepe cumque itaque recusandae iure odio reiciendis, aliquam inventore magnam. Animi ipsum voluptates ex alias.</h2>
+        </div>
+    </section>
+    <!-- /Área de Início -->
+
+    <!-- Seção Home -->
+    <section class="divform" id="divform">
+        <div class="text-container">
+            <h2 style="text-align: center;">Formulário para Criação do Produto</h2>
+            <form action="{{ url_for('submit') }}" method="POST">
+                <!-- Pergunta 1 -->
+                <div class="form-group">
+                    <label for="question1">O que você faz no seu trabalho todos os dias e quais são as atividades mais importantes que você precisa fazer? (Liste suas atividades em ordem conforme sua rotina.)</label>
+                    <textarea type="text" id="question1" name="question1" required></textarea>
+                    <p id="question1Counter">1000 caracteres restantes</p>
+                </div>
+                <!-- /Pergunta 1 -->
+
+                <!-- Pergunta 2 -->
+                <div class="form-group">
+                    <label for="question2">Que tipo de recursos, materiais ou ferramentas você usa para fazer o seu trabalho e como esses recursos ajudam você no seu trabalho?</label>
+                    <textarea type="text" id="question2" name="question2" required></textarea>
+                    <p id="question2Counter">1000 caracteres restantes</p>
+                </div>
+                <!-- /Pergunta 2 -->
+
+                <!-- Pergunta 3 -->
+                <div class="form-group">
+                    <label for="question3">Você encontra problemas durante o seu trabalho? Se sim, conte sobre os problemas e como resolve.</label>
+                    <textarea type="text" id="question3" name="question3" required></textarea>
+                    <p id="question3Counter">1000 caracteres restantes</p>
+                </div>
+                <!-- /Pergunta 3 -->
+
+                <!-- Pergunta 4 -->
+                <div class="form-group">
+                    <label for="question4">Já teve que tomar decisões importantes no seu trabalho? Como você decide o que fazer? Depende de algo ou de alguém? Explique:</label>
+                    <textarea type="text" id="question4" name="question4" required></textarea>
+                    <p id="question4Counter">1000 caracteres restantes</p>
+                </div>
+                <!-- /Pergunta 4 -->
+
+                <!-- Pergunta 5 -->
+                <div class="form-group">
+                    <label for="question5">Você trabalha com outras pessoas? Se sim, Quantas? Como você descreve a experiência de trabalhar com elas? Explique:</label>
+                    <textarea type="text" id="question5" name="question5" required></textarea>
+                    <p id="question5Counter">1000 caracteres restantes</p>
+                </div>
+                <!-- /Pergunta 6 -->
+
+                <!-- Pergunta 6 -->
+                <div class="form-group">
+                    <label for="question6">Compartilhe algo legal que você tenha feito no seu trabalho. Explique e diga como você fez isso:</label>
+                    <textarea type="text" id="question6" name="question6" required></textarea>
+                    <p id="question6Counter">1000 caracteres restantes</p>
+                </div>
+                <!-- /Pergunta 6 -->
+
+                <!-- Pergunta 7 -->
+                <div class="form-group">
+                    <label for="question7">Como você aprende coisas novas para o seu trabalho? Você já teve que fazer algo de maneira diferente? Explique:</label>
+                    <textarea type="text" id="question7" name="question7" required></textarea>
+                    <p id="question7Counter">1000 caracteres restantes</p>
+                </div>
+                <!-- /Pergunta 7 -->
+
+                <!-- Pergunta 8 -->
+                <div class="form-group">
+                    <label for="question8">Você trabalhou em alguma atividade importante ou diferente das suas atividades? Como fez para realiza-las?</label>
+                    <textarea type="text" id="question8" name="question8" required></textarea>
+                    <p id="question8Counter">1000 caracteres restantes</p>
+                </div>
+                <!-- /Pergunta 8 -->
+
+                <!-- Pergunta 9 -->
+                <div class="form-group">
+                    <label for="question9">Se pudesse dar um conselho a um adolescente interessado no seu trabalho, o que diria? Ao final, diga o que acha mais desafiador e o que acha mais legal na sua profissão:</label>
+                    <textarea type="text" id="question9" name="question9" required></textarea>
+                    <p id="question9Counter">1000 caracteres restantes</p>
+                </div>
+                <!-- /Pergunta 9 -->
+
+                <!-- Pergunta 10 -->
+                <div class="form-group">
+                    <label for="question10">Você possui recursos, modelos de materiais ou amostras usadas na sua rotina que possa listar? Poderia compartilhar esses arquivos em formato digital? (Word; Excel; PDF...)</label>
+                    <textarea type="text" id="question10" name="question10" required></textarea>
+                    <p id="question10Counter">1000 caracteres restantes</p>
+                </div>
+                <!-- /Pergunta 10 -->
+
+                <button type="submit">Gerar Produto</button>
+            </form>
+        </div>
+    </section>
+    <!-- /Seção Home -->
+
+        <!-- Depoimentos -->
+        <section class="testimonials">
+            <h2 style="text-align: center;">Sêniors que Utilizam o Serviço</h2>
+            <div class="testimonial-cards">
+    
+                <div class="testimonial-card">
+                    <img src="{{ url_for('static', filename='images/depoimento.jpg') }}" alt="Depoimento">
+                    <div class="testimonial-info">
+                        <a href="perfil.html" class="profile-link">
+                            <img src="{{ url_for('static', filename='images/perfil.jpg') }}" alt="Foto do Usuário" class="user-profile">
+                            <i class='bx bx-user'></i>
+                        </a>
+                        <h4>João Silva</h4>
+                        <p>São Paulo, cliente desde 2020</p>
+                    </div>
+                </div>
+    
+                <div class="testimonial-card">
+                    <img src="{{ url_for('static', filename='images/depoimento.jpg') }}" alt="Depoimento">
+                    <div class="testimonial-info">
+                        <a href="perfil.html" class="profile-link">
+                            <img src="{{ url_for('static', filename='images/perfil.jpg') }}" alt="Foto do Usuário" class="user-profile">
+                            <i class='bx bx-user'></i>
+                        </a>
+                        <h4>João Silva</h4>
+                        <p>São Paulo, cliente desde 2020</p>
+                    </div>
+                </div>
+    
+                <div class="testimonial-card">
+                    <img src="{{ url_for('static', filename='images/depoimento.jpg') }}" alt="Depoimento">
+                    <div class="testimonial-info">
+                        <a href="perfil.html" class="profile-link">
+                            <img src="{{ url_for('static', filename='images/perfil.jpg') }}" alt="Foto do Usuário" class="user-profile">
+                            <i class='bx bx-user'></i>
+                        </a>
+                        <h4>João Silva</h4>
+                        <p>São Paulo, cliente desde 2020</p>
+                    </div>
+                </div> 
+            </div>
+        </section>
+        <!-- /Depoimentos -->
+    
+    <!-- Seção de Direitos sobre o site-->
+    <footer>
+        <p>Copyright &copy; 2024 by &lt;/devxxctor.&gt; All rights Reserved</p>
+    </footer>
+    <!-- /Seção de Direitos sobre o site -->
+    
+    <!-- Referência ao Arquivo JavaScript -->
+    <script src="../static/js/vendas.js"></script>
+
+</body>
+</html>
