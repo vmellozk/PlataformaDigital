@@ -1,0 +1,60 @@
+O arquivo define funções para automatizar a interação com uma página web, incluindo copiar textos de botões, enviar 
+textos com quebras de linha, e atualizar a página para reiniciar o processo. O código também gerencia a execução de 
+várias tarefas sequenciais e a captura de respostas em uma aplicação web automatizada.
+
+Relação com Outros Arquivos
+prompt.py: Importa funções auxiliares (get_initial_prompt, responses, tittle) que fornecem o prompt inicial, processam
+respostas e geram títulos.
+pyperclip: Usado para manipular a área de transferência e copiar textos.
+Selenium: Biblioteca principal utilizada para automação de navegador.
+
+Estrutura do Código e Organização
+Organização Interna
+O código está organizado em funções que realizam tarefas específicas:
+Funções de Interação com a Web: Gerenciam a interação com a página, como clicar em botões e copiar textos.
+Funções de Envio de Dados: Enviam textos e prompts para a página.
+Funções de Atualização: Atualizam a página e reiniciam o processo conforme necessário.
+
+Blocos de Código e Funções
+copy_text(driver, button_xpath)
+Descrição: Copia o texto de um botão localizado pelo XPath fornecido.
+Parâmetros:
+driver: Instância do navegador.
+button_xpath: XPath do botão a ser clicado.
+Retorno: Texto copiado da área de transferência.
+Interação com Outros Blocos: Utiliza pyperclip para obter o texto copiado.
+send_text_with_line_breaks(input_field, text)
+
+Descrição: Envia um texto para um campo de entrada, respeitando quebras de linha.
+Parâmetros:
+input_field: Campo de entrada no qual o texto será enviado.
+text: Texto a ser enviado.
+Interação com Outros Blocos: Utiliza input_field.send_keys para enviar texto.
+refresh_page(driver, responses_file, tittle_file, output_file, name)
+
+Descrição: Atualiza a página e reinicia o processo de envio de prompts.
+Parâmetros:
+driver: Instância do navegador.
+responses_file: Arquivo contendo as respostas.
+tittle_file: Arquivo para salvar o título.
+output_file: Arquivo para salvar a saída final.
+name: Nome usado no prompt.
+Interação com Outros Blocos: Chama send_prompts após atualizar a página.
+send_prompts(driver, responses_file, tittle_file, output_file, name)
+
+Descrição: Envia prompts para o campo de entrada e realiza ações baseadas nos elementos encontrados na página.
+Parâmetros:
+driver: Instância do navegador.
+responses_file: Arquivo contendo as respostas.
+tittle_file: Arquivo para salvar o título.
+output_file: Arquivo para salvar a saída final.
+name: Nome usado no prompt..
+Interação com Outros Blocos: Utiliza copy_text para obter textos copiados e send_text_with_line_breaks para enviar
+textos.
+
+Observações e Mudanças Recentes
+02/09/24: Atualização de elementos atuais e anotação de elementos anteriores.
+04/09/24: Retirada dos prints de TimeoutException.
+05/09/24: Correção de interação com o botão keep_generate e ajustes na identação.
+06/09/24: Adicionada lógica para reiniciar o processo caso o botão não apareça e correção de identação.
+06/09/24: Criação e remoção de arquivo de backup para mudanças no send_prompt.

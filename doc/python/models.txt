@@ -1,0 +1,66 @@
+O código define funções para manipulação de dados em um banco de dados SQLite, específico para um sistema de usuários
+e respostas a questionários. Ele fornece operações básicas de inserção e consulta no banco de dados.
+
+
+Relação de Arquivos
+Nenhum arquivo adicional é mencionado. Este código é autônomo, lidando diretamente com o banco de dados database.db.
+
+
+Estrutura do Código e Organização
+Conexão com o Banco de Dados:
+Cada função estabelece uma conexão com o banco de dados SQLite database.db, executa a operação desejada e fecha a
+conexão após a operação ser concluída.
+
+Funções Definidas:
+insert_user: Insere um novo usuário na tabela users.
+get_user_by_email: Consulta a tabela users para obter informações sobre um usuário com base no e-mail e senha
+fornecidos.
+insert_survey_response: Insere uma nova resposta de questionário na tabela survey_responses.
+
+
+Blocos de Códigos e Funções
+Função insert_user (linhas 4-9):
+Objetivo: Inserir um novo usuário na tabela users.
+Parâmetros: name, email, password, categoria.
+Descrição: Estabelece uma conexão com o banco de dados, executa a instrução SQL para inserir um novo registro na
+tabela users, e fecha a conexão.
+
+Função get_user_by_email (linhas 11-17):
+Objetivo: Recuperar informações sobre um usuário com base no e-mail e senha fornecidos.
+Parâmetros: email, password.
+Descrição: Estabelece uma conexão com o banco de dados, executa a consulta SQL para obter o ID, nome e categoria do
+usuário, e fecha a conexão.
+
+Função insert_survey_response (linhas 19-25):
+Objetivo: Inserir respostas de um questionário na tabela survey_responses.
+Parâmetro: data (uma tupla com os dados das respostas).
+Descrição: Estabelece uma conexão com o banco de dados, executa a instrução SQL para inserir as respostas na tabela
+survey_responses, e fecha a conexão.
+
+
+Erros e Soluções de Problemas
+Problema de Conexão: Certifique-se de que o arquivo database.db está acessível e não está sendo usado por outro
+processo durante a execução das funções.
+
+Erros de SQL: Verifique a integridade da tabela e a correspondência dos campos com os parâmetros fornecidos.
+Certifique-se de que os nomes das colunas e tipos de dados estão corretos no banco de dados.
+
+Uso de Variáveis Globais: A variável global response_number é mencionada na função insert_survey_response, mas não
+está definida no código fornecido. Assegure-se de que essa variável é inicializada corretamente em outra parte do
+código ou remova a referência, se não for necessária.
+
+
+Histórico de Alterações
+18/07/24 - Implementação inicial das funções para manipulação de dados em um banco de dados SQLite.
+
+
+Contribuição e Melhorias
+Contribuições: Outros desenvolvedores podem contribuir ajustando o esquema do banco de dados, adicionando
+funcionalidades de validação, ou implementando tratamento de erros mais robusto.
+Melhorias:
+Validação de Dados: Adicionar validação de dados antes da inserção no banco para evitar problemas com dados
+inválidos ou mal formatados.
+Tratamento de Erros: Implementar tratamento de exceções mais detalhado para fornecer feedback claro em caso de
+falhas na operação do banco de dados.
+Variáveis Globais: Revisar a necessidade de variáveis globais e considerar a passagem de parâmetros diretamente
+para evitar dependências globais.

@@ -1,0 +1,44 @@
+O código define uma função clean_text que é utilizada para limpar e normalizar um texto de entrada. O propósito
+principal dessa função é remover palavras específicas e caracteres especiais indesejados, deixando apenas caracteres
+alfanuméricos, espaços e alguns sinais de pontuação.
+
+Relação de Arquivos
+Neste código específico, há apenas um arquivo, que parece ser um módulo ou um script Python simples contendo a função
+clean_text.
+
+Estrutura do Código e Organização
+Função clean_text: A função é responsável por:
+Remover palavras específicas predefinidas de uma string.
+Remover caracteres especiais, exceto alguns caracteres permitidos.
+
+Blocos de Códigos e Funções
+Função clean_text (linhas 3 a 13):
+Definição de Variáveis:
+words_to_remove: Lista de palavras e expressões específicas que serão removidas do texto.
+allowed_characters: Expressão regular que define os caracteres permitidos no texto final.
+Remoção de Palavras Específicas: Um loop itera sobre cada palavra na lista words_to_remove e remove todas as
+ocorrências dessas palavras do texto.
+Remoção de Caracteres Especiais: Utiliza uma expressão regular para substituir todos os caracteres não permitidos
+(conforme definido por allowed_characters) por uma string vazia.
+Retorno: A função retorna o texto limpo.
+
+Erros e Soluções de Problemas
+Problema de Desempenho: Se a lista words_to_remove for muito grande ou o texto for muito extenso, a função pode sofrer
+problemas de desempenho. Para grandes listas de palavras, considere otimizações como usar conjuntos (set) em vez de
+listas.
+Caracteres Especiais Adicionais: Se houver caracteres especiais que precisam ser mantidos ou removidos, a expressão
+regular em allowed_characters deve ser ajustada.
+
+Histórico de Alterações
+08/08/24: Implementação inicial da função clean_text, que inclui a remoção de palavras específicas e caracteres
+especiais.
+20/08/24: Autualização de parâmetros
+
+Contribuição e Melhorias
+Contribuições: Outros desenvolvedores podem contribuir ajustando a lista words_to_remove ou a expressão regular em
+allowed_characters para atender a requisitos específicos.
+Melhorias:
+Desempenho: Para melhorar o desempenho com grandes volumes de texto ou listas extensas de palavras, considere
+alternativas para a remoção de palavras e caracteres.
+Testes: Adicione casos de teste para garantir que a função clean_text lida corretamente com diversos formatos de
+entrada e diferentes cenários de uso.

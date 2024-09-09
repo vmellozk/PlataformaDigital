@@ -1,0 +1,75 @@
+Atualmente não está sendo usado. Porém, o código fornece funções auxiliares para gerenciar a automação usando o
+Selenium, incluindo a manipulação de processos do Chrome, controle de tentativas, e verificação de elementos na
+página. Ele lida com erros durante a automação, reiniciando o processo conforme necessário e garantindo que os
+recursos sejam liberados corretamente.
+
+
+Relação de Arquivos
+generate_Ebook.py: Contém a função generate_ebook, que é chamada para reiniciar o processo de geração do eBook quando
+ocorre um erro.
+
+
+Estrutura do Código e Organização
+Contadores de Tentativas:
+get_attempt_counter: Obtém o número atual de tentativas a partir de uma variável de ambiente específica para o usuário.
+increment_attempt_counter: Incrementa o contador de tentativas e atualiza a variável de ambiente correspondente.
+
+Limitação de Tentativas:
+MAX_ATTEMPTS: Define o limite máximo de tentativas para reiniciar o processo.
+
+Manipulação de Processos e Arquivos:
+kill_chrome_processes: Finaliza processos do Chrome e do Chromedriver.
+delete_files: Remove arquivos específicos do sistema.
+
+Interação com a Página Web:
+click_element_if_found: Verifica se um elemento HTML específico está presente e clica em um link se encontrado.
+
+Tratamento de Erros:
+handle_error: Lida com erros durante a automação, limpa arquivos temporários, encerra o driver e os processos do
+Chrome, e tenta reiniciar o processo de geração do eBook se o número de tentativas não exceder o máximo permitido.
+
+
+Blocos de Códigos e Funções
+Funções de Contador de Tentativas (linhas 5-13):
+get_attempt_counter: Recupera o contador de tentativas de uma variável de ambiente.
+increment_attempt_counter: Incrementa e atualiza o contador de tentativas na variável de ambiente.
+
+Funções de Limpeza e Manipulação (linhas 16-26):
+kill_chrome_processes: Encerra os processos do Chrome e Chromedriver.
+delete_files: Apaga arquivos temporários especificados.
+
+Função de Verificação e Clique (linhas 29-44):
+click_element_if_found: Verifica e clica em elementos na página se encontrados.
+
+Função de Tratamento de Erros (linhas 47-76):
+handle_error: Lida com erros ao verificar a presença de um elemento de erro, apaga arquivos temporários, encerra o
+driver e processos do Chrome, e reinicia o processo de geração do eBook se o número de tentativas não for excedido.
+
+
+Erros e Soluções de Problemas
+Falha ao Encerrar Processos: Verifique se os processos do Chrome e Chromedriver estão sendo encerrados corretamente
+e se a função kill_chrome_processes está funcionando conforme esperado.
+
+Arquivos Não Removidos: Certifique-se de que a função delete_files está removendo os arquivos especificados.
+
+Problemas com Contadores de Tentativas: Verifique se as variáveis de ambiente estão sendo manipuladas corretamente e
+se o contador de tentativas está sendo incrementado conforme esperado.
+
+Erros na Verificação de Elementos: Verifique se os seletores CSS usados em click_element_if_found e handle_error
+estão corretos e se os elementos esperados estão presentes na página.
+
+
+Histórico de Alterações
+Última modificação: 05/09/24
+Troca de driver.quit() para driver.close(), porque assim que acabar fecha apenas a aba certa, e não todas
+
+
+Contribuição e Melhorias
+Contribuições: Outros desenvolvedores podem contribuir ajustando os seletores de elementos, melhorando o tratamento
+de erros, ou otimizando o gerenciamento de tentativas e processos.
+Melhorias:
+Precisão na Verificação de Elementos: Refinar seletores para garantir a detecção precisa de elementos na página.
+Manejo de Exceções: Melhorar o tratamento de exceções para fornecer informações mais detalhadas sobre falhas durante
+a execução.
+Testes de Robustez: Adicionar testes para garantir que as funções lidem corretamente com diferentes cenários e
+condições de erro.

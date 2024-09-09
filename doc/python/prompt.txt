@@ -1,0 +1,49 @@
+Este código contém três funções que auxiliam na geração de eBooks, fornecendo instruções e formatando prompts e
+respostas para criar documentos detalhados. As funções são usadas para criar o prompt inicial, formatar as respostas
+e solicitar a capa do eBook.
+
+
+Funções Definidas
+1. get_initial_prompt()
+Objetivo: Fornece um prompt inicial detalhado para a criação de eBooks. Define a estrutura e as seções que o eBook
+deve ter, e instrui o usuário a responder com "OK" até que as instruções sejam dadas.
+Descrição: Esta função retorna uma string formatada que descreve o processo para criar um eBook, incluindo a divisão
+do eBook em partes como Capa, Sumário, Introdução, Conteúdo Principal e Conclusão. Instruções específicas são
+fornecidas sobre como responder e o que deve ser incluído em cada seção do eBook.
+
+2. responses(responses_text)
+Objetivo: Formata o texto das respostas fornecidas pelo usuário.
+Descrição: Esta função recebe o texto das respostas e retorna a string formatada. É uma função simples que pode ser
+utilizada para inserir o texto das respostas no eBook.
+Parâmetro:
+responses_text (str): Texto das respostas fornecidas.
+
+3. tittle(name)
+Objetivo: Solicita a capa do eBook com o título e o nome do autor.
+Descrição: Esta função retorna uma string solicitando a capa do eBook. O título da capa é solicitado ao usuário e deve
+ser fornecido junto com o nome do autor. A função inclui uma instrução para usar 4 hashes antes da palavra "Capa".
+Parâmetro:
+name (str): Nome do autor do eBook.
+
+
+Erros e Soluções de Problemas
+Problemas com Formatação:
+Certifique-se de que as strings formatadas estão corretas e não contêm erros de sintaxe. Verifique o uso correto de
+f-strings.
+
+Resposta Inesperada:
+Assegure-se de que o sistema que utiliza essas funções esteja preparado para lidar com respostas e prompts de maneira
+apropriada.
+
+
+Histórico de Alterações
+19/08/24: Implementação inicial das funções para gerar prompts e formatar respostas para eBooks.
+
+
+Contribuição e Melhorias
+Contribuições: Outros desenvolvedores podem adicionar novos parâmetros ou personalizar os prompts e formatação conforme
+necessário.
+Melhorias:
+Validação de Entradas: Adicionar validação para garantir que o texto das respostas e o nome do autor sejam fornecidos
+corretamente.
+Mensagens de Erro: Incluir mensagens de erro para fornecer feedback em caso de entradas inválidas ou ausentes.
