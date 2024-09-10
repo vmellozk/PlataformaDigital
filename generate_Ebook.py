@@ -35,7 +35,7 @@ def generate_ebook(user_id, driver):
         df_user = pd.read_sql_query("SELECT email, name FROM users WHERE id = ?", conn, params=(user_id,))
         if df_user.empty:
             print("E-mail ou nome do autor não encontrado para o usuário.")
-            return
+            return None
 
         # Obtém o email e o nome do Banco de Dados
         email = df_user.iloc[0]['email']
@@ -140,7 +140,11 @@ def generate_ebook(user_id, driver):
         else:
             print("O eBook não foi criado, mantendo arquivos temporários.")
 
+        # Retorna o caminho do eBook gerado
+        return file_path
+
     except Exception as e:
         print(f"Erro durante a geração do eBook: {e}")
+        return None
     finally:
         conn.close()

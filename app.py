@@ -1,14 +1,20 @@
 import time
 import threading
 import queue
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email import encoders
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 import undetected_chromedriver as uc
 from database import init_db
-from models import insert_user, get_user_by_email, insert_survey_response
+from models import insert_user, get_user_by_email, insert_survey_response, get_email_by_user_id
 from generate_Ebook import generate_ebook
+from email.mime.text import MIMEText
+from dotenv import load_dotenv
+import os
 
 #
 app = Flask(__name__)
@@ -38,6 +44,13 @@ occupied_positions = [False, False, False, False]
 window_width = 960
 window_height = 540
 
+# Obter e carrega as variáveis de ambiente / Configurações de email
+load_dotenv()
+EMAIL_ADDRESS = os.getenv('EMAIL_ADDRESS')
+EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD')
+SMTP_SERVER = os.getenv('SMTP_SERVER')
+SMTP_PORT = int(os.getenv('SMTP_PORT'))
+
 # Função para encontrar a primeira posição livre
 def find_free_position():
     for index, occupied in enumerate(occupied_positions):
@@ -56,6 +69,44 @@ def set_window_position_and_size(driver, position_index):
 # Função para liberar a posição quando a aba é fechada
 def release_position(position_index):
     occupied_positions[position_index] = False
+
+# Função para enviar o e-mail com o eBook
+def send_email(user_email, ebook_path):
+    try:
+        print(f"Enviando e-mail de {EMAIL_ADDRESS} para {user_email} através de {SMTP_SERVER}:{SMTP_PORT}")
+        msg = MIMEMultipart()
+        msg['From'] = EMAIL_ADDRESS
+        msg['To'] = user_email
+        msg['Subject'] = 'Seu eBook Gerado'
+        
+        body = 'Prezado(a),\n\nSeu eBook gerado está anexado a este e-mail.\n\nAtenciosamente,\nEquipe'
+        msg.attach(MIMEText(body, 'plain'))
+        
+        with open(ebook_path, 'rb') as attachment:
+            part = MIMEBase('application', 'octet-stream')
+            part.set_payload(attachment.read())
+            encoders.encode_base64(part)
+            part.add_header('Content-Disposition', f'attachment; filename={os.path.basename(ebook_path)}')
+            msg.attach(part)
+
+        if SMTP_PORT == 465:
+            with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT) as server:
+                print(f"Realizando login com {EMAIL_ADDRESS}")
+                server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+                text = msg.as_string()
+                server.sendmail(EMAIL_ADDRESS, user_email, text)
+                print(f"E-mail enviado com sucesso para {user_email}")
+        else:
+            with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+                server.starttls()
+                print(f"Realizando login com {EMAIL_ADDRESS}")
+                server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+                text = msg.as_string()
+                server.sendmail(EMAIL_ADDRESS, user_email, text)
+                print(f"E-mail enviado com sucesso para {user_email}")
+
+    except Exception as e:
+        print(f"Erro ao enviar o e-mail para {user_email}: {e}")
 
 # Função para processar cada usuário
 def process_user(user_id):
@@ -83,9 +134,21 @@ def process_user(user_id):
             return
 
     try:
-        generate_ebook(user_id, driver)
+        # Gera o eBook e salva o caminho
+        ebook_path = generate_ebook(user_id, driver)
+        # Adicione um log para verificar o caminho retornado
+        print(f"Caminho do eBook gerado: {ebook_path}")
+
+        if ebook_path is None:
+            raise ValueError("Caminho do eBook não retornado pela função generate_ebook.")
+
+        # Recupera o e-mail do usuário
+        user_email = get_email_by_user_id(user_id)
+        # Envia o eBook para o e-mail do usuário
+        send_email(user_email, ebook_path)
     except Exception as e:
-        print(f"Erro ao processar o usuário {user_id}: {e}")
+        print(f"Erro ao processar o usuário {user_id} no envio do eBook: {e}")
+
     finally:
         driver.quit()
         print(f"Processamento concluído para o usuário {user_id}. Fechando o navegador.")
@@ -110,6 +173,7 @@ def release_tab_and_process_queue():
 @app.route('/home')
 def home():
     return render_template('home.html')
+
 #
 @app.route('/loja')
 def loja():

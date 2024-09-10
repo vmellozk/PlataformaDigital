@@ -17,6 +17,14 @@ def get_user_by_email(email, password):
     conn.close()
     return user
 
+def get_email_by_user_id(user_id):
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT email FROM users WHERE id = ?', (user_id,))
+    user_email = cursor.fetchone()
+    conn.close()
+    return user_email[0] if user_email else None
+
 def insert_survey_response(data):
     global response_number 
 
