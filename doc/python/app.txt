@@ -131,6 +131,7 @@ funcionando corretamente os elementos.
 06/09/24 - Arquivo com delay entre abas, mas o navegador travado.
 06/09/24 - Atualização do flash quando a fila está cheia.
 06/09/24 - Arquivo funcionando! Removendo arquivos de backup.
+10/09/24 - Inserção de bibliotecas novas e função para envio automático para cadas usuário usando smtp.
 
 Contribuição
 Estilo de Codificação

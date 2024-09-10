@@ -102,6 +102,9 @@ e JS estão sendo carregados corretamente.
 * Changelog Local:
 - 26/07/24 - Criado o arquivo com a estilização inicial.
 - 29/07/24 - Atualizado para incluir novos estilos e ajustar a aparência.
+- 10/09/24 - Adicionei um campo para colocar o email do usuário, para assim enviar o produto para o email que foi
+colocado no campo de form.
+
 
 * Planejamento Futuro:
 Considerar a adição de validações de formulário mais robustas.

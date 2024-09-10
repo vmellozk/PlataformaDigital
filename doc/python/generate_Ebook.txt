@@ -54,9 +54,9 @@ funcionando.
 
 
 Histórico de Alterações
-Última modificação: 29/08/24
-Atualização da função generate_ebook, incluindo modificação da criação de diretórios, processamento de dados,
-geração de conteúdo e criação de PDF.
+29/08/24 - Atualização da função generate_ebook, incluindo modificação da criação de diretórios, processamento de
+dados, geração de conteúdo e criação de PDF.
+10/09/24 - Alterei os "return's" para me dar o caminho do arquivo e finalizar o processo
 
 
 Contribuição e Melhorias

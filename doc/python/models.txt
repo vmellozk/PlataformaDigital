@@ -52,6 +52,8 @@ código ou remova a referência, se não for necessária.
 
 Histórico de Alterações
 18/07/24 - Implementação inicial das funções para manipulação de dados em um banco de dados SQLite.
+10/09/24 - Adicionei a função "get_email_by_user_id()" para captar e retornar o email do usuário pelo id, para assim
+conseguir enviar o email com o produto para o usuário em outro código.
 
 
 Contribuição e Melhorias
