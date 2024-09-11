@@ -95,7 +95,7 @@ def kiwify_automation(driver):
 
     try:
         driver.get('https://dashboard.kiwify.com.br/')
-        time.sleep(5)
+        time.sleep(5000000)
         print(f"Abrindo o site")
 
         current_url = driver.current_url
@@ -290,6 +290,11 @@ def kiwify_automation(driver):
                     print("Aguardando o botão 'imagem produto' antes de clicar...")
                     time.sleep(2)
 
+
+            '''
+            criar uma logica para buscar a imagem do produto que vai ser gerada via IA para cada usuário na pasta do user_id específico
+            '''
+
             #
             while True:
                 try:
@@ -315,6 +320,141 @@ def kiwify_automation(driver):
                 except Exception as e:
                     print("Aguardando o campo 'nome produtor' antes de clicar...")
                     time.sleep(2)
+
+            #
+            while True:
+                try:
+                    salvar = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[17]/div[2]/button')
+                    if salvar:
+                        time.sleep(2)
+                        salvar.click()
+                        print("CLicando em salvar")
+                        break
+                except Exception as e:
+                    print("Aguardando o botão 'salvar' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    area_membros = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[12]/div/div[1]/nav/div[2]/a')
+                    if area_membros:
+                        time.sleep(2)
+                        area_membros.click()
+                        print("CLicando em area_membros")
+                        break
+                except Exception as e:
+                    print("Aguardando o botão 'area_membros' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    adicionar = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[7]/div[1]/div[1]/div[1]/div[2]/button')
+                    if adicionar:
+                        time.sleep(2)
+                        adicionar.click()
+                        print("CLicando em adicionar")
+                        break
+                except Exception as e:
+                    print("Aguardando o botão 'adicionar' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    nome_modulo = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[2]/div/div[2]/div[2]/div/div/div/div[1]/div/input')
+                    if nome_modulo:
+                        time.sleep(2)
+                        nome_modulo.click()
+                        print("CLicando em nome_modulo")
+                        break
+                except Exception as e:
+                    print("Aguardando o campo 'nome_modulo' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    adicionar_modulo = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[2]/div/div[2]/div[2]/div/div/div/div[3]/button')
+                    if adicionar_modulo:
+                        time.sleep(2)
+                        adicionar_modulo.click()
+                        print("CLicando em adicionar_modulo")
+                        break
+                except Exception as e:
+                    print("Aguardando o botão 'adicionar_modulo' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    simbolo_adicionar = driver.find_element(By.XPATH, '//*[@id="options-menu"]')
+                    if simbolo_adicionar:
+                        time.sleep(2)
+                        simbolo_adicionar.click()
+                        print("CLicando em simbolo_adicionar")
+                        break
+                except Exception as e:
+                    print("Aguardando o botão 'simbolo_adicionar' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    adicionar_conteudo = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[7]/div[1]/div[1]/div[2]/div/div/div[2]/div/div[1]/div/div/div/div/div[2]/div/div/div[1]/div[1]')
+                    if adicionar_conteudo:
+                        time.sleep(2)
+                        adicionar_conteudo.click()
+                        print("CLicando em adicionar_conteudo")
+                        break
+                except Exception as e:
+                    print("Aguardando o botão 'adicionar_conteudo' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    titulo = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[7]/div[1]/div/div[4]/div[1]/div/div[2]/div/div/div[1]/div/input')
+                    if titulo:
+                        time.sleep(2)
+                        titulo.click()
+                        print("CLicando em titulo")
+                        break
+                except Exception as e:
+                    print("Aguardando o botão 'titulo' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    selecione_computador = driver.find_element(By.XPATH, '//*[@id="attachment"]/div[1]/div/button/div/div/span')
+                    if selecione_computador:
+                        time.sleep(2)
+                        selecione_computador.click()
+                        print("CLicando em selecione_computador")
+                        break
+                except Exception as e:
+                    print("Aguardando o botão 'selecione_computador' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    criar_publicar = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[7]/div[1]/div/div[5]/div[3]/div')
+                    if criar_publicar:
+                        time.sleep(2)
+                        criar_publicar.click()
+                        print("CLicando em criar_publicar")
+                        break
+                except Exception as e:
+                    print("Aguardando o botão 'criar_publicar' antes de clicar...")
+                    time.sleep(2)
+
+
+            '''
+            aqui fechar a aba atual para voltar na aba de edição do produto e continuar a automação
+            '''
 
             #
             while True:
@@ -363,6 +503,19 @@ def kiwify_automation(driver):
                         time.sleep(2)
                         habilitar_market_place.click()
                         print("CLicando em habilitar_market_place")
+                        break
+                except Exception as e:
+                    print("Aguardando o botão 'habilitar_market_place' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    categoria_afiliados = driver.find_element(By.XPATH, '//*[@id="affiliates"]/div[2]/div/div[2]/div/div/div[2]/div[4]/div/select')
+                    if categoria_afiliados:
+                        time.sleep(2)
+                        categoria_afiliados.click()
+                        print("CLicando em categoria_afiliados")
 
                         '''
                         criar uma lógica para selecionar a categoria. pode ser perguntando ao chatgpt, salvando em um arquivo de texto, lendo o texto, procurando na div onde tem aquilo e clicar
@@ -370,7 +523,7 @@ def kiwify_automation(driver):
 
                         break
                 except Exception as e:
-                    print("Aguardando o botão 'habilitar_market_place' antes de clicar...")
+                    print("Aguardando o botão 'categoria_afiliados' antes de clicar...")
                     time.sleep(2)
 
             #
@@ -402,6 +555,24 @@ def kiwify_automation(driver):
             #
             while True:
                 try:
+                    duracao_cookies = driver.find_element(By.XPATH, '//*[@id="affiliates"]/div[2]/div/div[2]/div/div/div[2]/div[10]/div/select')
+                    if duracao_cookies:
+                        time.sleep(2)
+                        duracao_cookies.click()
+                        print("CLicando em duracao_cookies")
+                        eterno = driver.find_element(By.XPATH, '//*[@id="affiliates"]/div[2]/div/div[2]/div/div/div[2]/div[10]/div/select/option[1]')
+                        if eterno:
+                            time.sleep(2)
+                            eterno.click()
+                            print("Clicando em eterno")
+                        break
+                except Exception as e:
+                    print("Aguardando o botão 'duracao_cookies' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
                     salvar_config_afiliados = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[18]/div[2]/button')
                     if salvar_config_afiliados:
                         time.sleep(2)
@@ -415,19 +586,6 @@ def kiwify_automation(driver):
             #
             while True:
                 try:
-                    teste = driver.find_element(By.XPATH, '')
-                    if teste:
-                        time.sleep(2)
-                        teste.click()
-                        print("CLicando em teste")
-                        break
-                except Exception as e:
-                    print("Aguardando o  'teste' antes de clicar...")
-                    time.sleep(2)
-
-            #
-            while True:
-                try:
                     link_afiliado = driver.find_element(By.XPATH, '//*[@id="affiliates"]/div[3]/div/div[2]/div/div/div/div[2]/span/button')
                     if link_afiliado:
                         time.sleep(2)
@@ -435,13 +593,17 @@ def kiwify_automation(driver):
                         print("CLicando em link_afiliado")
 
                         '''
-                        usar o pyperclip para salvar o link em um arquivo para enviar no email do cliente
+                        usar o pyperclip para salvar o link em um arquivo de texto
                         '''
 
                         break
                 except Exception as e:
                     print("Aguardando o botão 'link_afiliado' antes de clicar...")
                     time.sleep(2)
+
+            '''
+            aqui fazer uma lógica para enviar o email via smtp lendo o arquivo da url de afiliado para enviar ao cliente
+            '''
 
     #
     finally:
