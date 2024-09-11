@@ -148,9 +148,300 @@ def kiwify_automation(driver):
             '''
 
         else:
-            time.sleep(5000000000)
+            time.sleep(5)
             print("Página inicial detectada ou já logado.")
-            pass
+            
+            #
+            while True:
+                try:
+                    produtos = WebDriverWait(driver, 20).until(
+                        EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[2]/div/div/div[2]/nav/div[1]/a[2]'))
+                    )
+                    if produtos:
+                        time.sleep(2)
+                        produtos.click()
+                        print("Botão de produtos encontrado")
+                        break
+                except Exception as e:
+                    print("Aguardando o botão de 'produtos' antes de continuar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    criar_produto = WebDriverWait(driver, 20).until(
+                        EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[6]/span/div'))
+                    )
+                    if criar_produto:
+                        time.sleep(2)
+                        criar_produto.click()
+                        print("Botão de criar produto encontrado")
+                        break
+                except Exception as e:
+                    print("Aguardando botão de 'criar produto' antes de continuar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    continuar = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div/div/div[2]/button')
+                    if continuar:
+                        time.sleep(2)
+                        continuar.click()
+                        print("Clicando em continuar")
+                        break
+                except Exception as e:
+                    print("Aguardando o botão de 'continuar' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    nome_produto = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div/div/div[1]/div[2]/div/input')
+                    if nome_produto:
+                        time.sleep(2)
+                        nome_produto.click()
+                        print("Clicando em nome do produto")
+                        break
+                except Exception as e:
+                    print("Aguardando o campo de 'nome do produto' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    descricao = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div/div/div[1]/div[3]/div/textarea')
+                    if descricao:
+                        time.sleep(2)
+                        descricao.click()
+                        print("Clicando em descrição")
+                        break
+                except Exception as e:
+                    print("Aguardando o campo de 'descrição' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    pagina_vendas = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div/div/div[1]/div[4]/div[2]/input')
+                    if pagina_vendas:
+                        time.sleep(2)
+                        pagina_vendas.click()
+                        print("Clicando em pagina de vendas")
+                        break
+                except Exception as e:
+                    print("Aguardando o campo de 'página de vendas' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    preco = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div/div/div[1]/div[5]/fieldset/div/input')
+                    if preco:
+                        time.sleep(2)
+                        preco.click()
+                        print("Clicando em preço")
+                        break
+                except Exception as e:
+                    print("Aguardando o campo de 'preço' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    criar_produto_final = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div/div/div[2]/button')
+                    if criar_produto_final:
+                        time.sleep(2)
+                        criar_produto_final.click()
+                        print("CLicando em criar produto final")
+                        break
+                except Exception as e:
+                    print("Aguardando o botão 'criar produto final' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    categoria = driver.find_element(By.XPATH, '//*[@id="general"]/div[1]/div/div[2]/div/div/div[3]/div/select')
+                    if categoria:
+                        time.sleep(2)
+                        categoria.click()
+                        print("CLicando em categoria")
+
+                        '''
+                        criar uma lógica para selecionar a categoria. pode ser perguntando ao chatgpt, salvando em um arquivo de texto, lendo o texto, procurando na div onde tem aquilo e clicar
+                        '''
+
+                        break
+                except Exception as e:
+                    print("Aguardando o campo 'categoria' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    imagem_produto = driver.find_element(By.XPATH, '//*[@id="general"]/div[1]/div/div[2]/div/div/div[4]/div[1]/div[1]/div/button/div/div/span')
+                    if imagem_produto:
+                        time.sleep(2)
+                        imagem_produto.click()
+                        print("CLicando em imagem produto")
+                        break
+                except Exception as e:
+                    print("Aguardando o botão 'imagem produto' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    email_suporte = driver.find_element(By.XPATH, '//*[@id="general"]/div[3]/div/div[2]/div/div/div/div[2]/div/div/input')
+                    if email_suporte:
+                        time.sleep(2)
+                        email_suporte.click()
+                        print("CLicando em email suporte")
+                        break
+                except Exception as e:
+                    print("Aguardando o campo 'email suporte' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    nome_produtor = driver.find_element(By.XPATH, '//*[@id="general"]/div[3]/div/div[2]/div/div/div/div[3]/div/div/input')
+                    if nome_produtor:
+                        time.sleep(2)
+                        nome_produtor.click()
+                        print("CLicando em nome produtor")
+                        break
+                except Exception as e:
+                    print("Aguardando o campo 'nome produtor' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    salvar = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[17]/div[2]/button')
+                    if salvar:
+                        time.sleep(2)
+                        salvar.click()
+                        print("CLicando em salvar")
+                        break
+                except Exception as e:
+                    print("Aguardando o botão 'salvar' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    afiliados = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[12]/div/div[1]/nav/div[6]/a')
+                    if afiliados:
+                        time.sleep(2)
+                        afiliados.click()
+                        print("CLicando em afiliados")
+                        break
+                except Exception as e:
+                    print("Aguardando o botão 'afiliados' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    habilitar_afiliados = driver.find_element(By.XPATH, '//*[@id="affiliates"]/div[2]/div/div[2]/div/div/div[1]/span/span')
+                    if habilitar_afiliados:
+                        time.sleep(2)
+                        habilitar_afiliados.click()
+                        print("CLicando em habilitar afiliados")
+                        break
+                except Exception as e:
+                    print("Aguardando o botão 'habilitar afiliados' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    habilitar_market_place = driver.find_element(By.XPATH, '//*[@id="affiliates"]/div[2]/div/div[2]/div/div/div[2]/div[3]/div/span')
+                    if habilitar_market_place:
+                        time.sleep(2)
+                        habilitar_market_place.click()
+                        print("CLicando em habilitar_market_place")
+
+                        '''
+                        criar uma lógica para selecionar a categoria. pode ser perguntando ao chatgpt, salvando em um arquivo de texto, lendo o texto, procurando na div onde tem aquilo e clicar
+                        '''
+
+                        break
+                except Exception as e:
+                    print("Aguardando o botão 'habilitar_market_place' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    email_suporte_afiliados = driver.find_element(By.XPATH, '//*[@id="affiliates"]/div[2]/div/div[2]/div/div/div[2]/div[5]/div/div/div/input')
+                    if email_suporte_afiliados:
+                        time.sleep(2)
+                        email_suporte_afiliados.click()
+                        print("CLicando em email_suporte_afiliados")
+                        break
+                except Exception as e:
+                    print("Aguardando o campo 'email_suporte_afiliados' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    descricao_afiliados = driver.find_element(By.XPATH, '//*[@id="affiliates"]/div[2]/div/div[2]/div/div/div[2]/div[6]/div[1]/textarea')
+                    if descricao_afiliados:
+                        time.sleep(2)
+                        descricao_afiliados.click()
+                        print("CLicando em descricao_afiliados")
+                        break
+                except Exception as e:
+                    print("Aguardando o campo 'descricao_afiliados' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    salvar_config_afiliados = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[18]/div[2]/button')
+                    if salvar_config_afiliados:
+                        time.sleep(2)
+                        salvar_config_afiliados.click()
+                        print("CLicando em salvar_config_afiliados")
+                        break
+                except Exception as e:
+                    print("Aguardando o  'salvar_config_afiliados' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    teste = driver.find_element(By.XPATH, '')
+                    if teste:
+                        time.sleep(2)
+                        teste.click()
+                        print("CLicando em teste")
+                        break
+                except Exception as e:
+                    print("Aguardando o  'teste' antes de clicar...")
+                    time.sleep(2)
+
+            #
+            while True:
+                try:
+                    link_afiliado = driver.find_element(By.XPATH, '//*[@id="affiliates"]/div[3]/div/div[2]/div/div/div/div[2]/span/button')
+                    if link_afiliado:
+                        time.sleep(2)
+                        link_afiliado.click()
+                        print("CLicando em link_afiliado")
+
+                        '''
+                        usar o pyperclip para salvar o link em um arquivo para enviar no email do cliente
+                        '''
+
+                        break
+                except Exception as e:
+                    print("Aguardando o botão 'link_afiliado' antes de clicar...")
+                    time.sleep(2)
 
     #
     finally:
