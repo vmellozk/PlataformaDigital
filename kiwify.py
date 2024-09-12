@@ -77,11 +77,11 @@ def release_tab_and_process_queue():
 # Função de automação para cada usuário
 def kiwify_automation(driver):
     #
-    user_profile_path = r"C:\Users\Victor\AppData\Local\Google\Chrome for Testing\User Data\Default"
+    #user_profile_path = r"C:\Users\Victor\AppData\Local\Google\Chrome for Testing\User Data\Default"
 
     # Deifine as opções, parâmetros e adiciona o perfil de usuário
     chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument(f"user-data-dir={user_profile_path}")
+    #chrome_options.add_argument(f"user-data-dir={user_profile_path}")
     chrome_options.add_argument("--disable-infobars")
     chrome_options.add_argument("--disable-extensions")
     chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
@@ -108,7 +108,7 @@ def kiwify_automation(driver):
     #Bloco try except para tentar executar o código dentro
     try:
         driver.get('https://dashboard.kiwify.com.br/')
-        time.sleep(5000000)
+        time.sleep(5)
         print(f"Abrindo o site")
 
         #Detecta a url atual e comparada a com url passada, se for igual, ele vai fazer o login, abrindo o email para pegar o código, voltar para a aba e colar o código para logar
@@ -156,9 +156,22 @@ def kiwify_automation(driver):
                         time.sleep(2)
                         login.click()
                         print("Clicando em logar")
+                        time.sleep(5)
                         break
                 except Exception as e:
                     print("Aguardando o botão de 'logar' antes de clicar...")
+                    time.sleep(2)
+
+            # Verifica se vai aparecer a verificação de dois fatores
+            while True:
+                try:
+                    verificacao_dois_fatores = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[3]/div/main/div[2]/div/div/div[1]')
+                    if verificacao_dois_fatores:
+                        time.sleep(3)
+                        print("Verificacao de dois fatores apareceu")
+                        break
+                except Exception as e:
+                    print("Aguardando se o campo de 'verificacao de dois' apareceu...")
                     time.sleep(2)
 
             #Abre uma nova aba para abrir o gmail para pegar o código e voltar para colar o código na kiwify e logar no site
@@ -171,10 +184,10 @@ def kiwify_automation(driver):
             time.sleep(3)
 
             #Detecta a url atual e verifica com a url passada, se for igual, ele vai logar, fornecendo a senha se for preciso e entrando no email
-            current_url = driver.current_url
-            print(f"URL atual: {current_url}")
             gmail_login = 'https://accounts.google.com/'
-            if current_url == gmail_login:
+            current_url_1 = driver.current_url
+            print(f"URL atual: {current_url_1}")
+            if gmail_login in current_url_1:
                 #Procura onde está o campo de email, clica e insere o email
                 while True:
                     try:
@@ -229,13 +242,14 @@ def kiwify_automation(driver):
                         print("Aguardando o botão de 'password_proximo' antes de clicar...")
                         time.sleep(2)
             else:
+                print("não abriu o accounts.google")
                 pass
 
-            # Detecta a url atual, verifica com a url passada, se for igual, vai clicar em fazer login, selecionar o email, se aparecer o campo de senha vai clicar em senha e clicar em logar para abrir o email
-            current_url = driver.current_url
-            print(f"URL atual: {current_url}")            
+            # Detecta a url atual, verifica com a url passada, se for igual, vai clicar em fazer login, selecionar o email, se aparecer o campo de senha vai clicar em senha e clicar em logar para abrir o email          
             gmail_entrar = 'https://www.google.com/intl/pt-BR/gmail/about/'
-            if current_url == gmail_entrar:
+            current_url_2 = driver.current_url
+            print(f"URL atual: {current_url_2}")  
+            if gmail_entrar in current_url_2:
                 # Procura o botão de fazer login e clica
                 while True:
                     try:
@@ -290,6 +304,7 @@ def kiwify_automation(driver):
                         print("Aguardando o botão de 'teste' antes de clicar...")
                         time.sleep(2)
             else:
+                print("não abriu o google.com/gmail/about")
                 pass
 
             # Alternar de volta para a primeira aba
