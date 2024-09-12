@@ -10,6 +10,8 @@ import undetected_chromedriver as uc
 from selenium import webdriver
 import threading
 import queue
+from dotenv import load_dotenv
+import os
 
 # Configurações
 MAX_TABS = 4
@@ -19,6 +21,13 @@ task_queue = queue.Queue()
 tab_semaphore = threading.Semaphore(MAX_TABS)
 position_lock = threading.Lock()
 startup_lock = threading.Lock()  # Lock para controlar o atraso global
+
+# Variáveis de Ambiente .env
+load_dotenv()
+KW_EMAIL_ADDRESS=os.getenv('KW_EMAIL_ADDRESS')
+KW_EMAIL_PASSWORD=os.getenv('KW_EMAIL_PASSWORD')
+GM_EMAIL_ADDRESS=os.getenv('GM_EMAIL_ADDRESS')
+GM_EMAIL_PASSWORD=os.getenv('GM_EMAIL_PASSWORD')
 
 # Posições da janela do navegador (grade 2x2)
 positions = [
@@ -99,7 +108,7 @@ def kiwify_automation(driver):
     #Bloco try except para tentar executar o código dentro
     try:
         driver.get('https://dashboard.kiwify.com.br/')
-        time.sleep(5)
+        time.sleep(5000000)
         print(f"Abrindo o site")
 
         #Detecta a url atual e comparada a com url passada, se for igual, ele vai fazer o login, abrindo o email para pegar o código, voltar para a aba e colar o código para logar
@@ -110,13 +119,14 @@ def kiwify_automation(driver):
             #Clica no campo de email e insere o email
             while True:
                 try:
-                    email = WebDriverWait(driver, 20).until(
+                    email_kw = WebDriverWait(driver, 20).until(
                         EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/main/div[1]/div/div[2]/form/div[1]/div[1]/input'))
                     )
-                    if email:
+                    if email_kw:
                         time.sleep(2)
-                        email.click()
-                        print("Campo de email encontrado")
+                        email_kw.click()
+                        print("Campo de email_kw encontrado")
+                        email_kw.send_keys(KW_EMAIL_ADDRESS)
                         break
                 except Exception as e:
                     print("Aguardando o campo de email antes de continuar...")
@@ -125,13 +135,14 @@ def kiwify_automation(driver):
             #Clica no campo de senha e insere a senha
             while True:
                 try:
-                    password = WebDriverWait(driver, 20).until(
+                    password_kw = WebDriverWait(driver, 20).until(
                         EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/main/div[1]/div/div[2]/form/div[2]/div/input'))
                     )
-                    if password:
+                    if password_kw:
                         time.sleep(2)
-                        password.click()
+                        password_kw.click()
                         print("Campo de senha encontrado")
+                        password_kw.send_keys(KW_EMAIL_PASSWORD)
                         break
                 except Exception as e:
                     print("Aguardando o campo de senha antes de continuar...")
@@ -167,14 +178,15 @@ def kiwify_automation(driver):
                 #Procura onde está o campo de email, clica e insere o email
                 while True:
                     try:
-                        email = driver.find_element(By.XPATH, '//*[@id="identifierId"]')
-                        if email:
+                        email_gm = driver.find_element(By.XPATH, '//*[@id="identifierId"]')
+                        if email_gm:
                             time.sleep(2)
-                            email.click()
-                            print("Clicando em email")
+                            email_gm.click()
+                            print("Clicando em email_gm")
+                            email_gm.send_keys(GM_EMAIL_ADDRESS)
                             break
                     except Exception as e:
-                        print("Aguardando o campo de 'email' antes de clicar...")
+                        print("Aguardando o campo de 'email_gm' antes de clicar...")
                         time.sleep(2)
 
                 #Procura onde está o botão de próximo e clica
@@ -193,11 +205,12 @@ def kiwify_automation(driver):
                 # Procura o campo de senha, clica e insere a senha
                 while True:
                     try:
-                        password = driver.find_element(By.XPATH, '//*[@id="password"]/div[1]/div/div[1]/input')
-                        if password:
+                        password_gm = driver.find_element(By.XPATH, '//*[@id="password"]/div[1]/div/div[1]/input')
+                        if password_gm:
                             time.sleep(2)
-                            password.click()
+                            password_gm.click()
                             print("Clicando em password")
+                            password_gm.send_keys(GM_EMAIL_PASSWORD)
                             break
                     except Exception as e:
                         print("Aguardando o campo de 'password' antes de clicar...")
@@ -253,20 +266,21 @@ def kiwify_automation(driver):
                 # Procura o campo de senha, clica e insere a senha
                 while True:
                     try:
-                        teste = driver.find_element(By.XPATH, '')
-                        if teste:
+                        password_gm = driver.find_element(By.XPATH, '//*[@id="password"]/div[1]/div/div[1]/input')
+                        if password_gm:
                             time.sleep(2)
-                            teste.click()
-                            print("Clicando em teste")
+                            password_gm.click()
+                            print("Clicando em password_gm")
+                            password_gm.send_keys(GM_EMAIL_PASSWORD)
                             break
                     except Exception as e:
-                        print("Aguardando o botão de 'teste' antes de clicar...")
+                        print("Aguardando o botão de 'password_gm' antes de clicar...")
                         time.sleep(2)
 
                 # Procura o botão de próximo e clica
                 while True:
                     try:
-                        teste = driver.find_element(By.XPATH, '')
+                        teste = driver.find_element(By.XPATH, '//*[@id="passwordNext"]/div/button')
                         if teste:
                             time.sleep(2)
                             teste.click()
