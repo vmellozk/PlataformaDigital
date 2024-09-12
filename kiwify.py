@@ -278,7 +278,7 @@ def kiwify_automation(driver):
             else:
                 pass
 
-            # Alternar de volta para a primeira aba, se necessário
+            # Alternar de volta para a primeira aba
             driver.switch_to.window(driver.window_handles[0])
             print("Voltando para a primeira aba")
 
@@ -602,12 +602,11 @@ def kiwify_automation(driver):
                     print("Aguardando o botão 'criar_publicar' antes de clicar...")
                     time.sleep(2)
 
+            # Alternar de volta para a primeira aba
+            driver.switch_to.window(driver.window_handles[0])
+            print("Voltando para a primeira aba")
 
-            '''
-            aqui fechar a aba atual para voltar na aba de edição do produto e continuar a automação
-            '''
-
-            #
+            # Procura o botão de salvar e clica nele
             while True:
                 try:
                     salvar = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[17]/div[2]/button')
@@ -620,7 +619,7 @@ def kiwify_automation(driver):
                     print("Aguardando o botão 'salvar' antes de clicar...")
                     time.sleep(2)
 
-            #
+            # Procura o botão de afiliados e clica nele
             while True:
                 try:
                     afiliados = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[12]/div/div[1]/nav/div[6]/a')
@@ -633,7 +632,7 @@ def kiwify_automation(driver):
                     print("Aguardando o botão 'afiliados' antes de clicar...")
                     time.sleep(2)
 
-            #
+            # Procura o botão de habilitar afiliados e clica nele
             while True:
                 try:
                     habilitar_afiliados = driver.find_element(By.XPATH, '//*[@id="affiliates"]/div[2]/div/div[2]/div/div/div[1]/span/span')
@@ -646,7 +645,7 @@ def kiwify_automation(driver):
                     print("Aguardando o botão 'habilitar afiliados' antes de clicar...")
                     time.sleep(2)
 
-            #
+            # Procura o botão de habilitar o market place e clica nele
             while True:
                 try:
                     habilitar_market_place = driver.find_element(By.XPATH, '//*[@id="affiliates"]/div[2]/div/div[2]/div/div/div[2]/div[3]/div/span')
@@ -659,7 +658,7 @@ def kiwify_automation(driver):
                     print("Aguardando o botão 'habilitar_market_place' antes de clicar...")
                     time.sleep(2)
 
-            #
+            # Procura o botão de categoria e clica nele
             while True:
                 try:
                     categoria_afiliados = driver.find_element(By.XPATH, '//*[@id="affiliates"]/div[2]/div/div[2]/div/div/div[2]/div[4]/div/select')
@@ -667,17 +666,25 @@ def kiwify_automation(driver):
                         time.sleep(2)
                         categoria_afiliados.click()
                         print("CLicando em categoria_afiliados")
-
-                        '''
-                        criar uma lógica para selecionar a categoria. pode ser perguntando ao chatgpt, salvando em um arquivo de texto, lendo o texto, procurando na div onde tem aquilo e clicar
-                        '''
-
                         break
                 except Exception as e:
                     print("Aguardando o botão 'categoria_afiliados' antes de clicar...")
                     time.sleep(2)
+            
+            # Criar uma lógica para selecionar a categoria. pode ser perguntando ao chatgpt, salvando em um arquivo de texto, lendo o texto, procurando na div onde tem aquilo e clicar
+            while True:
+                try:
+                    teste = driver.find_element(By.XPATH, '')
+                    if teste:
+                        time.sleep(2)
+                        teste.click()
+                        print("Clicando em teste")
+                        break
+                except Exception as e:
+                    print("Aguardando o botão de 'teste' antes de clicar...")
+                    time.sleep(2)
 
-            #
+            # Procura o campo de email de suporte de afiliados, clica nele e insere
             while True:
                 try:
                     email_suporte_afiliados = driver.find_element(By.XPATH, '//*[@id="affiliates"]/div[2]/div/div[2]/div/div/div[2]/div[5]/div/div/div/input')
@@ -690,7 +697,7 @@ def kiwify_automation(driver):
                     print("Aguardando o campo 'email_suporte_afiliados' antes de clicar...")
                     time.sleep(2)
 
-            #
+            # Procura o campo de descrição de afiliados, clica nele e insere a descrição que foi gerada por IA na pasta específica de cada user_id
             while True:
                 try:
                     descricao_afiliados = driver.find_element(By.XPATH, '//*[@id="affiliates"]/div[2]/div/div[2]/div/div/div[2]/div[6]/div[1]/textarea')
@@ -703,7 +710,7 @@ def kiwify_automation(driver):
                     print("Aguardando o campo 'descricao_afiliados' antes de clicar...")
                     time.sleep(2)
 
-            #
+            # Procura o campo de duração de cookies, clica nele e seleciona a opção de eterno
             while True:
                 try:
                     duracao_cookies = driver.find_element(By.XPATH, '//*[@id="affiliates"]/div[2]/div/div[2]/div/div/div[2]/div[10]/div/select')
@@ -721,7 +728,7 @@ def kiwify_automation(driver):
                     print("Aguardando o botão 'duracao_cookies' antes de clicar...")
                     time.sleep(2)
 
-            #
+            # Procura o botão de salvar configuração de afiliados e clica nele
             while True:
                 try:
                     salvar_config_afiliados = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[18]/div[2]/button')
@@ -734,7 +741,7 @@ def kiwify_automation(driver):
                     print("Aguardando o  'salvar_config_afiliados' antes de clicar...")
                     time.sleep(2)
 
-            #
+            # Procura o botão de copiar o link de afiliados e clica nele
             while True:
                 try:
                     link_afiliado = driver.find_element(By.XPATH, '//*[@id="affiliates"]/div[3]/div/div[2]/div/div/div/div[2]/span/button')
@@ -742,18 +749,16 @@ def kiwify_automation(driver):
                         time.sleep(2)
                         link_afiliado.click()
                         print("CLicando em link_afiliado")
-
                         '''
                         usar o pyperclip para salvar o link em um arquivo de texto
                         '''
-
                         break
                 except Exception as e:
                     print("Aguardando o botão 'link_afiliado' antes de clicar...")
                     time.sleep(2)
 
             '''
-            aqui fazer uma lógica para enviar o email via smtp lendo o arquivo da url de afiliado para enviar ao cliente
+            aqui jogar a lógica para enviar o email via smtp lendo o arquivo da url de afiliado para enviar ao cliente
             '''
 
     #
@@ -768,7 +773,6 @@ def kiwify_automation(driver):
 #
 if __name__ == "__main__":
     kiwify_automation('driver')
-
 
 '''
 user_id, responses_file, output_file, tittle_file, formatted_name, name
