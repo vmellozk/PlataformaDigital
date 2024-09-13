@@ -70,7 +70,23 @@ def login_gm(driver):
                 time.sleep(2)
                 password_proximo.click()
                 print("Clicando em password_proximo")
+                time.sleep(50000000)
                 break
         except Exception as e:
             print("Aguardando o botão de 'password_proximo' antes de clicar...")
+            time.sleep(2)
+
+    # Procura onde está o campo de identificação do gmail e passa
+    while True:
+        try:
+            simbolo_gmail = WebDriverWait(driver, 20).until(
+                EC.presence_of_element_located((By.XPATH, '//*[@id="gb"]/div[2]/div[1]/div[4]/div'))
+            )
+            if simbolo_gmail:
+                time.sleep(2)
+                print("Campo simbolo_gmail encontrado")
+                time.sleep(5)
+                break
+        except Exception as e:
+            print("Aguardando o campo de 'simbolo_gmail' antes de passar...")
             time.sleep(2)
