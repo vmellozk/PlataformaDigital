@@ -70,7 +70,7 @@ def login_gm(driver):
                 time.sleep(2)
                 password_proximo.click()
                 print("Clicando em password_proximo")
-                time.sleep(50000000)
+                time.sleep(5)
                 break
         except Exception as e:
             print("Aguardando o botão de 'password_proximo' antes de clicar...")
