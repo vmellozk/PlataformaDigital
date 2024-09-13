@@ -115,25 +115,26 @@ def kiwify_automation(driver):
 
         #
         kiwify_login = "https://dashboard.kiwify.com.br/login?redirect=%2F"
+        time.sleep(2)
         current_url_1 = driver.current_url
         print(f"URL atual: {current_url_1}")
         if current_url_1 == kiwify_login:
             login_kw(driver)
+            time.sleep(3)
+            driver.execute_script("window.open('');")
+            print("Nova aba aberta")
+            time.sleep(1)
+            driver.switch_to.window(driver.window_handles[1])
+            driver.get("https://mail.google.com/")
+            print("Segunda aba aberta: Gmail")
+            time.sleep(3)
         else:
             print("não abriu o login kiwify")
             pass
 
-        #Abre uma nova aba para abrir o gmail para pegar o código e voltar para colar o código na kiwify e logar no site
-        driver.execute_script("window.open('');")
-        print("Nova aba aberta")
-        time.sleep(1)
-        driver.switch_to.window(driver.window_handles[1])
-        driver.get("https://mail.google.com/")
-        print("Segunda aba aberta: Gmail")
-        time.sleep(3)
-
         #
         gmail_entrar = 'https://www.google.com/intl/pt-BR/gmail/about/'
+        time.sleep(2)
         current_url_2 = driver.current_url
         print(f"URL atual: {current_url_2}")  
         if gmail_entrar in current_url_2:
@@ -144,45 +145,77 @@ def kiwify_automation(driver):
 
         #
         gmail_login = 'https://accounts.google.com/'
+        time.sleep(2)
         current_url_3 = driver.current_url
         print(f"URL atual: {current_url_3}")
         if gmail_login in current_url_3:
             login_gm(driver)
+            time.sleep(3)
         else:
             print("não abriu o login gmail")
             pass
 
         gmail = 'https://mail.google.com/'
-        current_url_5 = driver.current_url
-        print(f"URL atual: {current_url_5}")
-        if gmail in current_url_5:
+        time.sleep(2)
+        current_url_4 = driver.current_url
+        print(f"URL atual: {current_url_4}")
+        if gmail in current_url_4:
             adq_codigo_kw(driver)
+            time.sleep(3)
+            print("fechando a aba atual")
+            driver.close()
+            print("Voltando para a primeira aba")
         else:
             print("não abriu o gmail")
             pass
+
+        kiwify_verificacao = "https://dashboard.kiwify.com.br/verify-otp?redirect=%2F"
+        time.sleep(2)
+        current_url_5 = driver.current_url
+        print(f"URL atual: {current_url_5}")
+        if current_url_5 == kiwify_verificacao:
+            # Procura onde está o campo para inserir o código e clica
+            while True:
+                try:
+                    campo_inserir_codigo = WebDriverWait(driver, 20).until(
+                        EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[3]/div/main/div[2]/div/div/div[2]/div[1]/input'))
+                    )
+                    if campo_inserir_codigo:
+                        time.sleep(2)
+                        campo_inserir_codigo.click()
+                        print("Clicando em campo_inserir_codigo")
+                        time.sleep(2)
+                        #aqui adicionar um send_keys para ler o arquivo criado com o codigo capturado no email e inserir no campo
+                        time.sleep(2)
+                        break
+                except Exception as e:
+                    print("Aguardando o botão de 'campo_inserir_codigo' antes de clicar...")
+                    time.sleep(2)
+
+            # Procura onde está o botão de verificar e clica
+            while True:
+                try:
+                    verificar = WebDriverWait(driver, 20).until(
+                        EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[3]/div/main/div[2]/div/div/div[2]/div[2]/button'))
+                    )
+                    if verificar:
+                        time.sleep(2)
+                        verificar.click()
+                        print("Clicando em verificar")
+                        time.sleep(5)
+                        break
+                except Exception as e:
+                    print("Aguardando o botão de 'verificar' antes de clicar...")
+                    time.sleep(2)
+
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         
-
-
-
-
-
-
-
-
-        
-        #
-        time.sleep(3)
-        driver.close()
-        print("fechando a aba atual")
-        time.sleep(3)
-        print("Voltando para a primeira aba")
-
         # Começa o processo de automação principal
         #time.sleep(500000)
         kiwify_url = 'https://dashboard.kiwify.com.br/'
-        current_url_4 = driver.current_url
-        print(f"URL atual: {current_url_4}")
-        if kiwify_url in current_url_4: 
+        current_url_6 = driver.current_url
+        print(f"URL atual: {current_url_6}")
+        if kiwify_url in current_url_6: 
             print("Página inicial detectada ou já logado.")
             # Procura o botão de produtos e clica nele
             while True:
@@ -217,7 +250,9 @@ def kiwify_automation(driver):
             # Procura o botão de continuar e clica nele
             while True:
                 try:
-                    continuar = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div/div/div[2]/button')
+                    continuar = WebDriverWait(driver, 20).until(
+                        EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div/div/div[2]/button'))
+                    )
                     if continuar:
                         time.sleep(2)
                         continuar.click()
