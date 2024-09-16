@@ -4,8 +4,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.action_chains import ActionChains
-import pyperclip
 
 #
 def adq_codigo_kw(driver):
@@ -82,24 +80,29 @@ def adq_codigo_kw(driver):
     # Localiza onde está localizado o campo do código, clica nele duas vezes para selecionar, copia o código e salva num arquivo .txt para depois ser lido e colocado na confirmação de dois fatores
     while True:
         try:
-            codigo_kw = WebDriverWait(driver, 20).until(
-                EC.presence_of_element_located((By.XPATH, '//div[contains(@id, ":")]/div[1]/center/div/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td/table[3]/tbody/tr/td/div/div[6]/span/strong'))
+            # XPath do elemento com o texto a ser copiado
+            xpath_element = '//*[contains(@id, ":")]/div[1]/center/div/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td/table[3]/tbody/tr/td/div/div[6]/span/strong'
+
+            # Espera o elemento estar presente
+            element = WebDriverWait(driver, 20).until(
+                EC.presence_of_element_located((By.XPATH, xpath_element))
             )
-            if codigo_kw:
-                action = ActionChains(driver)
-                time.sleep(2)
-                action.double_click(codigo_kw).perform()
-                print("Clicando em codigo_kw")
-                time.sleep(2)
-                action.key_down(Keys.CONTROL).send_keys('c').key_up(Keys.CONTROL).perform()
-                print("Texto copiado para a área de transferência")
-                time.sleep(2)
-                codigo = pyperclip.paste()
-                with open('codigo_kw.txt', 'w') as file:
-                    file.write(codigo)
-                    print("codigo salvo no arquivo .txt")
-                time.sleep(2)
-                break
+
+            # Executa JavaScript para pegar o texto do elemento
+            codigo_kw = driver.execute_script("return arguments[0].textContent;", element)
+
+            # Imprime o texto copiado
+            print("Texto copiado:", codigo_kw)
+
+            # Salva o texto em um arquivo .txt
+            with open('codigo_kw.txt', 'w') as file:
+                file.write(codigo_kw)
+                print("Código salvo no arquivo .txt")
+
+            # Aguarda antes de sair do loop
+            time.sleep(2)
+            break
+
         except Exception as e:
-            print("Aguardando o campo de 'codigo_kw' antes de clicar...")
+            print("Aguardando o campo de 'codigo_kw' antes de clicar...", e)
             time.sleep(2)
