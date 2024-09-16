@@ -60,7 +60,7 @@ def adq_codigo_kw(driver):
     while True:
         try:
             codigo_kw = WebDriverWait(driver, 20).until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id=":oq"]/div[1]/center/div/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td/table[3]/tbody/tr/td/div/div[6]/span'))
+                EC.presence_of_element_located((By.XPATH, '//div[contains(@id, ":")]/div[1]/center/div/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td/table[3]/tbody/tr/td/div/div[6]/span/strong'))
             )
             if codigo_kw:
                 action = ActionChains(driver)
