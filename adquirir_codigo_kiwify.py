@@ -30,29 +30,52 @@ def adq_codigo_kw(driver):
     # Espera o campo dos emails aparecer para seguir com a automação
     while True:
         try:
+            # XPath para encontrar o div final que contém os emails
+            emails_xpath = '//*[contains(@id, "44")]/div[2]/div[6]/div[1]'
             emails = WebDriverWait(driver, 20).until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id=":aw"]/tbody'))
+                EC.presence_of_element_located((By.XPATH, emails_xpath))
             )
+            
             if emails:
                 time.sleep(2)
                 print("Campo de emails apareceu")
                 break
         except Exception as e:
-            print("Aguardando o campo de 'emails' antes de clicar...")
+            print(f"Erro: {e}")
+            print("Aguardando o campo de 'emails' antes de aparecer...")
             time.sleep(2)
 
     # Localiza o primeiro email e entra nele
     while True:
         try:
+            # XPath da div que contém todos os emails
+            emails_xpath = '//*[contains(@id, "44")]/div[2]/div[6]/div[1]'
+            # XPath para o primeiro email dentro dessa div
+            first_email_xpath = f'{emails_xpath}/descendant::div[contains(@id, ":")][1]'
+            # Espera até que o primeiro email esteja presente
             first_email = WebDriverWait(driver, 20).until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id=":ax"]'))
+                EC.presence_of_element_located((By.XPATH, first_email_xpath))
             )
+            
             if first_email:
                 time.sleep(2)
+                # Clica no primeiro email para expandir o conteúdo
                 first_email.click()
-                print("Clicando em first_email")
-                break
+                print("Clicando no primeiro email")
+                # XPath para o elemento 'td[4]' que contém o nome "Kiwify"
+                kiwify_td_xpath = f'{first_email_xpath}/ancestor::tr/td[4]'
+                # Espera até que o elemento td[4] esteja presente
+                kiwify_td = WebDriverWait(driver, 20).until(
+                    EC.presence_of_element_located((By.XPATH, kiwify_td_xpath))
+                )
+                
+                if kiwify_td:
+                    time.sleep(2)
+                    kiwify_td.click()  # Clica no elemento para acessar o corpo do email
+                    print("Clicando no 'td[4]' do primeiro email")
+                    break
         except Exception as e:
+            print(f"Erro: {e}")
             print("Aguardando o campo de 'first_email' antes de clicar...")
             time.sleep(2)
 
