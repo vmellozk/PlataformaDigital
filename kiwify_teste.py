@@ -125,9 +125,10 @@ def kiwify_automation(driver):
         print(f"URL atual: {current_url_1}")
         if current_url_1 == kiwify_login:
             login_kw(driver)
+            print("Fazendo o login na kiwify")
             time.sleep(3)
             driver.execute_script("window.open('');")
-            print("Nova aba aberta")
+            print("Abrindo uma nova aba")
             time.sleep(1)
             driver.switch_to.window(driver.window_handles[1])
             driver.get("https://mail.google.com/")
@@ -144,6 +145,8 @@ def kiwify_automation(driver):
         print(f"URL atual: {current_url_2}")  
         if gmail_entrar in current_url_2:
             entrar_gm(driver)
+            print("Entrando no gmail")
+            time.sleep(3)
         else:
             print("Não foi preciso entrar na sessão desconecta do gmail para adquirir o código do kiwify")
             pass
@@ -155,6 +158,7 @@ def kiwify_automation(driver):
         print(f"URL atual: {current_url_3}")
         if gmail_login in current_url_3:
             login_gm(driver)
+            print("Fazendo o login no gmail")
             time.sleep(3)
         else:
             print("Não foi preciso fazer o login no gmail para adquirir o código do kiwify")
@@ -168,9 +172,8 @@ def kiwify_automation(driver):
         if gmail in current_url_4:
             adq_codigo_kw(driver)
             time.sleep(3)
-            print("fechando a aba atual")
+            print("fechando a aba atual e voltando para a primeira aba")
             driver.close()
-            print("Voltando para a primeira aba")
         else:
             print("Não foi preciso adquirir o código de login do kiwify do gmail")
             pass
