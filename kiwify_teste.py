@@ -13,7 +13,6 @@ import os
 from login_kiwify import login_kw
 from login_gmail import login_gm
 from adquirir_codigo_kiwify import adq_codigo_kw
-from entrar_gmail import entrar_gm
 from criar_produto_kiwify import criar_produto_kw
 from editar_principal import edit
 from anexar_produto import anexar_produto
@@ -136,19 +135,6 @@ def kiwify_automation(driver):
             time.sleep(3)
         else:
             print("Não foi preciso fazer o login no kiwify")
-            pass
-
-        # Verifica se a url passada é igual a atual. Se for, chama a função e faz o login na sessão que foi desconectada. Se não, passa direto. 
-        gmail_entrar = 'https://www.google.com/intl/pt-BR/gmail/about/'
-        time.sleep(2)
-        current_url_2 = driver.current_url
-        print(f"URL atual: {current_url_2}")  
-        if gmail_entrar in current_url_2:
-            entrar_gm(driver)
-            print("Entrando no gmail")
-            time.sleep(3)
-        else:
-            print("Não foi preciso entrar na sessão desconecta do gmail para adquirir o código do kiwify")
             pass
 
         # Verifica se a url passada é igual a atual. Se for, chama a função e faz o login. Se não, passa direto.
