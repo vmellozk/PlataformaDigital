@@ -18,6 +18,7 @@ from criar_produto_kiwify import criar_produto_kw
 from editar_principal import edit
 from anexar_produto import anexar_produto
 from afiliado import copiar_link_afiliado
+from inserir_codigo_kiwify import inserir_codigo_kw
 
 # Configurações
 MAX_TABS = 4
@@ -112,12 +113,12 @@ def kiwify_automation(driver):
             return
 
     try:
-        #
+        # Abre um navegador com a url passada do kiwify
         driver.get('https://dashboard.kiwify.com.br/')
         time.sleep(5)
         print(f"Abrindo o site")
 
-        #
+        # Verifica se a url é a passada é igual a atual. Se for, chama a função e começa o processo de login no kiwify e depois abra uma nova aba com a outra url passada. Se não for, ignora tudo e passa direto.
         kiwify_login = "https://dashboard.kiwify.com.br/login?redirect=%2F"
         time.sleep(2)
         current_url_1 = driver.current_url
@@ -133,10 +134,10 @@ def kiwify_automation(driver):
             print("Segunda aba aberta: Gmail")
             time.sleep(3)
         else:
-            print("não abriu o login kiwify")
+            print("Não foi preciso fazer o login no kiwify")
             pass
 
-        #
+        # Verifica se a url passada é igual a atual. Se for, chama a função e faz o login na sessão que foi desconectada. Se não, passa direto. 
         gmail_entrar = 'https://www.google.com/intl/pt-BR/gmail/about/'
         time.sleep(2)
         current_url_2 = driver.current_url
@@ -144,10 +145,10 @@ def kiwify_automation(driver):
         if gmail_entrar in current_url_2:
             entrar_gm(driver)
         else:
-            print("não abriu o google/about")
+            print("Não foi preciso entrar na sessão desconecta do gmail para adquirir o código do kiwify")
             pass
 
-        #
+        # Verifica se a url passada é igual a atual. Se for, chama a função e faz o login. Se não, passa direto.
         gmail_login = 'https://accounts.google.com/'
         time.sleep(2)
         current_url_3 = driver.current_url
@@ -156,10 +157,10 @@ def kiwify_automation(driver):
             login_gm(driver)
             time.sleep(3)
         else:
-            print("não abriu o login gmail")
+            print("Não foi preciso fazer o login no gmail para adquirir o código do kiwify")
             pass
 
-        #
+        # Verifica se a url passada é igual a atual. Se for, chama a função para pegar o código que foi enviado para o login. Se não passa direto.
         gmail = 'https://mail.google.com/'
         time.sleep(2)
         current_url_4 = driver.current_url
@@ -171,48 +172,21 @@ def kiwify_automation(driver):
             driver.close()
             print("Voltando para a primeira aba")
         else:
-            print("não abriu o gmail")
+            print("Não foi preciso adquirir o código de login do kiwify do gmail")
             pass
 
-        #
+        # Verifica se a url passada é igual a atual. Se for, verifica se o campo de verificação está presente, depois verifica o campo para inserir o código, clica e insere o código adquirido na função "adq_codigo_kw()"
         kiwify_verificacao = "https://dashboard.kiwify.com.br/verify-otp?redirect=%2F"
         time.sleep(2)
         current_url_5 = driver.current_url
         print(f"URL atual: {current_url_5}")
         if current_url_5 == kiwify_verificacao:
-            # Procura onde está o campo para inserir o código e clica
-            while True:
-                try:
-                    campo_inserir_codigo = WebDriverWait(driver, 20).until(
-                        EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[3]/div/main/div[2]/div/div/div[2]/div[1]/input'))
-                    )
-                    if campo_inserir_codigo:
-                        time.sleep(2)
-                        campo_inserir_codigo.click()
-                        print("Clicando em campo_inserir_codigo")
-                        time.sleep(2)
-                        #aqui adicionar um send_keys para ler o arquivo criado com o codigo capturado no email e inserir no campo
-                        time.sleep(2)
-                        break
-                except Exception as e:
-                    print("Aguardando o botão de 'campo_inserir_codigo' antes de clicar...")
-                    time.sleep(2)
-
-            # Procura onde está o botão de verificar e clica
-            while True:
-                try:
-                    verificar = WebDriverWait(driver, 20).until(
-                        EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[3]/div/main/div[2]/div/div/div[2]/div[2]/button'))
-                    )
-                    if verificar:
-                        time.sleep(2)
-                        verificar.click()
-                        print("Clicando em verificar")
-                        time.sleep(5)
-                        break
-                except Exception as e:
-                    print("Aguardando o botão de 'verificar' antes de clicar...")
-                    time.sleep(2)
+            inserir_codigo_kw(driver)
+            print("Inserindo o código no login kiwify")
+            time.sleep(3)
+        else:
+            print("Não foi preciso fazer o login no kiwify")
+            pass
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         
@@ -222,7 +196,7 @@ def kiwify_automation(driver):
         current_url_6 = driver.current_url
         print(f"URL atual: {current_url_6}")
         if kiwify_url in current_url_6: 
-            print("Página inicial detectada ou já logado.")
+            print("Página inicial já logada.")
 
             criar_produto_kw(driver)
             time.sleep(1)
