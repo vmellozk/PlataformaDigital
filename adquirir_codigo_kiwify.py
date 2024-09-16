@@ -3,11 +3,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
-import os
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
+import pyperclip
 
 #
 def adq_codigo_kw(driver):
-    #
+    # Localiza o campo de pesquisar email, clica, insere o prompt passado e clica em ENTER
     while True:
         try:
             pesquisar_email = WebDriverWait(driver, 20).until(
@@ -18,7 +20,7 @@ def adq_codigo_kw(driver):
                 pesquisar_email.click()
                 print("Clicando em pesquisar_email")
                 time.sleep(1)
-                pesquisar_email.send_keys('Kiwify codigo de verificação')
+                pesquisar_email.send_keys('Kiwify codigo de verificação' + Keys.ENTER)
                 #adicionar um enter para enviar
                 time.sleep(3)
                 break
@@ -34,7 +36,6 @@ def adq_codigo_kw(driver):
             )
             if emails:
                 time.sleep(2)
-                emails.click()
                 print("Campo de emails apareceu")
                 break
         except Exception as e:
@@ -59,17 +60,24 @@ def adq_codigo_kw(driver):
     #
     while True:
         try:
-            código_kw = WebDriverWait(driver, 20).until(
+            codigo_kw = WebDriverWait(driver, 20).until(
                 EC.presence_of_element_located((By.XPATH, '//*[@id=":oq"]/div[1]/center/div/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td/table[3]/tbody/tr/td/div/div[6]/span'))
             )
-            if código_kw:
+            if codigo_kw:
+                action = ActionChains(driver)
                 time.sleep(2)
-                #aqui dar um duplo clique rápido
-                print("Clicando em código_kw")
+                action.double_click(codigo_kw).perform()
+                print("Clicando em codigo_kw")
                 time.sleep(2)
-                #aqui copiar o que foi selecionado com um ctrl c + ctrl v ou pyperclip e salvar num arquivo .txt dentro da pasta de cada user_id específico
-                time.sleep(5)
+                action.key_down(Keys.CONTROL).send_keys('c').key_up(Keys.CONTROL).perform()
+                print("Texto copiado para a área de transferência")
+                time.sleep(2)
+                codigo = pyperclip.paste()
+                with open('codigo_kw.txt', 'w') as file:
+                    file.write(codigo)
+                    print("codigo salvo no arquivo .txt")
+                time.sleep(2)
                 break
         except Exception as e:
-            print("Aguardando o campo de 'código_kw' antes de clicar...")
+            print("Aguardando o campo de 'codigo_kw' antes de clicar...")
             time.sleep(2)
