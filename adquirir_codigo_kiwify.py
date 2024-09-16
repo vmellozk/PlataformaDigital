@@ -21,14 +21,13 @@ def adq_codigo_kw(driver):
                 print("Clicando em pesquisar_email")
                 time.sleep(1)
                 pesquisar_email.send_keys('Kiwify codigo de verificação' + Keys.ENTER)
-                #adicionar um enter para enviar
-                time.sleep(3)
+                time.sleep(5)
                 break
         except Exception as e:
             print("Aguardando o campo de 'pesquisar_email' antes de clicar...")
             time.sleep(2)
 
-    #
+    # Espera o campo dos emails aparecer para seguir com a automação
     while True:
         try:
             emails = WebDriverWait(driver, 20).until(
@@ -42,7 +41,7 @@ def adq_codigo_kw(driver):
             print("Aguardando o campo de 'emails' antes de clicar...")
             time.sleep(2)
 
-    #
+    # Localiza o primeiro email e entra nele
     while True:
         try:
             first_email = WebDriverWait(driver, 20).until(
@@ -57,7 +56,7 @@ def adq_codigo_kw(driver):
             print("Aguardando o campo de 'first_email' antes de clicar...")
             time.sleep(2)
 
-    #
+    # Localiza onde está localizado o campo do código, clica nele duas vezes para selecionar, copia o código e salva num arquivo .txt para depois ser lido e colocado na confirmação de dois fatores
     while True:
         try:
             codigo_kw = WebDriverWait(driver, 20).until(
