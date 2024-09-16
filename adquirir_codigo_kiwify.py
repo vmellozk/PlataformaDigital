@@ -82,7 +82,6 @@ def adq_codigo_kw(driver):
         try:
             # XPath do elemento com o texto a ser copiado
             xpath_element = '//*[contains(@id, ":")]/div[1]/center/div/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td/table[3]/tbody/tr/td/div/div[6]/span/strong'
-
             # Espera o elemento estar presente
             element = WebDriverWait(driver, 20).until(
                 EC.presence_of_element_located((By.XPATH, xpath_element))
@@ -90,15 +89,12 @@ def adq_codigo_kw(driver):
 
             # Executa JavaScript para pegar o texto do elemento
             codigo_kw = driver.execute_script("return arguments[0].textContent;", element)
-
             # Imprime o texto copiado
             print("Texto copiado:", codigo_kw)
-
             # Salva o texto em um arquivo .txt
             with open('codigo_kw.txt', 'w') as file:
                 file.write(codigo_kw)
                 print("Código salvo no arquivo .txt")
-
             # Aguarda antes de sair do loop
             time.sleep(2)
             break
