@@ -4,7 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
-#
+# Verifica se o campo de verificação de dois fatores está presente para poder seguir com o código
 def inserir_codigo_kw(driver):
     while True:
         try:
@@ -20,7 +20,7 @@ def inserir_codigo_kw(driver):
             print("Aguardando o campo de 'verificacao_dois_fatores' antes de clicar...")
             time.sleep(2)
 
-    # Procura onde está o campo para inserir o código e clica
+    # Procura onde está o campo para inserir o código, clica nele, lê o arquivo com o código e insere ele no campo
     while True:
         try:
             campo_inserir_codigo = WebDriverWait(driver, 20).until(
@@ -31,7 +31,10 @@ def inserir_codigo_kw(driver):
                 campo_inserir_codigo.click()
                 print("Clicando em campo_inserir_codigo")
                 time.sleep(2)
-                #aqui adicionar um send_keys para ler o arquivo criado com o codigo capturado no email e inserir no campo
+                with open('codigo_kw.txt', 'r', encoding='utf-8') as file:
+                    codigo_read = file.read()
+                campo_inserir_codigo.send_keys(codigo_read)
+                print(f"Código inserido: {codigo_read}")
                 time.sleep(2)
                 break
         except Exception as e:
