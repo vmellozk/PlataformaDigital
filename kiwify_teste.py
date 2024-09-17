@@ -83,11 +83,11 @@ def release_tab_and_process_queue():
 # Função de automação para cada usuário
 def kiwify_automation(driver):
     #
-    #user_profile_path = r"C:\Users\Victor\AppData\Local\Google\Chrome for Testing\User Data\Default"
+    user_profile_path = r"C:\Users\Victor\AppData\Local\Google\Chrome for Testing\User Data\Default"
 
-    # Deifine as opções, parâmetros e adiciona o perfil de usuário
+    # Define as opções, parâmetros e adiciona o perfil de usuário
     chrome_options = webdriver.ChromeOptions()
-    #chrome_options.add_argument(f"user-data-dir={user_profile_path}")
+    chrome_options.add_argument(f"user-data-dir={user_profile_path}")
     chrome_options.add_argument("--disable-infobars")
     chrome_options.add_argument("--disable-extensions")
     chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
