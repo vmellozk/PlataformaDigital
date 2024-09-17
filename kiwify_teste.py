@@ -160,6 +160,9 @@ def kiwify_automation(driver):
             time.sleep(3)
             print("fechando a aba atual e voltando para a primeira aba")
             driver.close()
+            time.sleep(1)
+            driver.switch_to.window(driver.window_handles[0])
+            time.sleep(1)
         else:
             print("Não foi preciso adquirir o código de login do kiwify do gmail")
             pass
