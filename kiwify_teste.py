@@ -1,15 +1,9 @@
 #Bibliotecas
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 import time
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
 import threading
-import queue
-from dotenv import load_dotenv
-import os
 from login_kiwify import login_kw
 from login_gmail import login_gm
 from adquirir_codigo_kiwify import adq_codigo_kw
@@ -18,64 +12,18 @@ from editar_principal import edit
 from anexar_produto import anexar_produto
 from afiliado import copiar_link_afiliado
 from inserir_codigo_kiwify import inserir_codigo_kw
+from configuracoes_driver import ConfiguracoesDriver
 
-# Configurações
-MAX_TABS = 4
-TASK_QUEUE_DELAY = 3  # Tempo em segundos para aguardar antes de processar a próxima aba
-STARTUP_DELAY = 3    # Tempo em segundos para aguardar antes de iniciar o processamento de qualquer aba
-task_queue = queue.Queue()
-tab_semaphore = threading.Semaphore(MAX_TABS)
-position_lock = threading.Lock()
-startup_lock = threading.Lock()  # Lock para controlar o atraso global
-
-# Posições da janela do navegador (grade 2x2)
-positions = [
-    (0, 0),        # Canto superior esquerdo
-    (960, 0),      # Canto superior direito
-    (0, 540),      # Inferior esquerdo
-    (960, 540)     # Inferior direito
-]
-
-# Lista para rastrear quais posições estão ocupadas (False = livre, True = ocupada)
-occupied_positions = [False, False, False, False]
-
-# Tamanho da janela do navegador
-window_width = 960
-window_height = 540
-
-#
-load_dotenv()
-KW_EMAIL_ADDRESS=os.getenv('KW_EMAIL_ADDRESS')
-KW_EMAIL_PASSWORD=os.getenv('KW_EMAIL_PASSWORD')
-GM_EMAIL_ADDRESS=os.getenv('GM_EMAIL_ADDRESS')
-GM_EMAIL_PASSWORD=os.getenv('GM_EMAIL_PASSWORD')
-
-# Função para encontrar a primeira posição livre
-def find_free_position():
-    for index, occupied in enumerate(occupied_positions):
-        if not occupied:
-            return index
-    return None  # Se todas as posições estiverem ocupadas
-
-# Função que ajusta a posição e o tamanho da janela
-def set_window_position_and_size(driver, position_index):
-    x, y = positions[position_index]
-    driver.set_window_size(window_width, window_height)
-    driver.set_window_position(x, y)
-    # Marcar a posição como ocupada
-    occupied_positions[position_index] = True
-
-# Função para liberar a posição quando a aba é fechada
-def release_position(position_index):
-    occupied_positions[position_index] = False
+# Instanciando as configurações
+configuracoes = ConfiguracoesDriver()
 
 # Função para liberar vaga e chamar o próximo item da fila
 def release_tab_and_process_queue():
     # Libera uma vaga no semáforo
-    tab_semaphore.release()
+    configuracoes.tab_semaphore.release()
     
-    if not task_queue.empty():
-        next_user_id = task_queue.get()
+    if not configuracoes.task_queue.empty():
+        next_user_id = configuracoes.task_queue.get()
         print(f"Chamando a fila para processar o usuário {next_user_id}")
         # Inicia um novo thread para processar o próximo usuário
         threading.Thread(target=kiwify_automation, args=(next_user_id,)).start()
@@ -99,13 +47,13 @@ def kiwify_automation(driver):
     driver = webdriver.Chrome(service=service, options=chrome_options)
 
     # Use um lock para garantir que apenas uma aba seja aberta e posicionada por vez
-    with position_lock:
+    with configuracoes.position_lock:
         # Encontre a primeira posição livre
-        free_position = find_free_position()
+        free_position = configuracoes.find_free_position()
         
         if free_position is not None:
             # Define a posição e o tamanho da aba
-            set_window_position_and_size(driver, free_position)
+            configuracoes.set_window_position_and_size(driver, free_position)
         else:
             # Caso não haja posição livre, fecha o driver
             driver.quit()
@@ -207,8 +155,8 @@ def kiwify_automation(driver):
         driver.close()
         time.sleep(1)
         # Libera a vaga e chama o próximo item da fila com um atraso
-        release_position(free_position)
-        time.sleep(TASK_QUEUE_DELAY)  # Aguarda um tempo antes de processar o próximo
+        configuracoes.release_position(free_position)
+        time.sleep(configuracoes.TASK_QUEUE_DELAY)  # Aguarda um tempo antes de processar o próximo
         release_tab_and_process_queue()
 
 #
