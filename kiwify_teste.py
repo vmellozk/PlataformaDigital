@@ -60,6 +60,8 @@ def kiwify_automation(driver):
             return
 
     try:
+        # Diminui o zoom da página para 80%
+        driver.execute_script("document.body.style.zoom='95%'")
         # Abre um navegador com a url passada do kiwify
         driver.get('https://dashboard.kiwify.com.br/')
         time.sleep(5)
@@ -138,7 +140,7 @@ def kiwify_automation(driver):
         if kiwify_url in current_url_6: 
             print("Página inicial já logada.")
 
-            criar_produto_kw(driver)
+            criar_produto_kw(driver, user_id=1)
             time.sleep(1)
             edit(driver)
             time.sleep(1)
