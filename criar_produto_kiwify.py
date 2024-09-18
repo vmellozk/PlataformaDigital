@@ -3,9 +3,14 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
+import os
+import threading
 
 #
-def criar_produto_kw(driver):
+file_lock = threading.Lock()
+
+#
+def criar_produto_kw(driver, user_id):
     # Procura o botão de produtos e clica nele
     while True:
         try:
@@ -61,6 +66,22 @@ def criar_produto_kw(driver):
                 time.sleep(2)
                 nome_produto.click()
                 print("Clicando em nome do produto")
+                time.sleep(2)
+
+                # Usa o lock para garantir que a leitura e escrita do arquivo não interfira com outra execução/threads. 
+                with file_lock:
+                    user_folder = os.path.join("users", str(user_id))
+                    file_path = os.path.join(user_folder, "teste.txt")
+
+                    # Verifica se o caminho existe antes de tentar ler e depois insere o nome no campo
+                    if os.path.exists(file_path):
+                        with open(file_path, "r") as file:
+                            product_name = file.read().strip()
+                        nome_produto.send_keys(product_name)
+                        print(f"Nome do produto {product_name} inserindo para o user_id {user_id}")
+                    else:
+                        print(f"Arquivo 'teste.txt' não encontrado para o user_id {user_id}")
+
                 break
         except Exception as e:
             print("Aguardando o campo de 'nome do produto' antes de clicar...")
@@ -76,6 +97,10 @@ def criar_produto_kw(driver):
                 time.sleep(2)
                 descricao.click()
                 print("Clicando em descrição")
+                time.sleep(2)
+
+                # aqui adicionar uma lógica para ler o arquivo com a descrição do produto de acordo com cada user_id específico e depois inserir no campo com send_keys, sem uma leitura e inserção interferir na outra. usar o lock, talvez
+
                 break
         except Exception as e:
             print("Aguardando o campo de 'descrição' antes de clicar...")
@@ -91,6 +116,8 @@ def criar_produto_kw(driver):
                 time.sleep(2)
                 pagina_vendas.click()
                 print("Clicando em pagina de vendas")
+                time.sleep(2)
+                pagina_vendas.send_keys('www.praticasenior.com')
                 break
         except Exception as e:
             print("Aguardando o campo de 'página de vendas' antes de clicar...")
@@ -106,6 +133,8 @@ def criar_produto_kw(driver):
                 time.sleep(2)
                 preco.click()
                 print("Clicando em preço")
+                time.sleep(2)
+                preco.send_keys('R$47,90')
                 break
         except Exception as e:
             print("Aguardando o campo de 'preço' antes de clicar...")
