@@ -85,16 +85,16 @@ def edit(driver, user_id):
     #criar uma logica para buscar a imagem do produto que vai ser gerada via IA para cada usuário na pasta do user_id específico
     while True:
         try:
-            teste = WebDriverWait(driver, 20).until(
+            imagem_gerada_ia = WebDriverWait(driver, 20).until(
                 EC.presence_of_element_located((By.XPATH, ''))
             )
-            if teste:
+            if imagem_gerada_ia:
                 time.sleep(2)
-                teste.click()
-                print("Clicando em teste")
+                imagem_gerada_ia.click()
+                print("Clicando em imagem_gerada_ia")
                 break
         except Exception as e:
-            print("Aguardando o botão de 'teste' antes de clicar...")
+            print("Aguardando o botão de 'imagem_gerada_ia' antes de clicar...")
             time.sleep(2)
 
     # Procura o campo de inserir o email de suporte, clica nele e insere o email de suporte
@@ -107,12 +107,15 @@ def edit(driver, user_id):
                 time.sleep(2)
                 email_suporte.click()
                 print("CLicando em email suporte")
+                time.sleep(1)
+                email_suporte.send_keys('contato.praticasenior@gmail.com')
+                time.sleep(1)
                 break
         except Exception as e:
             print("Aguardando o campo 'email suporte' antes de clicar...")
             time.sleep(2)
 
-    # Procura o campo do nome do produtor, clica nele, lê o arquivo .txt salvo na pasta do usuário e insere aqui
+    # Procura o campo do nome do produtor, clica nele e insere
     while True:
         try:
             nome_produtor = WebDriverWait(driver, 20).until(
@@ -122,6 +125,9 @@ def edit(driver, user_id):
                 time.sleep(2)
                 nome_produtor.click()
                 print("CLicando em nome produtor")
+                print(1)
+                nome_produtor.send_keys('Prática Sênior')
+                time.sleep(1)
                 break
         except Exception as e:
             print("Aguardando o campo 'nome produtor' antes de clicar...")
