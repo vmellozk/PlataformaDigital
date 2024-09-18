@@ -60,8 +60,8 @@ def kiwify_automation(driver):
             return
 
     try:
-        # Diminui o zoom da página para 80%
-        driver.execute_script("document.body.style.zoom='95%'")
+        # Diminui o zoom da página para 90%
+        driver.execute_script("document.body.style.zoom='90%'")
         # Abre um navegador com a url passada do kiwify
         driver.get('https://dashboard.kiwify.com.br/')
         time.sleep(5)
@@ -142,7 +142,7 @@ def kiwify_automation(driver):
 
             criar_produto_kw(driver, user_id=1)
             time.sleep(1)
-            edit(driver)
+            edit(driver, user_id=1)
             time.sleep(1)
             anexar_produto(driver)
             time.sleep(1)
