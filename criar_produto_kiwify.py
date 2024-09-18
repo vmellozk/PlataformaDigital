@@ -75,7 +75,7 @@ def criar_produto_kw(driver, user_id):
 
                     # Verifica se o caminho existe antes de tentar ler e depois insere o nome no campo
                     if os.path.exists(file_path_name):
-                        with open(file_path_name, "r") as file:
+                        with open(file_path_name, "r", encoding="utf-8") as file:
                             product_name = file.read().strip()
                         nome_produto.send_keys(product_name)
                         print(f"Nome do produto {product_name} inserindo para o user_id {user_id}")
@@ -106,7 +106,7 @@ def criar_produto_kw(driver, user_id):
 
                     # verifica se o caminho existe antes de tentar ler e depois insere o nome no campo
                     if os.path.exists(file_path_descricao):
-                        with open(file_path_descricao, "r") as file:
+                        with open(file_path_descricao, "r", encoding="utf-8") as file:
                             product_descricao = file.read().strip()
                         descricao.send_keys(product_descricao)
                         print(f"Descrição do produto inserida para o user_id {user_id}")
