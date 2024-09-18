@@ -70,17 +70,17 @@ def criar_produto_kw(driver, user_id):
 
                 # Usa o lock para garantir que a leitura e escrita do arquivo não interfira com outra execução/threads. 
                 with file_lock:
-                    user_folder = os.path.join("users", str(user_id))
-                    file_path = os.path.join(user_folder, "teste.txt")
+                    user_folder_name = os.path.join("users", str(user_id))
+                    file_path_name = os.path.join(user_folder_name, "name_product.txt")
 
                     # Verifica se o caminho existe antes de tentar ler e depois insere o nome no campo
-                    if os.path.exists(file_path):
-                        with open(file_path, "r") as file:
+                    if os.path.exists(file_path_name):
+                        with open(file_path_name, "r") as file:
                             product_name = file.read().strip()
                         nome_produto.send_keys(product_name)
                         print(f"Nome do produto {product_name} inserindo para o user_id {user_id}")
                     else:
-                        print(f"Arquivo 'teste.txt' não encontrado para o user_id {user_id}")
+                        print(f"Arquivo 'name_product.txt' não encontrado para o user_id {user_id}")
 
                 break
         except Exception as e:
@@ -99,7 +99,19 @@ def criar_produto_kw(driver, user_id):
                 print("Clicando em descrição")
                 time.sleep(2)
 
-                # aqui adicionar uma lógica para ler o arquivo com a descrição do produto de acordo com cada user_id específico e depois inserir no campo com send_keys, sem uma leitura e inserção interferir na outra. usar o lock, talvez
+                # Usa o lock para garantir que a leitura e escrita do arquivo não interfira com outra execução/threads
+                with file_lock:
+                    user_folder_descricao = os.path.join("users", str(user_id))
+                    file_path_descricao = os.path.join(user_folder_descricao, "descricao_product.txt")
+
+                    # verifica se o caminho existe antes de tentar ler e depois insere o nome no campo
+                    if os.path.exists(file_path_descricao):
+                        with open(file_path_descricao, "r") as file:
+                            product_descricao = file.read().strip()
+                        descricao.send_keys(product_descricao)
+                        print(f"Descrição do produto inserida para o user_id {user_id}")
+                    else:
+                        print(f"Arquivo de descrição do produto não encontrado para o user_id {user_id}")
 
                 break
         except Exception as e:
