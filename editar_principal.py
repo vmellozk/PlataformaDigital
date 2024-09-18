@@ -3,9 +3,15 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
+import os
+import threading
+from selenium.webdriver.support.ui import Select
 
 #
-def edit(driver):
+file_lock = threading.Lock()
+
+#
+def edit(driver, user_id):
     # Procura o botão de categoria e clica nele
     while True:
         try:
@@ -15,7 +21,7 @@ def edit(driver):
             if categoria:
                 time.sleep(2)
                 categoria.click()
-                print("CLicando em categoria")
+                print("Clicando em categoria")
                 break
         except Exception as e:
             print("Aguardando o campo 'categoria' antes de clicar...")
@@ -24,16 +30,41 @@ def edit(driver):
     # aqui deve-se criar uma lógica para selecionar a categoria. pode ser perguntando ao chatgpt, salvando em um arquivo de texto, lendo o texto, procurando na div onde tem aquilo e clicar 
     while True:
         try:
-            teste = WebDriverWait(driver, 20).until(
-                EC.presence_of_element_located((By.XPATH, ''))
+            selecionar_categoria = WebDriverWait(driver, 20).until(
+                EC.presence_of_element_located((By.XPATH, '//*[@id="general"]/div[1]/div/div[2]/div/div/div[3]/div/select'))
             )
-            if teste:
-                time.sleep(2)
-                teste.click()
-                print("Clicando em teste")
+            if selecionar_categoria:
+                time.sleep(1)
+                print("Selecionando a categoria")
+                time.sleep(1)
+
+                # Usa o lock para garantir que a leitura e escrita do arquivo não interfira com outra execução/threads.
+                while file_lock:
+                    user_folder_categoria = os.path.join("users", str(user_id))
+                    file_path_categoria = os.path.join(user_folder_categoria, "categoria.txt")
+
+                    # Verifica se o caminho existe antes de tentar ler e depois insere o nome no campo
+                    if os.path.exists(file_path_categoria):
+                        with open(file_path_categoria, "r", encoding="utf-8") as file:
+                            categoria_read = file.read().strip()
+
+                        #
+                        select_element = Select(selecionar_categoria)
+                        
+                        #
+                        try:
+                            select_element.select_by_visible_text(categoria_read)
+                            print(f"Categoria '{categoria_read}' selecionada para o user_id {user_id}")
+                        except Exception as e:
+                            print(f"Categoria '{categoria_read}' não encontrada para o user_id {user_id}")
+
+                        break
+                else:
+                    print(f"Arquivo com a categoria não encontrado para o user_id {user_id}")
+
                 break
         except Exception as e:
-            print("Aguardando o botão de 'teste' antes de clicar...")
+            print("Aguardando o botão de 'selecionar_categoria' antes de clicar...")
             time.sleep(2)
 
     # Procura o botão de selecionar a imagem do produto e clica nele
