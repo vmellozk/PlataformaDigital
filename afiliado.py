@@ -6,21 +6,6 @@ import time
 
 #
 def copiar_link_afiliado(driver):
-    # Procura o botão de salvar e clica nele
-    while True:
-        try:
-            salvar = WebDriverWait(driver, 20).until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[17]/div[2]/button'))
-            )
-            if salvar:
-                time.sleep(2)
-                salvar.click()
-                print("CLicando em salvar")
-                break
-        except Exception as e:
-            print("Aguardando o botão 'salvar' antes de clicar...")
-            time.sleep(2)
-
     # Procura o botão de afiliados e clica nele
     while True:
         try:
