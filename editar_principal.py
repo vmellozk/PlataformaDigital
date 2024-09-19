@@ -68,7 +68,7 @@ def edit(driver, user_id):
             time.sleep(2)
 
     # Procura o botão de selecionar a imagem do produto e clica nele
-    while True:
+    '''while True:
         try:
             imagem_produto = WebDriverWait(driver, 20).until(
                 EC.presence_of_element_located((By.XPATH, '//*[@id="general"]/div[1]/div/div[2]/div/div/div[4]/div[1]/div[1]/div/button/div/div/span'))
@@ -80,10 +80,10 @@ def edit(driver, user_id):
                 break
         except Exception as e:
             print("Aguardando o botão 'imagem produto' antes de clicar...")
-            time.sleep(2)
+            time.sleep(2)'''
 
     #criar uma logica para buscar a imagem do produto que vai ser gerada via IA para cada usuário na pasta do user_id específico
-    while True:
+    '''while True:
         try:
             imagem_gerada_ia = WebDriverWait(driver, 20).until(
                 EC.presence_of_element_located((By.XPATH, ''))
@@ -95,7 +95,21 @@ def edit(driver, user_id):
                 break
         except Exception as e:
             print("Aguardando o botão de 'imagem_gerada_ia' antes de clicar...")
-            time.sleep(2)
+            time.sleep(2)'''
+    
+    # espera aparecer o remover imagem para esperar carregar a imagem no site antes de seguir
+    '''while True:
+        try:
+            remover_imagem = WebDriverWait(driver, 20).until(
+                EC.presence_of_element_located((By.XPATH, ''))
+            )
+            if remover_imagem:
+                time.sleep(2)
+                print()
+                break
+        except Exception as e:
+            print()
+            time.sleep(2)'''
 
     # Procura o campo de inserir o email de suporte, clica nele e insere o email de suporte
     while True:
@@ -146,4 +160,19 @@ def edit(driver, user_id):
                 break
         except Exception as e:
             print("Aguardando o botão 'salvar' antes de clicar...")
+            time.sleep(2)
+
+    # Procura o botão de área de membros e clica nele
+    while True:
+        try:
+            area_membros = WebDriverWait(driver, 20).until(
+                EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[12]/div/div[1]/nav/div[2]/a'))
+            )
+            if area_membros:
+                time.sleep(2)
+                area_membros.click()
+                print("CLicando em area_membros")
+                break
+        except Exception as e:
+            print("Aguardando o botão 'area_membros' antes de clicar...")
             time.sleep(2)
