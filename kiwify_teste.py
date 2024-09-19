@@ -144,7 +144,7 @@ def kiwify_automation(driver):
             time.sleep(1)
             edit(driver, user_id=1)
             time.sleep(1)
-            anexar_produto(driver)
+            anexar_produto(driver, user_id=1)
             time.sleep(1)
             copiar_link_afiliado(driver)
 
