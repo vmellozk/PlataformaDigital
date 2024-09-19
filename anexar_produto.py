@@ -158,11 +158,16 @@ def anexar_produto(driver, user_id):
                 print("CLicando em criar_publicar")
                 time.sleep(1)
                 driver.close()
-                time.sleep(2)
+                time.sleep(5)
                 break
         except Exception as e:
             print("Aguardando o botão 'criar_publicar' antes de clicar...")
             time.sleep(2)
+
+    # Obter as abas abertas
+    abas = driver.window_handles
+    # Focar na última aba aberta (a mais recente)
+    driver.switch_to.window(abas[-1])
 
     # Procura o botão de salvar e clica nele
     while True:
