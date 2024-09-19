@@ -156,7 +156,7 @@ def anexar_produto(driver, user_id):
                 time.sleep(2)
                 criar_publicar.click()
                 print("CLicando em criar_publicar")
-                time.sleep(1)
+                time.sleep(5)
                 driver.close()
                 time.sleep(5)
                 break
