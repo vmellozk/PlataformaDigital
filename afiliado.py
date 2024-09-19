@@ -3,6 +3,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
+import os
+import threading
+from selenium.webdriver.support.ui import Select
+import pyperclip
+
+#
+file_lock = threading.Lock()
 
 #
 def copiar_link_afiliado(driver, user_id):
@@ -69,16 +76,41 @@ def copiar_link_afiliado(driver, user_id):
     # Criar uma lógica para selecionar a categoria. pode ser perguntando ao chatgpt, salvando em um arquivo de texto, lendo o texto, procurando na div onde tem aquilo e clicar
     while True:
         try:
-            teste = WebDriverWait(driver, 20).until(
-                EC.presence_of_element_located((By.XPATH, ''))
+            selecionar_categoria = WebDriverWait(driver, 20).until(
+                EC.presence_of_element_located((By.XPATH, '//*[@id="affiliates"]/div[2]/div/div[2]/div/div/div[2]/div[4]/div/select'))
             )
-            if teste:
-                time.sleep(2)
-                teste.click()
-                print("Clicando em teste")
+            if selecionar_categoria:
+                time.sleep(1)
+                print("Selecionando a categoria")
+                time.sleep(1)
+
+                # Usa o lock para garantir que a leitura e escrita do arquivo não interfira com outra execução/threads.
+                while file_lock:
+                    user_folder_categoria = os.path.join("users", str(user_id))
+                    file_path_categoria = os.path.join(user_folder_categoria, "categoria.txt")
+
+                    # Verifica se o caminho existe antes de tentar ler e depois insere o nome no campo
+                    if os.path.exists(file_path_categoria):
+                        with open(file_path_categoria, "r", encoding="utf-8") as file:
+                            categoria_read = file.read().strip()
+
+                        #
+                        select_element = Select(selecionar_categoria)
+                        
+                        #
+                        try:
+                            select_element.select_by_visible_text(categoria_read)
+                            print(f"Categoria '{categoria_read}' selecionada para o user_id {user_id}")
+                        except Exception as e:
+                            print(f"Categoria '{categoria_read}' não encontrada para o user_id {user_id}")
+
+                        break
+                else:
+                    print(f"Arquivo com a categoria não encontrado para o user_id {user_id}")
+
                 break
         except Exception as e:
-            print("Aguardando o botão de 'teste' antes de clicar...")
+            print("Aguardando o botão de 'selecionar_categoria' antes de clicar...")
             time.sleep(2)
 
     # Procura o campo de email de suporte de afiliados, clica nele e insere
@@ -91,6 +123,9 @@ def copiar_link_afiliado(driver, user_id):
                 time.sleep(2)
                 email_suporte_afiliados.click()
                 print("CLicando em email_suporte_afiliados")
+                time.sleep(2)
+                email_suporte_afiliados.send_keys('contato.praticasenior@afiliados.com')
+                time.sleep(1)
                 break
         except Exception as e:
             print("Aguardando o campo 'email_suporte_afiliados' antes de clicar...")
@@ -106,6 +141,8 @@ def copiar_link_afiliado(driver, user_id):
                 time.sleep(2)
                 descricao_afiliados.click()
                 print("CLicando em descricao_afiliados")
+                time.sleep(2)
+                descricao_afiliados.send_keys('Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados')
                 break
         except Exception as e:
             print("Aguardando o campo 'descricao_afiliados' antes de clicar...")
@@ -143,6 +180,7 @@ def copiar_link_afiliado(driver, user_id):
                 time.sleep(2)
                 salvar_config_afiliados.click()
                 print("CLicando em salvar_config_afiliados")
+                time.sleep(3)
                 break
         except Exception as e:
             print("Aguardando o  'salvar_config_afiliados' antes de clicar...")
@@ -151,17 +189,27 @@ def copiar_link_afiliado(driver, user_id):
     # Procura o botão de copiar o link de afiliados e clica nele
     while True:
         try:
-            link_afiliado = WebDriverWait(driver, 20).until(
+            botao_copiar_link_afiliado = WebDriverWait(driver, 20).until(
                 EC.presence_of_element_located((By.XPATH, '//*[@id="affiliates"]/div[3]/div/div[2]/div/div/div/div[2]/span/button'))
             )
-            if link_afiliado:
+            if botao_copiar_link_afiliado:
                 time.sleep(2)
-                link_afiliado.click()
-                print("CLicando em link_afiliado")
-                '''
-                usar o pyperclip para salvar o link em um arquivo de texto
-                '''
+                botao_copiar_link_afiliado.click()
+                print("CLicando em botao_copiar_link_afiliado")
+                time.sleep(3)
+                botao_copiar_link_afiliado_copiado = pyperclip.paste()
+
+                #
+                with file_lock:
+                    user_folder_link = os.path.join("users", str(user_id))
+                    os.makedirs(user_folder_link, exist_ok=True)
+                    file_path_link = os.path.join(user_folder_link, "botao_copiar_link_afiliado.txt")
+
+                    #
+                    with open(file_path_link, "w", encoding="utf-8") as file:
+                        file.write(botao_copiar_link_afiliado_copiado)
+
                 break
         except Exception as e:
-            print("Aguardando o botão 'link_afiliado' antes de clicar...")
+            print("Aguardando o botão 'botao_copiar_link_afiliado' antes de clicar...")
             time.sleep(2)
