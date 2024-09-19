@@ -3,24 +3,14 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
+import os
+import threading
 
 #
-def anexar_produto(driver):
-    # Procura o botão de área de membros e clica nele
-    while True:
-        try:
-            area_membros = WebDriverWait(driver, 20).until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[12]/div/div[1]/nav/div[2]/a'))
-            )
-            if area_membros:
-                time.sleep(2)
-                area_membros.click()
-                print("CLicando em area_membros")
-                break
-        except Exception as e:
-            print("Aguardando o botão 'area_membros' antes de clicar...")
-            time.sleep(2)
+file_lock = threading.Lock()
 
+#
+def anexar_produto(driver, user_id):
     # Procura o botão de adicionar e clica nele
     while True:
         try:
@@ -46,6 +36,8 @@ def anexar_produto(driver):
                 time.sleep(2)
                 nome_modulo.click()
                 print("CLicando em nome_modulo")
+                time.sleep(2)
+                nome_modulo.send_keys('eBook')
                 break
         except Exception as e:
             print("Aguardando o campo 'nome_modulo' antes de clicar...")
@@ -106,13 +98,15 @@ def anexar_produto(driver):
                 time.sleep(2)
                 titulo.click()
                 print("CLicando em titulo")
+                time.sleep(2)
+                titulo.send_keys('Baixe ou Visualize o produto.')
                 break
         except Exception as e:
             print("Aguardando o botão 'titulo' antes de clicar...")
             time.sleep(2)
 
     # Procura o botão de selecionar do computador, clica nele, e seleciona o ebook gerado na pasta específica de cada user_id
-    while True:
+    '''while True:
         try:
             selecione_computador = WebDriverWait(driver, 20).until(
                 EC.presence_of_element_located((By.XPATH, '//*[@id="attachment"]/div[1]/div/button/div/div/span'))
@@ -121,10 +115,36 @@ def anexar_produto(driver):
                 time.sleep(2)
                 selecione_computador.click()
                 print("CLicando em selecione_computador")
+                time.sleep(2)
+
+                # Usa o lock para garantir que a leitura do arquivo não interfira com outra execução/threads
+                with file_lock:
+                    user_folder_ebook = os.path.join("users", str(user_id), "ebook")
+                    file_path_ebook = os.path.join(user_folder_ebook, "")
+                    
+                    # Verifica se a pasta existe
+                    if os.path.exists(user_folder_ebook):
+                        # Procura o arquivo de eBook na pasta (supondo que há um único arquivo com extensão .pdf)
+                        ebook_files = [f for f in os.listdir(user_folder_ebook) if f.endswith('.pdf')]
+
+                        if ebook_files:
+                            ebook_path = os.path.join(user_folder_ebook, ebook_files[0])
+
+                            # Usa o send_keys para anexar o arquivo
+                            selecione_computador_input = WebDriverWait(driver, 20).until(
+                                EC.presence_of_element_located((By.XPATH, '//*[@id="attachment"]/div[1]/div/input'))
+                            )
+                            selecione_computador_input.send_keys(ebook_path)
+                            print(f"Anexando o eBook '{ebook_files[0]}' para o user_id {user_id}")
+                        else:
+                            print(f"Nenhum eBook encontrado na pasta 'ebook' para o user_id {user_id}")
+                    else:
+                        print(f"Pasta 'ebook' não encontrada para o user_id {user_id}")
+
                 break
         except Exception as e:
             print("Aguardando o botão 'selecione_computador' antes de clicar...")
-            time.sleep(2)
+            time.sleep(2)'''
 
     # Procura o botão de criar e publicar e clica nele
     while True:
