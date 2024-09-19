@@ -172,7 +172,13 @@ def edit(driver, user_id):
                 time.sleep(2)
                 area_membros.click()
                 print("CLicando em area_membros")
+                time.sleep(5)
                 break
         except Exception as e:
             print("Aguardando o botão 'area_membros' antes de clicar...")
             time.sleep(2)
+
+    # Obter as abas abertas
+    abas = driver.window_handles
+    # Focar na última aba aberta (a mais recente)
+    driver.switch_to.window(abas[-1])
