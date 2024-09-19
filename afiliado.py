@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 
 #
-def copiar_link_afiliado(driver):
+def copiar_link_afiliado(driver, user_id):
     # Procura o botão de afiliados e clica nele
     while True:
         try:
