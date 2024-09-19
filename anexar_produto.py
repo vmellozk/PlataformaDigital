@@ -62,7 +62,7 @@ def anexar_produto(driver, user_id):
     while True:
         try:
             simbolo_adicionar = WebDriverWait(driver, 20).until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id="options-menu"]'))
+                EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[7]/div[1]/div[1]/div[2]/div/div/div[2]/div/div[1]'))
             )
             if simbolo_adicionar:
                 time.sleep(2)
@@ -162,4 +162,19 @@ def anexar_produto(driver, user_id):
                 break
         except Exception as e:
             print("Aguardando o botão 'criar_publicar' antes de clicar...")
+            time.sleep(2)
+
+    # Procura o botão de salvar e clica nele
+    while True:
+        try:
+            salvar = WebDriverWait(driver, 20).until(
+                EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/header/button[2]'))
+            )
+            if salvar:
+                time.sleep(2)
+                salvar.click()
+                print("CLicando em salvar")
+                break
+        except Exception as e:
+            print("Aguardando o botão 'salvar' antes de clicar...")
             time.sleep(2)
