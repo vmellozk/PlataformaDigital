@@ -1,20 +1,9 @@
 import time
 import threading
-import queue
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.base import MIMEBase
-from email import encoders
 from flask import Flask, render_template, request, redirect, url_for, session, flash
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-import undetected_chromedriver as uc
 from database import init_db
 from models import insert_user, get_user_by_email, insert_survey_response, get_email_by_user_id
 from generate_Ebook import generate_ebook
-from email.mime.text import MIMEText
-from dotenv import load_dotenv
-import os
 from configuracoes_driver import ConfiguracoesDriver
 from send_email import send_email
 
