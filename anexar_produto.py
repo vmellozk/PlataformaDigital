@@ -106,15 +106,14 @@ def anexar_produto(driver, user_id):
             time.sleep(2)
 
     # Procura o botão de selecionar do computador, clica nele, e seleciona o ebook gerado na pasta específica de cada user_id
-    '''while True:
+    while True:
         try:
             selecione_computador = WebDriverWait(driver, 20).until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id="attachment"]/div[1]/div/button/div/div/span'))
+                EC.presence_of_element_located((By.CSS_SELECTOR, 'input.uppy-DragDrop-input'))
             )
             if selecione_computador:
                 time.sleep(2)
-                selecione_computador.click()
-                print("CLicando em selecione_computador")
+                print("Campo selecione_computador encontrado")
                 time.sleep(2)
 
                 # Usa o lock para garantir que a leitura do arquivo não interfira com outra execução/threads
@@ -128,23 +127,34 @@ def anexar_produto(driver, user_id):
                         ebook_files = [f for f in os.listdir(user_folder_ebook) if f.endswith('.pdf')]
 
                         if ebook_files:
-                            ebook_path = os.path.join(user_folder_ebook, ebook_files[0])
+                            ebook_path = os.path.abspath(os.path.join(user_folder_ebook, ebook_files[0]))
 
-                            # Usa o send_keys para anexar o arquivo
-                            selecione_computador_input = WebDriverWait(driver, 20).until(
-                                EC.presence_of_element_located((By.XPATH, '//*[@id="attachment"]/div[1]/div/input'))
-                            )
-                            selecione_computador_input.send_keys(ebook_path)
+                            selecione_computador.send_keys(ebook_path)
                             print(f"Anexando o eBook '{ebook_files[0]}' para o user_id {user_id}")
                         else:
                             print(f"Nenhum eBook encontrado na pasta 'ebook' para o user_id {user_id}")
+
                     else:
                         print(f"Pasta 'ebook' não encontrada para o user_id {user_id}")
 
                 break
         except Exception as e:
             print("Aguardando o botão 'selecione_computador' antes de clicar...")
-            time.sleep(2)'''
+            time.sleep(2)
+
+    # espera aparecer o botão de excluir para esperar carregar o pdf no site antes de seguir
+    while True:
+        try:
+            excluir_pdf = WebDriverWait(driver, 20).until(
+                EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[7]/div[1]/div/div[4]/div[3]/div/div[2]/div/div/div/div[2]/div/div/div[2]/div/div[2]/div/button'))
+            )
+            if excluir_pdf:
+                time.sleep(2)
+                print("Botão excluir_pdf foi encontrado, seguindo")
+                break
+        except Exception as e:
+            print()
+            time.sleep(2)
 
     # Procura o botão de criar e publicar e clica nele
     while True:
