@@ -16,6 +16,7 @@ from email.mime.text import MIMEText
 from dotenv import load_dotenv
 import os
 from configuracoes_driver import ConfiguracoesDriver
+from send_email import send_email
 
 #
 app = Flask(__name__)
@@ -23,49 +24,6 @@ app.secret_key = 'chave_secreta'
 
 # Instancia a classe ConfiguracoesDriver
 configuracoes = ConfiguracoesDriver()
-
-# Função para enviar o e-mail com o eBook
-def send_email(user_email, ebook_path):
-    try:
-        #
-        print(f"Enviando e-mail de {configuracoes.EMAIL_ADDRESS} para {user_email} através de {configuracoes.SMTP_SERVER}:{configuracoes.SMTP_PORT}")
-        msg = MIMEMultipart()
-        msg['From'] = configuracoes.EMAIL_ADDRESS
-        msg['To'] = user_email
-        msg['Subject'] = 'Seu eBook Gerado'
-        
-        #
-        body = 'Prezado(a),\n\nSeu eBook gerado está anexado a este e-mail.\n\nAtenciosamente,\nEquipe'
-        msg.attach(MIMEText(body, 'plain'))
-        
-        #
-        with open(ebook_path, 'rb') as attachment:
-            part = MIMEBase('application', 'octet-stream')
-            part.set_payload(attachment.read())
-            encoders.encode_base64(part)
-            part.add_header('Content-Disposition', f'attachment; filename={os.path.basename(ebook_path)}')
-            msg.attach(part)
-
-        #
-        if configuracoes.SMTP_PORT == 465:
-            with smtplib.SMTP_SSL(configuracoes.SMTP_SERVER, configuracoes.SMTP_PORT) as server:
-                print(f"Realizando login com {configuracoes.EMAIL_ADDRESS}")
-                server.login(configuracoes.EMAIL_ADDRESS, configuracoes.EMAIL_PASSWORD)
-                text = msg.as_string()
-                server.sendmail(configuracoes.EMAIL_ADDRESS, user_email, text)
-                print(f"E-mail enviado com sucesso para {user_email}")
-        #
-        else:
-            with smtplib.SMTP(configuracoes.SMTP_SERVER, configuracoes.SMTP_PORT) as server:
-                server.starttls()
-                print(f"Realizando login com {configuracoes.EMAIL_ADDRESS}")
-                server.login(configuracoes.EMAIL_ADDRESS, configuracoes.EMAIL_PASSWORD)
-                text = msg.as_string()
-                server.sendmail(configuracoes.EMAIL_ADDRESS, user_email, text)
-                print(f"E-mail enviado com sucesso para {user_email}")
-
-    except Exception as e:
-        print(f"Erro ao enviar o e-mail para {user_email}: {e}")
 
 # Função para processar cada usuário
 def process_user(user_id):
