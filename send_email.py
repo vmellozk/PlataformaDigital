@@ -1,29 +1,15 @@
 #
-import time
-import threading
-import queue
 import smtplib
 from email.mime.multipart import MIMEMultipart
-from email.mime.base import MIMEBase
-from email import encoders
-from flask import Flask, render_template, request, redirect, url_for, session, flash
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-import undetected_chromedriver as uc
-from database import init_db
-from models import insert_user, get_user_by_email, insert_survey_response, get_email_by_user_id
-from generate_Ebook import generate_ebook
 from email.mime.text import MIMEText
-from dotenv import load_dotenv
 import os
-from configuracoes_driver import ConfiguracoesDriver
 from configuracoes_driver import ConfiguracoesDriver
 
 #
 configuracoes = ConfiguracoesDriver()
 
 # Função para enviar o e-mail com o eBook
-def send_email(user_email, ebook_path):
+def send_email(user_email, user_id):
     try:
         #
         print(f"Enviando e-mail de {configuracoes.EMAIL_ADDRESS} para {user_email} através de {configuracoes.SMTP_SERVER}:{configuracoes.SMTP_PORT}")
@@ -32,17 +18,15 @@ def send_email(user_email, ebook_path):
         msg['To'] = user_email
         msg['Subject'] = 'Seu eBook Gerado'
         
-        #
-        body = 'Prezado(a),\n\nSeu eBook gerado está anexado a este e-mail.\n\nAtenciosamente,\nEquipe'
+        # Lê o link do arquivo .txt
+        user_folder_link = os.path.join("users", str(user_id))
+        file_path_link = os.path.join(user_folder_link, "botao_copiar_link_afiliado.txt")
+        with open(file_path_link, "r", encoding="utf-8") as file:
+            link = file.read().strip()
+
+        # Atualiza o corpo do e-mail para incluir o link
+        body = f'Prezado(a),\n\nSeu eBook gerado está disponível no seguinte link: {link}\n\nAtenciosamente,\nEquipe'
         msg.attach(MIMEText(body, 'plain'))
-        
-        #
-        with open(ebook_path, 'rb') as attachment:
-            part = MIMEBase('application', 'octet-stream')
-            part.set_payload(attachment.read())
-            encoders.encode_base64(part)
-            part.add_header('Content-Disposition', f'attachment; filename={os.path.basename(ebook_path)}')
-            msg.attach(part)
 
         #
         if configuracoes.SMTP_PORT == 465:
