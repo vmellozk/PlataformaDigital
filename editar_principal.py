@@ -108,14 +108,17 @@ def edit(driver, user_id):
     while True:
         try:
             remover_imagem = WebDriverWait(driver, 20).until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id="general"]/div[1]/div/div[2]/div/div/div[4]/div[1]'))
+                EC.text_to_be_present_in_element(
+                    (By.CSS_SELECTOR, 'div.mt-2.text-sm.text-indigo-600.underline.cursor-pointer'), 
+                    'Remover imagem'
+                )
             )
             if remover_imagem:
                 time.sleep(2)
-                print("Texto remover_imagem foi encontrado, seguindo")
+                print("Texto 'Remover imagem' foi encontrado, seguindo")
                 break
         except Exception as e:
-            print()
+            print(f"Aguardando o texto 'Remover imagem': {str(e)}")
             time.sleep(2)
 
     # Procura o campo de inserir o email de suporte, clica nele e insere o email de suporte
