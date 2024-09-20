@@ -149,11 +149,6 @@ def kiwify_automation(driver):
             time.sleep(1)
             copiar_link_afiliado(driver, user_id=1)
             time.sleep(5)
-
-            '''
-            aqui jogar a lógica para enviar o email via smtp lendo o arquivo da url de afiliado para enviar ao cliente
-            '''
-
             send_email(user_id=1)
 
     #
