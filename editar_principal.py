@@ -68,7 +68,7 @@ def edit(driver, user_id):
             time.sleep(2)
 
     # Procura o botão de selecionar a imagem do produto e clica nele
-    '''while True:
+    while True:
         try:
             imagem_produto = WebDriverWait(driver, 20).until(
                 EC.presence_of_element_located((By.XPATH, '//*[@id="general"]/div[1]/div/div[2]/div/div/div[4]/div[1]/div[1]/div/button/div/div/span'))
@@ -77,10 +77,11 @@ def edit(driver, user_id):
                 time.sleep(2)
                 imagem_produto.click()
                 print("CLicando em imagem produto")
+                time.sleep(5)
                 break
         except Exception as e:
             print("Aguardando o botão 'imagem produto' antes de clicar...")
-            time.sleep(2)'''
+            time.sleep(2)
 
     #criar uma logica para buscar a imagem do produto que vai ser gerada via IA para cada usuário na pasta do user_id específico
     '''while True:
@@ -98,18 +99,18 @@ def edit(driver, user_id):
             time.sleep(2)'''
     
     # espera aparecer o remover imagem para esperar carregar a imagem no site antes de seguir
-    '''while True:
+    while True:
         try:
             remover_imagem = WebDriverWait(driver, 20).until(
-                EC.presence_of_element_located((By.XPATH, ''))
+                EC.presence_of_element_located((By.XPATH, '//*[@id="general"]/div[1]/div/div[2]/div/div/div[4]/div[1]'))
             )
             if remover_imagem:
                 time.sleep(2)
-                print()
+                print("Texto remover_imagem foi encontrado, seguindo")
                 break
         except Exception as e:
             print()
-            time.sleep(2)'''
+            time.sleep(2)
 
     # Procura o campo de inserir o email de suporte, clica nele e insere o email de suporte
     while True:
