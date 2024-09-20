@@ -70,33 +70,39 @@ def edit(driver, user_id):
     # Procura o botão de selecionar a imagem do produto e clica nele
     while True:
         try:
+            # Localiza o campo de input (tipo file)
             imagem_produto = WebDriverWait(driver, 20).until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id="general"]/div[1]/div/div[2]/div/div/div[4]/div[1]/div[1]/div/button/div/div/span'))
+                EC.presence_of_element_located((By.CSS_SELECTOR, 'input.uppy-DragDrop-input'))
             )
+            
             if imagem_produto:
-                time.sleep(2)
-                imagem_produto.click()
-                print("CLicando em imagem produto")
-                time.sleep(5)
-                break
-        except Exception as e:
-            print("Aguardando o botão 'imagem produto' antes de clicar...")
-            time.sleep(2)
+                print("Encontrado campo de upload.")
+                
+                # Usa o lock para garantir que a leitura do arquivo não interfira com outra execução/threads
+                with file_lock:
+                    user_folder_images = os.path.join("users", str(user_id), "images")
 
-    #criar uma logica para buscar a imagem do produto que vai ser gerada via IA para cada usuário na pasta do user_id específico
-    '''while True:
-        try:
-            imagem_gerada_ia = WebDriverWait(driver, 20).until(
-                EC.presence_of_element_located((By.XPATH, ''))
-            )
-            if imagem_gerada_ia:
-                time.sleep(2)
-                imagem_gerada_ia.click()
-                print("Clicando em imagem_gerada_ia")
+                    # Verifica se a pasta existe
+                    if os.path.exists(user_folder_images):
+                        # Procura o arquivo de imagem na pasta
+                        image_files = [f for f in os.listdir(user_folder_images) if f.endswith(('.jpg', '.jpeg', '.png'))]
+
+                        if image_files:
+                            # Converte o caminho relativo para caminho absoluto
+                            image_path = os.path.abspath(os.path.join(user_folder_images, image_files[0]))
+
+                            # Usa o send_keys para anexar o arquivo
+                            imagem_produto.send_keys(image_path)
+                            print(f"Anexando a imagem '{image_files[0]}' para o user_id {user_id}")
+                        else:
+                            print(f"Nenhuma imagem encontrada na pasta 'images' para o user_id {user_id}")
+                    else:
+                        print(f"Pasta 'images' não encontrada para o user_id {user_id}")
+
                 break
         except Exception as e:
-            print("Aguardando o botão de 'imagem_gerada_ia' antes de clicar...")
-            time.sleep(2)'''
+            print(f"Aguardando o campo de upload: {str(e)}")
+            time.sleep(2)
     
     # espera aparecer o remover imagem para esperar carregar a imagem no site antes de seguir
     while True:
