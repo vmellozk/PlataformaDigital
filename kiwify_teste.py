@@ -13,6 +13,7 @@ from anexar_produto import anexar_produto
 from afiliado import copiar_link_afiliado
 from inserir_codigo_kiwify import inserir_codigo_kw
 from configuracoes_driver import ConfiguracoesDriver
+from send_email import send_email
 
 # Instanciando as configurações
 configuracoes = ConfiguracoesDriver()
@@ -147,11 +148,13 @@ def kiwify_automation(driver):
             anexar_produto(driver, user_id=1)
             time.sleep(1)
             copiar_link_afiliado(driver, user_id=1)
-            time.sleep(5000000)
+            time.sleep(5)
 
             '''
             aqui jogar a lógica para enviar o email via smtp lendo o arquivo da url de afiliado para enviar ao cliente
             '''
+
+            send_email(user_id=1)
 
     #
     finally:
