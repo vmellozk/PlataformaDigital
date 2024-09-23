@@ -3,7 +3,6 @@ import time
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
-import threading
 from login_kiwify import login_kw
 from login_gmail import login_gm
 from adquirir_codigo_kiwify import adq_codigo_kw
@@ -18,20 +17,9 @@ from send_email import send_email
 # Instanciando as configurações
 configuracoes = ConfiguracoesDriver()
 
-# Função para liberar vaga e chamar o próximo item da fila
-def release_tab_and_process_queue():
-    # Libera uma vaga no semáforo
-    configuracoes.tab_semaphore.release()
-    
-    if not configuracoes.task_queue.empty():
-        next_user_id = configuracoes.task_queue.get()
-        print(f"Chamando a fila para processar o usuário {next_user_id}")
-        # Inicia um novo thread para processar o próximo usuário
-        threading.Thread(target=kiwify_automation, args=(next_user_id,)).start()
-
 # Função de automação para cada usuário
 def kiwify_automation(driver):
-    #
+    # Define o local dos dados do profile do chrome para não ter que logar toda hora
     user_profile_path = r"C:\Users\Victor\AppData\Local\Google\Chrome for Testing\User Data\Default"
 
     # Define as opções, parâmetros e adiciona o perfil de usuário
@@ -43,22 +31,9 @@ def kiwify_automation(driver):
     chrome_options.add_experimental_option('useAutomationExtension', False)
     chrome_options.add_argument("--disable-blink-features=AutomationControlled")
 
-    #
+    # Inicia o Driver
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=chrome_options)
-
-    # Use um lock para garantir que apenas uma aba seja aberta e posicionada por vez
-    with configuracoes.position_lock:
-        # Encontre a primeira posição livre
-        free_position = configuracoes.find_free_position()
-        
-        if free_position is not None:
-            # Define a posição e o tamanho da aba
-            configuracoes.set_window_position_and_size(driver, free_position)
-        else:
-            # Caso não haja posição livre, fecha o driver
-            driver.quit()
-            return
 
     try:
         # Diminui o zoom da página para 90%
@@ -134,7 +109,6 @@ def kiwify_automation(driver):
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         
         # Começa o processo de automação principal
-        #time.sleep(500000)
         kiwify_url = 'https://dashboard.kiwify.com.br/'
         current_url_6 = driver.current_url
         print(f"URL atual: {current_url_6}")
@@ -151,14 +125,8 @@ def kiwify_automation(driver):
             time.sleep(5)
             send_email(user_id=1)
 
-    #
     finally:
         driver.close()
-        time.sleep(1)
-        # Libera a vaga e chama o próximo item da fila com um atraso
-        configuracoes.release_position(free_position)
-        time.sleep(configuracoes.TASK_QUEUE_DELAY)  # Aguarda um tempo antes de processar o próximo
-        release_tab_and_process_queue()
 
 #
 if __name__ == "__main__":
