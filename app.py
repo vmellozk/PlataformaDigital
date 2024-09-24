@@ -42,8 +42,8 @@ def process_user(user_id):
         kiwify_automation(driver, user_id)
 
         # Envia o email para o usuário
-        #user_email = get_email_by_user_id(user_id)
-        #send_email(user_email, ebook_path)
+        user_email = get_email_by_user_id(user_id)
+        send_email(user_email, user_id)
 
     except Exception as e:
         print(f"Erro ao processar o usuário {user_id} no envio do eBook: {e}")
