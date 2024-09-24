@@ -96,8 +96,10 @@ def edit(driver, user_id):
                             print(f"Anexando a imagem '{image_files[0]}' para o user_id {user_id}")
                         else:
                             print(f"Nenhuma imagem encontrada na pasta 'images' para o user_id {user_id}")
+                            pass
                     else:
                         print(f"Pasta 'images' não encontrada para o user_id {user_id}")
+                        pass
 
                 break
         except Exception as e:
