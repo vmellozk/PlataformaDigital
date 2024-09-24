@@ -11,6 +11,11 @@ output_directory = 'users'
 if not os.path.exists(output_directory):
     os.makedirs(output_directory)
 
+# Diretório para Images
+images_directory = 'images'
+if not os.path.exists(images_directory):
+    os.makedirs(images_directory)
+
 #
 def generate_ebook(user_id, driver):
     # Diretório específico para o usuário
