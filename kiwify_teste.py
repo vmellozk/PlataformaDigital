@@ -36,6 +36,16 @@ def kiwify_automation(driver, user_id):
     driver = webdriver.Chrome(service=service, options=chrome_options)
 
     try:
+        # Adicionando a lógica de posição e tamanho da janela
+        time.sleep(configuracoes.STARTUP_DELAY)
+        with configuracoes.position_lock:
+            free_position = configuracoes.find_free_position()
+            if free_position is not None:
+                configuracoes.set_window_position_and_size(driver, free_position)
+            else:
+                driver.quit()
+                return
+
         # Diminui o zoom da página para 90%
         driver.execute_script("document.body.style.zoom='90%'")
         # Abre um navegador com a url passada do kiwify
@@ -126,6 +136,8 @@ def kiwify_automation(driver, user_id):
 
     finally:
         driver.close()
+        configuracoes.release_position(free_position)
+        print(f"Automação do Kiwify concluída para o usuário {user_id}.")
 
 '''
 user_id, responses_file, output_file, tittle_file, formatted_name, name
