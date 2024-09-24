@@ -18,7 +18,7 @@ from send_email import send_email
 configuracoes = ConfiguracoesDriver()
 
 # Função de automação para cada usuário
-def kiwify_automation(driver):
+def kiwify_automation(driver, user_id):
     # Define o local dos dados do profile do chrome para não ter que logar toda hora
     user_profile_path = r"C:\Users\Victor\AppData\Local\Google\Chrome for Testing\User Data\Default"
 
@@ -115,22 +115,21 @@ def kiwify_automation(driver):
         if kiwify_url in current_url_6: 
             print("Página inicial já logada.")
 
-            criar_produto_kw(driver, user_id=1)
+            criar_produto_kw(driver, user_id)
             time.sleep(1)
-            edit(driver, user_id=1)
+            edit(driver, user_id)
             time.sleep(1)
-            anexar_produto(driver, user_id=1)
+            anexar_produto(driver, user_id)
             time.sleep(1)
-            copiar_link_afiliado(driver, user_id=1)
+            copiar_link_afiliado(driver, user_id)
             time.sleep(5)
-            send_email(user_id=1)
 
     finally:
         driver.close()
 
 #
 if __name__ == "__main__":
-    kiwify_automation('driver')
+    kiwify_automation('driver', 'user_id')
 
 '''
 user_id, responses_file, output_file, tittle_file, formatted_name, name
