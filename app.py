@@ -28,7 +28,7 @@ def process_user(user_id):
             configuracoes.set_window_position_and_size(driver, free_position)
         else:
             # Caso não haja posição livre, fecha o driver
-            driver.quit()
+            driver.close()
             return
 
     try:
@@ -49,7 +49,7 @@ def process_user(user_id):
         print(f"Erro ao processar o usuário {user_id} no envio do eBook: {e}")
 
     finally:
-        driver.quit()
+        driver.close()
         print(f"Processamento concluído para o usuário {user_id}. Fechando o navegador.")
         configuracoes.release_position(free_position)
         time.sleep(configuracoes.TASK_QUEUE_DELAY)
