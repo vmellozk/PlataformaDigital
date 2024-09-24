@@ -6,6 +6,7 @@ from models import insert_user, get_user_by_email, insert_survey_response, get_e
 from generate_Ebook import generate_ebook
 from configuracoes_driver import ConfiguracoesDriver
 from send_email import send_email
+from kiwify_teste import kiwify_automation
 
 #
 app = Flask(__name__)
@@ -36,8 +37,14 @@ def process_user(user_id):
         print(f"Caminho do eBook gerado: {ebook_path}")
         if ebook_path is None:
             raise ValueError("Caminho do eBook não retornado pela função generate_ebook.")
-        user_email = get_email_by_user_id(user_id)
-        send_email(user_email, ebook_path)
+        
+        # Cadastra o produto na plataforma do kiwify
+        kiwify_automation(driver, user_id)
+
+        # Envia o email para o usuário
+        #user_email = get_email_by_user_id(user_id)
+        #send_email(user_email, ebook_path)
+
     except Exception as e:
         print(f"Erro ao processar o usuário {user_id} no envio do eBook: {e}")
 
