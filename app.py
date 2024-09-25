@@ -6,7 +6,7 @@ from models import insert_user, get_user_by_email, insert_survey_response, get_e
 from generate_Ebook import generate_ebook
 from configuracoes_driver import ConfiguracoesDriver
 from send_email import send_email
-from kiwify_teste import kiwify_automation
+from kiwify import kiwify_automation
 from selenium.common.exceptions import InvalidSessionIdException
 
 #
