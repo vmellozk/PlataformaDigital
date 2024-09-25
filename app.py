@@ -7,6 +7,7 @@ from generate_Ebook import generate_ebook
 from configuracoes_driver import ConfiguracoesDriver
 from send_email import send_email
 from kiwify_teste import kiwify_automation
+from selenium.common.exceptions import InvalidSessionIdException
 
 #
 app = Flask(__name__)
@@ -28,7 +29,11 @@ def process_user(user_id):
             configuracoes.set_window_position_and_size(driver, free_position)
         else:
             # Caso não haja posição livre, fecha o driver
-            driver.close()
+            if driver.session_id:
+                try:
+                    driver.close()
+                except InvalidSessionIdException:
+                    print("Sessão do driver já encerrada ao tentar fechar.")
             return
 
     try:
@@ -49,7 +54,11 @@ def process_user(user_id):
         print(f"Erro ao processar o usuário {user_id} no envio do eBook: {e}")
 
     finally:
-        driver.close()
+        if driver.session_id:  # Verifica se a sessão ainda está ativa
+            try:
+                driver.close()
+            except InvalidSessionIdException:
+                print(f"Sessão do driver já encerrada ao tentar fechar no finally para o usuário {user_id}.")
         print(f"Processamento concluído para o usuário {user_id}. Fechando o navegador.")
         configuracoes.release_position(free_position)
         time.sleep(configuracoes.TASK_QUEUE_DELAY)
