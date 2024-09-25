@@ -135,7 +135,8 @@ def kiwify_automation(driver, user_id):
             time.sleep(5)
 
     finally:
-        driver.close()
+        if driver.session_id:
+            driver.close()
         configuracoes.release_position(free_position)
         print(f"Automação do Kiwify concluída para o usuário {user_id}.")
 
