@@ -11,7 +11,8 @@ from selenium.webdriver.support.ui import Select
 file_lock = threading.Lock()
 
 # Variáveis para inserção no campo
-
+email = 'contato.praticasenior@gmail.com'
+produtor = 'Prática Sênior'
 
 #
 def edit(driver, user_id):
@@ -134,7 +135,7 @@ def edit(driver, user_id):
                 email_suporte.click()
                 print("CLicando em email suporte")
                 time.sleep(1)
-                email_suporte.send_keys('contato.praticasenior@gmail.com')
+                email_suporte.send_keys(email)
                 break
         except Exception as e:
             print("Aguardando o campo 'email suporte' antes de clicar...")
@@ -150,7 +151,7 @@ def edit(driver, user_id):
                 nome_produtor.click()
                 print("CLicando em nome produtor")
                 print(1)
-                nome_produtor.send_keys('Prática Sênior')
+                nome_produtor.send_keys(produtor)
                 break
         except Exception as e:
             print("Aguardando o campo 'nome produtor' antes de clicar...")
