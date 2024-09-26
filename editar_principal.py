@@ -10,6 +10,9 @@ from selenium.webdriver.support.ui import Select
 #
 file_lock = threading.Lock()
 
+# Variáveis para inserção no campo
+
+
 #
 def edit(driver, user_id):
     # Procura o botão de categoria e clica nele
@@ -19,7 +22,6 @@ def edit(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="general"]/div[1]/div/div[2]/div/div/div[3]/div/select'))
             )
             if categoria:
-                time.sleep(2)
                 categoria.click()
                 print("Clicando em categoria")
                 break
@@ -34,7 +36,6 @@ def edit(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="general"]/div[1]/div/div[2]/div/div/div[3]/div/select'))
             )
             if selecionar_categoria:
-                time.sleep(1)
                 print("Selecionando a categoria")
                 time.sleep(1)
 
@@ -77,6 +78,7 @@ def edit(driver, user_id):
             
             if imagem_produto:
                 print("Encontrado campo de upload.")
+                time.sleep(1)
                 
                 # Usa o lock para garantir que a leitura do arquivo não interfira com outra execução/threads
                 with file_lock:
@@ -116,7 +118,6 @@ def edit(driver, user_id):
                 )
             )
             if remover_imagem:
-                time.sleep(2)
                 print("Texto 'Remover imagem' foi encontrado, seguindo")
                 break
         except Exception as e:
@@ -130,12 +131,10 @@ def edit(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="general"]/div[3]/div/div[2]/div/div/div/div[2]/div/div/input'))
             )
             if email_suporte:
-                time.sleep(2)
                 email_suporte.click()
                 print("CLicando em email suporte")
                 time.sleep(1)
                 email_suporte.send_keys('contato.praticasenior@gmail.com')
-                time.sleep(1)
                 break
         except Exception as e:
             print("Aguardando o campo 'email suporte' antes de clicar...")
@@ -148,12 +147,10 @@ def edit(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="general"]/div[3]/div/div[2]/div/div/div/div[3]/div/div/input'))
             )
             if nome_produtor:
-                time.sleep(2)
                 nome_produtor.click()
                 print("CLicando em nome produtor")
                 print(1)
                 nome_produtor.send_keys('Prática Sênior')
-                time.sleep(1)
                 break
         except Exception as e:
             print("Aguardando o campo 'nome produtor' antes de clicar...")
@@ -166,9 +163,9 @@ def edit(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[17]/div[2]/button'))
             )
             if salvar:
-                time.sleep(2)
                 salvar.click()
                 print("CLicando em salvar")
+                time.sleep(3)
                 break
         except Exception as e:
             print("Aguardando o botão 'salvar' antes de clicar...")
@@ -181,7 +178,6 @@ def edit(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[12]/div/div[1]/nav/div[2]/a'))
             )
             if area_membros:
-                time.sleep(2)
                 area_membros.click()
                 print("CLicando em area_membros")
                 time.sleep(5)
