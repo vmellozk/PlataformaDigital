@@ -9,6 +9,10 @@ import threading
 #
 file_lock = threading.Lock()
 
+# Variáveis para inserção nos campos
+modulo = 'eBook'
+titulo_modulo = 'Baixe ou Visualize o Produto'
+
 #
 def anexar_produto(driver, user_id):
     # Procura o botão de adicionar e clica nele
@@ -18,7 +22,6 @@ def anexar_produto(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[7]/div[1]/div[1]/div[1]/div[2]/button'))
             )
             if adicionar:
-                time.sleep(2)
                 adicionar.click()
                 print("CLicando em adicionar")
                 break
@@ -33,11 +36,10 @@ def anexar_produto(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[2]/div/div[2]/div[2]/div/div/div/div[1]/div/input'))
             )
             if nome_modulo:
-                time.sleep(2)
                 nome_modulo.click()
                 print("CLicando em nome_modulo")
-                time.sleep(2)
-                nome_modulo.send_keys('eBook')
+                time.sleep(1)
+                nome_modulo.send_keys(modulo)
                 break
         except Exception as e:
             print("Aguardando o campo 'nome_modulo' antes de clicar...")
@@ -50,7 +52,6 @@ def anexar_produto(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[2]/div/div[2]/div[2]/div/div/div/div[3]/button'))
             )
             if adicionar_modulo:
-                time.sleep(2)
                 adicionar_modulo.click()
                 print("CLicando em adicionar_modulo")
                 break
@@ -65,7 +66,6 @@ def anexar_produto(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[7]/div[1]/div[1]/div[2]/div/div/div[2]/div/div[1]'))
             )
             if simbolo_adicionar:
-                time.sleep(2)
                 simbolo_adicionar.click()
                 print("CLicando em simbolo_adicionar")
                 break
@@ -80,7 +80,6 @@ def anexar_produto(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[7]/div[1]/div[1]/div[2]/div/div/div[2]/div/div[1]/div/div/div/div/div[2]/div/div/div[1]/div[1]'))
             )
             if adicionar_conteudo:
-                time.sleep(2)
                 adicionar_conteudo.click()
                 print("CLicando em adicionar_conteudo")
                 break
@@ -95,11 +94,10 @@ def anexar_produto(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[7]/div[1]/div/div[4]/div[1]/div/div[2]/div/div/div[1]/div/input'))
             )
             if titulo:
-                time.sleep(2)
                 titulo.click()
                 print("CLicando em titulo")
-                time.sleep(2)
-                titulo.send_keys('Baixe ou Visualize o produto.')
+                time.sleep(1)
+                titulo.send_keys(titulo_modulo)
                 break
         except Exception as e:
             print("Aguardando o botão 'titulo' antes de clicar...")
@@ -112,14 +110,12 @@ def anexar_produto(driver, user_id):
                 EC.presence_of_element_located((By.CSS_SELECTOR, 'input.uppy-DragDrop-input'))
             )
             if selecione_computador:
-                time.sleep(2)
                 print("Campo selecione_computador encontrado")
-                time.sleep(2)
+                time.sleep(1)
 
                 # Usa o lock para garantir que a leitura do arquivo não interfira com outra execução/threads
                 with file_lock:
                     user_folder_ebook = os.path.join("users", str(user_id), "ebook")
-                    file_path_ebook = os.path.join(user_folder_ebook, "")
                     
                     # Verifica se a pasta existe
                     if os.path.exists(user_folder_ebook):
@@ -149,7 +145,6 @@ def anexar_produto(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[7]/div[1]/div/div[4]/div[3]/div/div[2]/div/div/div/div[2]/div/div/div[2]/div/div[2]/div/button'))
             )
             if excluir_pdf:
-                time.sleep(2)
                 print("Botão excluir_pdf foi encontrado, seguindo")
                 break
         except Exception as e:
@@ -163,7 +158,6 @@ def anexar_produto(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[7]/div[1]/div/div[5]/div[3]/div'))
             )
             if criar_publicar:
-                time.sleep(2)
                 criar_publicar.click()
                 print("CLicando em criar_publicar")
                 time.sleep(5)
@@ -186,9 +180,9 @@ def anexar_produto(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/header/button[2]'))
             )
             if salvar:
-                time.sleep(2)
                 salvar.click()
                 print("CLicando em salvar")
+                time.sleep(3)
                 break
         except Exception as e:
             print("Aguardando o botão 'salvar' antes de clicar...")
