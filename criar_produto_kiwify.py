@@ -9,6 +9,10 @@ import threading
 #
 file_lock = threading.Lock()
 
+# Variáveis para inserir nos campos
+site = 'www.praticasenior.com'
+preco = 'R$47,90'
+
 #
 def criar_produto_kw(driver, user_id):
     # Procura o botão de produtos e clica nele
@@ -18,7 +22,6 @@ def criar_produto_kw(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[2]/div/div/div[2]/nav/div[1]/a[2]'))
             )
             if produtos:
-                time.sleep(2)
                 produtos.click()
                 print("Botão de produtos encontrado")
                 break
@@ -33,7 +36,6 @@ def criar_produto_kw(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[6]/span/div'))
             )
             if criar_produto:
-                time.sleep(2)
                 criar_produto.click()
                 print("Botão de criar produto encontrado")
                 break
@@ -48,7 +50,6 @@ def criar_produto_kw(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div/div/div[2]/button'))
             )
             if continuar:
-                time.sleep(2)
                 continuar.click()
                 print("Clicando em continuar")
                 break
@@ -63,10 +64,9 @@ def criar_produto_kw(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div/div/div[1]/div[2]/div/input'))
             )
             if nome_produto:
-                time.sleep(2)
                 nome_produto.click()
                 print("Clicando em nome do produto")
-                time.sleep(2)
+                time.sleep(1)
 
                 # Usa o lock para garantir que a leitura e escrita do arquivo não interfira com outra execução/threads. 
                 with file_lock:
@@ -94,10 +94,9 @@ def criar_produto_kw(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div/div/div[1]/div[3]/div/textarea'))
             )
             if descricao:
-                time.sleep(2)
                 descricao.click()
                 print("Clicando em descrição")
-                time.sleep(2)
+                time.sleep(1)
 
                 # Usa o lock para garantir que a leitura e escrita do arquivo não interfira com outra execução/threads
                 with file_lock:
@@ -125,11 +124,10 @@ def criar_produto_kw(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div/div/div[1]/div[4]/div[2]/input'))
             )
             if pagina_vendas:
-                time.sleep(2)
                 pagina_vendas.click()
                 print("Clicando em pagina de vendas")
-                time.sleep(2)
-                pagina_vendas.send_keys('www.praticasenior.com')
+                time.sleep(1)
+                pagina_vendas.send_keys(site)
                 break
         except Exception as e:
             print("Aguardando o campo de 'página de vendas' antes de clicar...")
@@ -138,15 +136,14 @@ def criar_produto_kw(driver, user_id):
     # Procura o campo de preço, clica e insere o preço do produto
     while True:
         try:
-            preco = WebDriverWait(driver, 20).until(
+            preco_produto = WebDriverWait(driver, 20).until(
                 EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div/div/div[1]/div[5]/fieldset/div/input'))
             )
-            if preco:
-                time.sleep(2)
-                preco.click()
+            if preco_produto:
+                preco_produto.click()
                 print("Clicando em preço")
-                time.sleep(2)
-                preco.send_keys('R$47,90')
+                time.sleep(1)
+                preco_produto.send_keys(preco)
                 break
         except Exception as e:
             print("Aguardando o campo de 'preço' antes de clicar...")
@@ -159,7 +156,6 @@ def criar_produto_kw(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div/div/div[2]/button'))
             )
             if criar_produto_final:
-                time.sleep(2)
                 criar_produto_final.click()
                 print("CLicando em criar produto final")
                 break
