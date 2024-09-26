@@ -11,6 +11,10 @@ import pyperclip
 #
 file_lock = threading.Lock()
 
+# Variáveis para inserção no campo
+email_suporte = 'praticasenior@afiliados.com'
+descricao = 'Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados'
+
 #
 def copiar_link_afiliado(driver, user_id):
     # Procura o botão de afiliados e clica nele
@@ -20,7 +24,6 @@ def copiar_link_afiliado(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[12]/div/div[1]/nav/div[6]/a'))
             )
             if afiliados:
-                time.sleep(2)
                 afiliados.click()
                 print("CLicando em afiliados")
                 break
@@ -35,9 +38,9 @@ def copiar_link_afiliado(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="affiliates"]/div[2]/div/div[2]/div/div/div[1]/span/span'))
             )
             if habilitar_afiliados:
-                time.sleep(2)
                 habilitar_afiliados.click()
                 print("CLicando em habilitar afiliados")
+                time.sleep(1)
                 break
         except Exception as e:
             print("Aguardando o botão 'habilitar afiliados' antes de clicar...")
@@ -50,9 +53,9 @@ def copiar_link_afiliado(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="affiliates"]/div[2]/div/div[2]/div/div/div[2]/div[3]/div/span'))
             )
             if habilitar_market_place:
-                time.sleep(2)
                 habilitar_market_place.click()
                 print("CLicando em habilitar_market_place")
+                time.sleep(1)
                 break
         except Exception as e:
             print("Aguardando o botão 'habilitar_market_place' antes de clicar...")
@@ -65,7 +68,6 @@ def copiar_link_afiliado(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="affiliates"]/div[2]/div/div[2]/div/div/div[2]/div[4]/div/select'))
             )
             if categoria_afiliados:
-                time.sleep(2)
                 categoria_afiliados.click()
                 print("CLicando em categoria_afiliados")
                 break
@@ -80,7 +82,6 @@ def copiar_link_afiliado(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="affiliates"]/div[2]/div/div[2]/div/div/div[2]/div[4]/div/select'))
             )
             if selecionar_categoria:
-                time.sleep(1)
                 print("Selecionando a categoria")
                 time.sleep(1)
 
@@ -120,12 +121,10 @@ def copiar_link_afiliado(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="affiliates"]/div[2]/div/div[2]/div/div/div[2]/div[5]/div/div/div/input'))
             )
             if email_suporte_afiliados:
-                time.sleep(2)
                 email_suporte_afiliados.click()
                 print("CLicando em email_suporte_afiliados")
-                time.sleep(2)
-                email_suporte_afiliados.send_keys('contato.praticasenior@afiliados.com')
                 time.sleep(1)
+                email_suporte_afiliados.send_keys(email_suporte)
                 break
         except Exception as e:
             print("Aguardando o campo 'email_suporte_afiliados' antes de clicar...")
@@ -138,11 +137,10 @@ def copiar_link_afiliado(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="affiliates"]/div[2]/div/div[2]/div/div/div[2]/div[6]/div[1]/textarea'))
             )
             if descricao_afiliados:
-                time.sleep(2)
                 descricao_afiliados.click()
                 print("CLicando em descricao_afiliados")
-                time.sleep(2)
-                descricao_afiliados.send_keys('Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados Teste Descrição Afiliados')
+                time.sleep(1)
+                descricao_afiliados.send_keys(descricao)
                 break
         except Exception as e:
             print("Aguardando o campo 'descricao_afiliados' antes de clicar...")
@@ -155,14 +153,12 @@ def copiar_link_afiliado(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="affiliates"]/div[2]/div/div[2]/div/div/div[2]/div[10]/div/select'))
             )
             if duracao_cookies:
-                time.sleep(2)
                 duracao_cookies.click()
                 print("CLicando em duracao_cookies")
                 eterno = WebDriverWait(driver, 20).until(
                 EC.presence_of_element_located((By.XPATH, '//*[@id="affiliates"]/div[2]/div/div[2]/div/div/div[2]/div[10]/div/select/option[1]'))
             )
                 if eterno:
-                    time.sleep(2)
                     eterno.click()
                     print("Clicando em eterno")
                 break
@@ -177,7 +173,6 @@ def copiar_link_afiliado(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/div[18]/div[2]/button'))
             )
             if salvar_config_afiliados:
-                time.sleep(2)
                 salvar_config_afiliados.click()
                 print("CLicando em salvar_config_afiliados")
                 time.sleep(3)
@@ -193,10 +188,9 @@ def copiar_link_afiliado(driver, user_id):
                 EC.presence_of_element_located((By.XPATH, '//*[@id="affiliates"]/div[3]/div/div[2]/div/div/div/div[2]/span/button'))
             )
             if botao_copiar_link_afiliado:
-                time.sleep(2)
                 botao_copiar_link_afiliado.click()
                 print("CLicando em botao_copiar_link_afiliado")
-                time.sleep(3)
+                time.sleep(1)
                 botao_copiar_link_afiliado_copiado = pyperclip.paste()
 
                 #
