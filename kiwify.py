@@ -146,6 +146,3 @@ def kiwify_automation(driver, user_id):
 '''
 user_id, responses_file, output_file, tittle_file, formatted_name, name
 '''
-
-if __name__ == "__main__":
-    kiwify_automation('driver', user_id=1)
