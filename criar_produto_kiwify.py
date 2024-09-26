@@ -157,8 +157,20 @@ def criar_produto_kw(driver, user_id):
             )
             if criar_produto_final:
                 criar_produto_final.click()
-                print("CLicando em criar produto final")
+                print("Clicando em criar produto final")
+                time.sleep(2)  # Aguarda 2 segundos após clicar
+                try:
+                    # Verifica se o XPath de erro não aparece
+                    WebDriverWait(driver, 2).until(
+                        EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/header/h3'))
+                    )
+                    print("Erro ao continuar a criação do produto, tentando de novo")
+                    continue
+                except:
+                    print("Produto criado com sucesso ou erro não encontrado.")
+
                 break
+
         except Exception as e:
             print("Aguardando o botão 'criar produto final' antes de clicar...")
             time.sleep(2)
