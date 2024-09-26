@@ -1,5 +1,6 @@
-#Bibliotecas
-import time
+import tempfile
+import shutil
+import threading
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
@@ -13,11 +14,13 @@ from afiliado import copiar_link_afiliado
 from inserir_codigo_kiwify import inserir_codigo_kw
 from configuracoes_driver import ConfiguracoesDriver
 from send_email import send_email
-import tempfile
-import shutil
+import time
 
 # Instanciando as configurações
 configuracoes = ConfiguracoesDriver()
+
+# Lock para sincronizar o acesso ao perfil fixo
+profile_copy_lock = threading.Lock()
 
 # Função de automação para cada usuário
 def kiwify_automation(driver, user_id):
@@ -25,8 +28,10 @@ def kiwify_automation(driver, user_id):
     user_profile_path = r"C:\Users\Victor\AppData\Local\Google\Chrome for Testing\User Data\Default"
     # Cria um diretório temporário para o perfil da sessão de cada thread
     profile_dir = tempfile.mkdtemp()
-    # Copia o conteúdo da sessão fixa para o diretório temporário da thread
-    shutil.copytree(user_profile_path, profile_dir, dirs_exist_ok=True)
+    # Sincroniza a cópia do perfil para evitar concorrência entre threads
+    with profile_copy_lock:
+        print(f"Copiando perfil fixo para o diretório temporário para o usuário {user_id}")
+        shutil.copytree(user_profile_path, profile_dir, dirs_exist_ok=True)
 
     # Define as opções, parâmetros e adiciona o perfil temporário de usuário
     chrome_options = webdriver.ChromeOptions()
@@ -54,9 +59,9 @@ def kiwify_automation(driver, user_id):
 
         # Diminui o zoom da página para 90%
         driver.execute_script("document.body.style.zoom='90%'")
-        # Abre um navegador com a url passada do kiwify
+        # Abre o site do Kiwify
         driver.get('https://dashboard.kiwify.com.br/')
-        print(f"Abrindo o site")
+        print(f"Abrindo o site Kiwify para o usuário {user_id}")
 
         # Verifica se a url é a passada é igual a atual. Se for, chama a função e começa o processo de login no kiwify e depois abra uma nova aba com a outra url passada. Se não for, ignora tudo e passa direto.
         kiwify_login = "https://dashboard.kiwify.com.br/login?redirect=%2F"
@@ -65,15 +70,14 @@ def kiwify_automation(driver, user_id):
         if current_url_1 == kiwify_login:
             time.sleep(1)
             login_kw(driver)
-            print("Fazendo o login na kiwify")
+            print(f"Fazendo o login na Kiwify para o usuário {user_id}")
             driver.execute_script("window.open('');")
-            print("Abrindo uma nova aba")
+            print("Abrindo uma nova aba para o Gmail")
             time.sleep(1)
             driver.switch_to.window(driver.window_handles[1])
             driver.get("https://mail.google.com/")
-            print("Segunda aba aberta: Gmail")
         else:
-            print("Não foi preciso fazer o login no kiwify")
+            print("Já logado no Kiwify")
             pass
 
         # Verifica se a url passada é igual a atual. Se for, chama a função e faz o login. Se não, passa direto.
