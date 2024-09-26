@@ -23,10 +23,8 @@ configuracoes = ConfiguracoesDriver()
 def kiwify_automation(driver, user_id):
     # Define o local do perfil fixo onde a sessão está salva
     user_profile_path = r"C:\Users\Victor\AppData\Local\Google\Chrome for Testing\User Data\Default"
-
     # Cria um diretório temporário para o perfil da sessão de cada thread
     profile_dir = tempfile.mkdtemp()
-    
     # Copia o conteúdo da sessão fixa para o diretório temporário da thread
     shutil.copytree(user_profile_path, profile_dir, dirs_exist_ok=True)
 
@@ -58,50 +56,45 @@ def kiwify_automation(driver, user_id):
         driver.execute_script("document.body.style.zoom='90%'")
         # Abre um navegador com a url passada do kiwify
         driver.get('https://dashboard.kiwify.com.br/')
-        time.sleep(5)
         print(f"Abrindo o site")
 
         # Verifica se a url é a passada é igual a atual. Se for, chama a função e começa o processo de login no kiwify e depois abra uma nova aba com a outra url passada. Se não for, ignora tudo e passa direto.
         kiwify_login = "https://dashboard.kiwify.com.br/login?redirect=%2F"
-        time.sleep(2)
         current_url_1 = driver.current_url
         print(f"URL atual: {current_url_1}")
         if current_url_1 == kiwify_login:
+            time.sleep(1)
             login_kw(driver)
             print("Fazendo o login na kiwify")
-            time.sleep(3)
             driver.execute_script("window.open('');")
             print("Abrindo uma nova aba")
             time.sleep(1)
             driver.switch_to.window(driver.window_handles[1])
             driver.get("https://mail.google.com/")
             print("Segunda aba aberta: Gmail")
-            time.sleep(3)
         else:
             print("Não foi preciso fazer o login no kiwify")
             pass
 
         # Verifica se a url passada é igual a atual. Se for, chama a função e faz o login. Se não, passa direto.
         gmail_login = 'https://accounts.google.com/'
-        time.sleep(2)
         current_url_3 = driver.current_url
         print(f"URL atual: {current_url_3}")
         if gmail_login in current_url_3:
+            time.sleep(1)
             login_gm(driver)
             print("Fazendo o login no gmail")
-            time.sleep(3)
         else:
             print("Não foi preciso fazer o login no gmail para adquirir o código do kiwify")
             pass
 
         # Verifica se a url passada é igual a atual. Se for, chama a função para pegar o código que foi enviado para o login. Se não passa direto.
         gmail = 'https://mail.google.com/'
-        time.sleep(2)
         current_url_4 = driver.current_url
         print(f"URL atual: {current_url_4}")
         if gmail in current_url_4:
+            time.sleep(1)
             adq_codigo_kw(driver)
-            time.sleep(3)
             print("fechando a aba atual e voltando para a primeira aba")
             driver.close()
             time.sleep(1)
@@ -113,13 +106,12 @@ def kiwify_automation(driver, user_id):
 
         # Verifica se a url passada é igual a atual. Se for, verifica se o campo de verificação está presente, depois verifica o campo para inserir o código, clica e insere o código adquirido na função "adq_codigo_kw()"
         kiwify_verificacao = "https://dashboard.kiwify.com.br/verify-otp?redirect=%2F"
-        time.sleep(2)
         current_url_5 = driver.current_url
         print(f"URL atual: {current_url_5}")
         if current_url_5 == kiwify_verificacao:
+            time.sleep(1)
             inserir_codigo_kw(driver)
             print("Inserindo o código no login kiwify")
-            time.sleep(3)
         else:
             print("Não foi preciso fazer o login no kiwify")
             pass
@@ -130,7 +122,8 @@ def kiwify_automation(driver, user_id):
         kiwify_url = 'https://dashboard.kiwify.com.br/'
         current_url_6 = driver.current_url
         print(f"URL atual: {current_url_6}")
-        if kiwify_url in current_url_6: 
+        if kiwify_url in current_url_6:
+            time.sleep(1)
             print("Página inicial já logada.")
 
             criar_produto_kw(driver, user_id)
@@ -140,7 +133,7 @@ def kiwify_automation(driver, user_id):
             anexar_produto(driver, user_id)
             time.sleep(1)
             copiar_link_afiliado(driver, user_id)
-            time.sleep(5)
+            time.sleep(1)
 
     finally:
         if driver.session_id:
@@ -153,3 +146,6 @@ def kiwify_automation(driver, user_id):
 '''
 user_id, responses_file, output_file, tittle_file, formatted_name, name
 '''
+
+if __name__ == "__main__":
+    kiwify_automation('driver', user_id=1)
