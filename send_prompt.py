@@ -7,6 +7,8 @@ from selenium.webdriver.common.keys import Keys
 from prompt import get_initial_prompt, responses, tittle
 from selenium.common.exceptions import TimeoutException
 from threading import Lock
+from clear_caracters import remove_special_characters
+import os
 
 #
 mutex = Lock()
@@ -41,14 +43,14 @@ def send_text_with_line_breaks(input_field, text):
     input_field.send_keys(Keys.ENTER)
 
 #
-def refresh_page(driver, responses_file, tittle_file, output_file, name):
+def refresh_page(driver, responses_file, tittle_file, output_file, name, user_id):
     print("Atualizando a página e reiniciando o processo...")
     driver.refresh()
     time.sleep(5)
-    send_prompts(driver, responses_file, tittle_file, output_file, name)
+    send_prompts(driver, responses_file, tittle_file, output_file, name, user_id)
 
 #
-def send_prompts(driver, responses_file, tittle_file, output_file, name):
+def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id):
     def get_input_field():
         return WebDriverWait(driver, 30).until(
             EC.presence_of_element_located((By.XPATH, '//*[@id="prompt-textarea"]'))
@@ -79,7 +81,7 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name):
         except TimeoutException:
             print("Tempo limite esgotado para encontrar o button_copy_1. Atualizando a página...")
             time.sleep(1)
-            refresh_page(driver, responses_file, tittle_file, output_file, name)
+            refresh_page(driver, responses_file, tittle_file, output_file, name, user_id)
         except Exception as e:
             print(f"Erro ao encontrar o button_copy_1: {e}")
             time.sleep(1)
@@ -104,12 +106,12 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name):
         except TimeoutException:
             print("Tempo limite esgotado para encontrar o button_copy_2. Atualizando a página...")
             time.sleep(1)
-            refresh_page(driver, responses_file, tittle_file, output_file, name)
+            refresh_page(driver, responses_file, tittle_file, output_file, name, user_id)
         except Exception as e:
             print(f"Erro ao encontrar o button_copy_2: {e}")
             time.sleep(1)
 
-    #
+    # Trecho responsável por enviar o prompt que pega o capa do eBook com o Título e Autor, cortando também o texto para salvar também o título do eBook
     tittle_prompt = tittle(name)
     for i in range(0, len(tittle_prompt), 1000):
         input_field.send_keys(tittle_prompt[i:i + 1000])
@@ -126,14 +128,40 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name):
                 with mutex:
                     with open(tittle_file, "w", encoding="utf-8") as file:
                         file.write(copied_tittle)
+                        print(f"Título salvo em: {tittle_file}")
+
+                # Lê o conteúdo do arquivo salvo e remove caracteres especiais usando a nova função
+                with open(tittle_file, "r", encoding="utf-8") as file:
+                    saved_title = file.read()
+                cleaned_tittle = remove_special_characters(saved_title)
+
+                # Extrai o texto entre "Título:" e "Autor: e ajusta os índices para capturar apenas o conteúdo entre as palavras-chave"
+                start_keyword = "Título:"
+                end_keyword = "Autor:"
+                start_index = cleaned_tittle.find(start_keyword)
+                end_index = cleaned_tittle.find(end_keyword)
+                if start_index != -1 and end_index != -1:
+                    start_index += len(start_keyword)
+                    title_content = cleaned_tittle[start_index:end_index].strip()
+
+                    # Salva o conteúdo extraído em um novo arquivo na pasta users/user_id/
+                    user_folder = os.path.join("users", str(user_id))
+                    extracted_file_path = os.path.join(user_folder, 'name_product.txt')
+                    with open(extracted_file_path, "w", encoding="utf-8") as extra_file:
+                        extra_file.write(title_content)
+                        print(f"Conteúdo extraído salvo em: {extracted_file_path}")
+
+                else:
+                    print("Palavras-chave 'Título:' e 'Autor:' não encontradas no texto copiado.")
                 time.sleep(1)
                 break
+            
             else:
                 print("button_copy_3 não encontrado")
         except TimeoutException:
             print("Tempo limite esgotado para encontrar o button_copy_3. Atualizando a página...")
             time.sleep(1)
-            refresh_page(driver, responses_file, tittle_file, output_file, name)
+            refresh_page(driver, responses_file, tittle_file, output_file, name, user_id)
         except Exception as e:
             print(f"Erro ao encontrar o button_copy_3: {e}")
             time.sleep(1)
@@ -189,7 +217,7 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name):
                 
         except TimeoutException:
             print("Tempo limite esgotado para encontrar o button_copy_4. Atualizando a página...")
-            refresh_page(driver, responses_file, tittle_file, output_file, name)
+            refresh_page(driver, responses_file, tittle_file, output_file, name, user_id)
 
         except Exception as e:
             print(f"Erro inesperado durante a execução: {e}")

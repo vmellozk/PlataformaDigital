@@ -10,3 +10,9 @@ def clean_text(text):
         text = re.sub(r'\b' + re.escape(word) + r'\b', '', text, flags=re.IGNORECASE)
     text = re.sub(allowed_characters, '', text)
     return text
+
+def remove_special_characters(text):
+    # Remove caracteres especiais, mantendo letras, números e alguns caracteres permitidos
+    allowed_characters = r'[^A-Za-z0-9\s.,?!:;()+=/<>-áàâãéèêíìîóòôõúùûç]'
+    cleaned_text = re.sub(allowed_characters, '', text)
+    return cleaned_text

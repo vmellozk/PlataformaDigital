@@ -95,7 +95,7 @@ def chatgpt_response(driver, user_id, responses_file, output_file, tittle_file, 
         threading.Thread(target=continuously_check_errors, args=(driver, responses_file, tittle_file, name), daemon=True).start()
         
         print("Chamando send_prompts()")
-        send_prompts(driver, responses_file, tittle_file, output_file, name)
+        send_prompts(driver, responses_file, tittle_file, output_file, name, user_id)
         time.sleep(5)
 
     finally:
