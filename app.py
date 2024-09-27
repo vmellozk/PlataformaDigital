@@ -8,10 +8,14 @@ from configuracoes_driver import ConfiguracoesDriver
 from send_email import send_email
 from kiwify import kiwify_automation
 from selenium.common.exceptions import InvalidSessionIdException
+import os
 
 #
 app = Flask(__name__)
 app.secret_key = 'chave_secreta'
+
+#
+file_lock = threading.Lock()
 
 # Instancia a classe ConfiguracoesDriver
 configuracoes = ConfiguracoesDriver()
@@ -159,6 +163,8 @@ def submit():
     if 'user_id' in session:
         user_id = session['user_id']
 
+        # Pegue os dados do formulário, incluindo a categoria
+        categoria = request.form['categoria']
         data = (
             user_id,
             request.form['question1'],
@@ -177,9 +183,23 @@ def submit():
             print(f"Inserindo resposta do formulário: {data}")
             insert_survey_response(data)
 
+            # Criar a pasta do user_id, se não existir
+            user_folder_categoria = os.path.join("users", str(user_id))
+            os.makedirs(user_folder_categoria, exist_ok=True)
+
+            # Caminho do arquivo categoria.txt
+            file_path_categoria = os.path.join(user_folder_categoria, "categoria.txt")
+
+            # Usa o lock para garantir que a leitura e escrita do arquivo não interfira com outras threads
+            while file_lock:
+                with open(file_path_categoria, 'w', encoding='utf-8') as file:
+                    file.write(categoria)
+                print(f"Categoria '{categoria}' salva no arquivo para o user_id {user_id}")
+                break
+
             # Verifica se há uma vaga disponível
             if configuracoes.tab_semaphore.acquire(blocking=False):
-                # Se uma vaga está disponível, processa imediatamente
+                # Processa imediatamente
                 flash('Formulário enviado com sucesso! Aguarde o eBook gerado.', 'success')
                 print(f'Aba aberta para o usuário {user_id}')
                 
@@ -190,7 +210,7 @@ def submit():
 
                 threading.Thread(target=process).start()
             else:
-                # Se todas as abas estão ocupadas, adiciona à fila
+                # Adiciona à fila de espera
                 flash('A fila de abas está cheia. Sua solicitação foi adicionada à fila de espera.', 'warning')
                 print(f"Solicitação do usuário {user_id} adicionada à fila de espera.")
                 configuracoes.task_queue.put(user_id)
@@ -198,7 +218,7 @@ def submit():
         except Exception as e:
             print(f"Erro durante a submissão do formulário ou geração do eBook: {e}")
             flash('Houve um erro ao enviar o formulário. Tente novamente ou entre em contato.', 'warning')
-        
+
         return redirect(url_for('home'))
 
     return redirect(url_for('login'))
