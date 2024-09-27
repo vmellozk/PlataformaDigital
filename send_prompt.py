@@ -211,7 +211,7 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
                     with open(output_file, "w", encoding="utf-8") as file:
                         file.write(copied_text)
 
-                '''# Lê o conteúdo do arquivo output_file
+                # Lê o conteúdo do arquivo output_file
                 with open(output_file, "r", encoding="utf-8") as file:
                     output_content = file.read()
 
@@ -235,9 +235,20 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
                         desc_file.write(description_content)
                         print(f"Conteúdo extraído salvo em: {description_file_path}")
                 else:
-                    print("Palavras-chave 'Introdução' e 'Sumário' não encontradas no texto copiado.")'''
+                    print("Palavras-chave 'Introdução' e 'Sumário' não encontradas no texto copiado.")
 
                 time.sleep(1)
+
+                #
+                driver.refresh()
+                time.sleep(5)
+                with open(description_file_path, "r", encoding="utf-8") as descricao:
+                    descricao_kiwify = descricao.read()  
+                input_field.send_keys("Resuma esse texto para a descrição de um eBook, escrevendo como se fosse o usuário, com no máximo 500 caracteres: ", descricao_kiwify)
+                time.sleep(1)
+                input_field.send_keys(Keys.ENTER)
+                time.sleep(5000000)
+
                 break
             else:
                 print("button_copy_4 não encontrado")
