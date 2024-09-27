@@ -167,7 +167,7 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
             time.sleep(1)
 
     #
-    confirmacao = 'OK, agora me forneça o restante do conteúdo. Faça com que seja algo mais pessoal, abordando as respostas e, em alguns momentos em primeira pessoa, mas mantendo o profissionalismo. Lembrando da hash antes de: ####Introdução, ####Sumário, ####Conteúdo e ####Conclusão. Forneça esses tópicos assim e tudo em um único texto! Lembrando que quanto mais conteúdo foi fornecido de resposta, mais conteúdo será gerado. Apenas responda o que foi pedido, sem "essa foi a resposta, se precisar de mais..." não quero nada disso. Triplique o tamanho do conteúdo do ebook para cada tópico. Ou seja, me dê 3x mais de conteúdo para cada tópico do ebook do que o normal, tornando o ebook completo.'
+    confirmacao = 'OK, agora me forneça o restante do conteúdo. A introdução deve ser feita para ser utilizada como introdução e como descrição do conteúdo/eBook. Faça com que seja algo mais pessoal, abordando as respostas e, em alguns momentos em primeira pessoa, mas mantendo o profissionalismo. Lembrando da hash antes de: ####Introdução, ####Sumário, ####Conteúdo e ####Conclusão. Forneça esses tópicos assim e tudo em um único texto! Lembrando que quanto mais conteúdo foi fornecido de resposta, mais conteúdo será gerado. Apenas responda o que foi pedido, sem "essa foi a resposta, se precisar de mais..." não quero nada disso. Triplique o tamanho do conteúdo do ebook para cada tópico. Ou seja, me dê 3x mais de conteúdo para cada tópico do ebook do que o normal, tornando o ebook completo.'
     input_field.send_keys(confirmacao)
     time.sleep(1)
     input_field.send_keys(Keys.ENTER)
@@ -210,6 +210,33 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
                 with mutex:
                     with open(output_file, "w", encoding="utf-8") as file:
                         file.write(copied_text)
+
+                '''# Lê o conteúdo do arquivo output_file
+                with open(output_file, "r", encoding="utf-8") as file:
+                    output_content = file.read()
+
+                # Lógica para cortar o conteúdo entre "Introdução" e "Sumário"
+                start_keyword = "Introdução"
+                end_keyword = "Sumário"
+                start_index = output_content.find(start_keyword)
+                end_index = output_content.find(end_keyword)
+
+                # Verifica se as palavras-chave foram encontradas
+                if start_index != -1 and end_index != -1:
+                    # Ajusta os índices para capturar apenas o conteúdo entre as palavras-chave
+                    start_index += len(start_keyword)
+                    description_content = output_content[start_index:end_index].strip()
+
+                    # Salva o conteúdo extraído em um novo arquivo
+                    user_folder = os.path.join("users", str(user_id))
+                    description_file_path = os.path.join(user_folder, "descricao_product.txt")
+                    
+                    with open(description_file_path, "w", encoding="utf-8") as desc_file:
+                        desc_file.write(description_content)
+                        print(f"Conteúdo extraído salvo em: {description_file_path}")
+                else:
+                    print("Palavras-chave 'Introdução' e 'Sumário' não encontradas no texto copiado.")'''
+
                 time.sleep(1)
                 break
             else:
