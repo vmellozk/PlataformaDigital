@@ -210,55 +210,113 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
                 with mutex:
                     with open(output_file, "w", encoding="utf-8") as file:
                         file.write(copied_text)
-
-                # Lê o conteúdo do arquivo output_file
-                with open(output_file, "r", encoding="utf-8") as file:
-                    output_content = file.read()
-
-                # Lógica para cortar o conteúdo entre "Introdução" e "Sumário"
-                start_keyword = "Introdução"
-                end_keyword = "Sumário"
-                start_index = output_content.find(start_keyword)
-                end_index = output_content.find(end_keyword)
-
-                # Verifica se as palavras-chave foram encontradas
-                if start_index != -1 and end_index != -1:
-                    # Ajusta os índices para capturar apenas o conteúdo entre as palavras-chave
-                    start_index += len(start_keyword)
-                    description_content = output_content[start_index:end_index].strip()
-
-                    # Salva o conteúdo extraído em um novo arquivo
-                    user_folder = os.path.join("users", str(user_id))
-                    description_file_path = os.path.join(user_folder, "descricao_product.txt")
-                    
-                    with open(description_file_path, "w", encoding="utf-8") as desc_file:
-                        desc_file.write(description_content)
-                        print(f"Conteúdo extraído salvo em: {description_file_path}")
-                else:
-                    print("Palavras-chave 'Introdução' e 'Sumário' não encontradas no texto copiado.")
-
                 time.sleep(1)
-
-                #
-                driver.refresh()
-                time.sleep(5)
-                with open(description_file_path, "r", encoding="utf-8") as descricao:
-                    descricao_kiwify = descricao.read()  
-                input_field.send_keys("Resuma esse texto para a descrição de um eBook, escrevendo como se fosse o usuário, com no máximo 500 caracteres: ", descricao_kiwify)
-                time.sleep(1)
-                input_field.send_keys(Keys.ENTER)
-                time.sleep(5000000)
-
                 break
             else:
                 print("button_copy_4 não encontrado")
-                
+
         except TimeoutException:
             print("Tempo limite esgotado para encontrar o button_copy_4. Atualizando a página...")
             refresh_page(driver, responses_file, tittle_file, output_file, name, user_id)
 
         except Exception as e:
             print(f"Erro inesperado durante a execução: {e}")
+
+    #
+    while True:
+        try:
+            # Lê o conteúdo do arquivo output_file
+            with open(output_file, "r", encoding="utf-8") as file:
+                output_content = file.read()
+
+            # Lógica para cortar o conteúdo entre "Introdução" e "Sumário"
+            start_keyword = "Introdução"
+            end_keyword = "Sumário"
+            start_index = output_content.find(start_keyword)
+            end_index = output_content.find(end_keyword)
+
+            # Verifica se as palavras-chave foram encontradas
+            if start_index != -1 and end_index != -1:
+                # Ajusta os índices para capturar apenas o conteúdo entre as palavras-chave
+                start_index += len(start_keyword)
+                description_content = output_content[start_index:end_index].strip()
+
+                # Salva o conteúdo extraído em um novo arquivo
+                user_folder = os.path.join("users", str(user_id))
+                description_file_path = os.path.join(user_folder, "descricao.txt")
+                
+                with open(description_file_path, "w", encoding="utf-8") as desc_file:
+                    desc_file.write(description_content)
+                    print(f"Conteúdo extraído salvo em: {description_file_path}")
+
+            else:
+                print("Palavras-chave 'Introdução' e 'Sumário' não encontradas no texto copiado.")
+
+            #
+            with open(description_file_path, "r", encoding="utf-8") as descricao:
+                descricao_kiwify = descricao.read()
+
+            input_field.click()
+            input_field.send_keys("Reescreva a introdução como uma descrição para usar num site de vendas, NÃO ULTRAPASSANDO 480 caracteres, tem que ser abaixo de 480 caracteres contando com pontuações e espaços. Escrever como se fosse o usuário. Não fornecer mais de 480 caracteres.", descricao_kiwify)
+            time.sleep(1)
+            input_field.send_keys(Keys.ENTER)
+            break
+
+        except Exception as e:
+            print("erro")
+    
+    #
+    while True:
+        try:
+            arrow_botton = WebDriverWait(driver, 60).until(
+                EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/main/div[1]/div[1]/div/div/div/div/button'))
+            )
+            if arrow_botton:
+                print("arrow_botton encontrado")
+                time.sleep(2)
+                arrow_botton.click()
+            else:
+                print("arrow_botton não encontrado")
+        except TimeoutException:
+                pass
+
+        try:
+            button_copy_5 = WebDriverWait(driver, 120).until(
+                EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[10]/div/div/div[2]/div/div[2]/div/div[2]/span[1]/button'))
+            )
+            if button_copy_5:
+                print("button_copy_5 encontrado")
+                
+                # Copia o conteúdo clicando no botão
+                time.sleep(1)
+                desc_text = copy_text(driver, '/html/body/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[10]/div/div/div[2]/div/div[2]/div/div[2]/span[1]/button')
+                time.sleep(3)
+                
+                # Define o arquivo correto para salvar o conteúdo (exemplo: descricao_product.txt)
+                user_folder = os.path.join("users", str(user_id))  # Define o caminho do diretório do usuário
+                description_file_path = os.path.join(user_folder, "descricao_product.txt")  # Define o nome do arquivo de descrição
+
+                # Usa o mutex para garantir a escrita correta no arquivo
+                with mutex:
+                    with open(description_file_path, "w", encoding="utf-8") as file:
+                        file.write(desc_text)  # Salva o conteúdo copiado no arquivo correto
+                        print(f"Conteúdo copiado salvo em: {description_file_path}")
+                
+                time.sleep(1)
+                # Caminho para o arquivo descricao.txt
+                descricao_txt_path = os.path.join(user_folder, "descricao.txt")
+                if os.path.exists(descricao_txt_path):
+                    os.remove(descricao_txt_path)
+                    print(f"Arquivo {descricao_txt_path} removido com sucesso.")
+                else:
+                    print(f"Arquivo {descricao_txt_path} não encontrado.")
+
+                break
+            else:
+                print("Erro: button_copy_5 não encontrado")
+
+        except Exception as e:
+            print(f"Erro inesperado ao copiar e salvar o texto do button_copy_5: {e}")
 
 '''
 Variações dos elementos iteráveis:
