@@ -173,32 +173,35 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
     input_field.send_keys(Keys.ENTER)
     while True:
         try:
-            arrow_botton = WebDriverWait(driver, 60).until(
+            arrow_botton = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/main/div[1]/div[1]/div/div/div/div/button'))
             )
             if arrow_botton:
                 print("arrow_botton encontrado")
                 time.sleep(2)
                 arrow_botton.click()
+                break
             else:
                 print("arrow_botton não encontrado")
         except TimeoutException:
             pass
 
+    while True:
         try:
-            keep_generate = WebDriverWait(driver, 60).until(
+            keep_generate = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/main/div[1]/div[2]/div/div[1]/div/form/div/div[1]/div/div/div/div/button'))
             )
             if keep_generate:
                 print("keep_generate encontrado")
                 time.sleep(2)
                 keep_generate.click()
+                break
             else:
                 print("keep_generate não encontrado")
         except TimeoutException:
             pass
 
-        #
+    while True:
         try:
             button_copy_4 = WebDriverWait(driver, 120).until(
                 EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span[1]/button'))
