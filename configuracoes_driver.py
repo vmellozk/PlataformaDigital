@@ -72,8 +72,18 @@ class ConfiguracoesDriver:
                 print("As versões do Chrome e do ChromeDriver estão compatíveis.")
             else:
                 print("As versões do Chrome e do ChromeDriver não estão compatíveis.")
+                self.update_chrome()  # Atualiza o Chrome se houver incompatibilidade
         else:
             print("Não foi possível comparar as versões.")
+
+    #
+    def update_chrome(self):
+        print("Atualizando o Google Chrome...")
+        try:
+            subprocess.run(["winget", "install", "--id=Google.Chrome"], check=True)
+            print("Google Chrome atualizado com sucesso.")
+        except subprocess.CalledProcessError as e:
+            print(f"Erro ao atualizar o Google Chrome: {e}")
 
     #
     def create_driver(self):
