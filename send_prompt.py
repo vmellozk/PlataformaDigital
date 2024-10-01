@@ -9,9 +9,46 @@ from selenium.common.exceptions import TimeoutException
 from threading import Lock
 from clear_caracters import remove_special_characters
 import os
+import threading
 
 #
 mutex = Lock()
+
+#
+# Flags de controle para encerrar os loops
+arrow_button_clicked = threading.Event()
+keep_generate_clicked = threading.Event()
+
+#
+def monitor_arrow_button(driver):
+    while not arrow_button_clicked.is_set():
+        try:
+            arrow_button = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/main/div[1]/div[1]/div/div/div/div/button'))
+            )
+            if arrow_button:
+                print("arrow_button encontrado")
+                time.sleep(2)
+                arrow_button.click()
+                arrow_button_clicked.set()  # Sinaliza que o botão foi clicado
+                break
+        except TimeoutException:
+            pass
+
+def monitor_keep_generate(driver):
+    while not keep_generate_clicked.is_set():
+        try:
+            keep_generate = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/main/div[1]/div[2]/div/div[1]/div/form/div/div[1]/div/div/div/div/button'))
+            )
+            if keep_generate:
+                print("keep_generate encontrado")
+                time.sleep(2)
+                keep_generate.click()
+                keep_generate_clicked.set()  # Sinaliza que o botão foi clicado
+                break
+        except TimeoutException:
+            pass
 
 #
 def copy_text(driver, button_xpath):
@@ -171,35 +208,13 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
     input_field.send_keys(confirmacao)
     time.sleep(1)
     input_field.send_keys(Keys.ENTER)
-    while True:
-        try:
-            arrow_botton = WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/main/div[1]/div[1]/div/div/div/div/button'))
-            )
-            if arrow_botton:
-                print("arrow_botton encontrado")
-                time.sleep(2)
-                arrow_botton.click()
-                break
-            else:
-                print("arrow_botton não encontrado")
-        except TimeoutException:
-            pass
 
-    while True:
-        try:
-            keep_generate = WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/main/div[1]/div[2]/div/div[1]/div/form/div/div[1]/div/div/div/div/button'))
-            )
-            if keep_generate:
-                print("keep_generate encontrado")
-                time.sleep(2)
-                keep_generate.click()
-                break
-            else:
-                print("keep_generate não encontrado")
-        except TimeoutException:
-            pass
+    # Iniciar threads para monitorar os botões
+    arrow_button_thread = threading.Thread(target=monitor_arrow_button, args=(driver,))
+    keep_generate_thread = threading.Thread(target=monitor_keep_generate, args=(driver,))
+
+    arrow_button_thread.start()
+    keep_generate_thread.start()
 
     while True:
         try:
@@ -320,6 +335,10 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
 
         except Exception as e:
             print(f"Erro inesperado ao copiar e salvar o texto do button_copy_5: {e}")
+
+    # Espera que as threads terminem antes de continuar
+    arrow_button_thread.join()
+    keep_generate_thread.join()
 
 '''
 Variações dos elementos iteráveis:
