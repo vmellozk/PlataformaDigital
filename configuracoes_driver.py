@@ -1,13 +1,12 @@
-#
 import threading
 import queue
 from dotenv import load_dotenv
 import os
+import subprocess
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 import undetected_chromedriver as uc
 
-#
 class ConfiguracoesDriver:
     def __init__(self):
         # Carrega as variáveis de ambiente
@@ -42,6 +41,41 @@ class ConfiguracoesDriver:
         self.window_height = 540
 
     #
+    def get_chrome_version(self):
+        try:
+            version = subprocess.check_output(
+                r'"C:\Program Files\Google\Chrome\Application\chrome.exe" --version',  # Note as aspas
+                stderr=subprocess.STDOUT,
+                shell=True
+            ).decode('utf-8')
+            print(f"Versão do Chrome: {version.strip()}")
+            return version.strip().split()[2]  # Retorna apenas a versão, que é o terceiro elemento
+        except Exception as e:
+            print(f"Erro ao obter a versão do Chrome: {e}")
+            return None
+
+    #
+    def get_chromedriver_version(self):
+        try:
+            driver_path = ChromeDriverManager().install()  # Instala e obtém o caminho do ChromeDriver
+            version = driver_path.split("\\")[-1]  # Extrai a versão do caminho
+            print(f"Versão do ChromeDriver: {version}")
+            return version
+        except Exception as e:
+            print(f"Erro ao obter a versão do ChromeDriver: {e}")
+            return None
+
+    #
+    def compare_versions(self, chrome_version, chromedriver_version):
+        if chrome_version and chromedriver_version:
+            if chrome_version.startswith(chromedriver_version):
+                print("As versões do Chrome e do ChromeDriver estão compatíveis.")
+            else:
+                print("As versões do Chrome e do ChromeDriver não estão compatíveis.")
+        else:
+            print("Não foi possível comparar as versões.")
+
+    #
     def create_driver(self):
         chrome_options = uc.ChromeOptions()
         chrome_options.add_argument("--disable-infobars")
@@ -66,3 +100,10 @@ class ConfiguracoesDriver:
     #
     def release_position(self, position_index):
         self.occupied_positions[position_index] = False
+
+# Teste das funções de versão
+if __name__ == "__main__":
+    config_driver = ConfiguracoesDriver()
+    chrome_version = config_driver.get_chrome_version()
+    chromedriver_version = config_driver.get_chromedriver_version()
+    config_driver.compare_versions(chrome_version, chromedriver_version)
