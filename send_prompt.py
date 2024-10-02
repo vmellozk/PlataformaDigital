@@ -336,6 +336,10 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
         except Exception as e:
             print(f"Erro inesperado ao copiar e salvar o texto do button_copy_5: {e}")
 
+    # Finalizando as threads
+    arrow_button_clicked.set()
+    keep_generate_clicked.set()
+    
     # Espera que as threads terminem antes de continuar
     arrow_button_thread.join()
     keep_generate_thread.join()
