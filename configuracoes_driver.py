@@ -110,10 +110,3 @@ class ConfiguracoesDriver:
     #
     def release_position(self, position_index):
         self.occupied_positions[position_index] = False
-
-# Teste das funções de versão
-if __name__ == "__main__":
-    config_driver = ConfiguracoesDriver()
-    chrome_version = config_driver.get_chrome_version()
-    chromedriver_version = config_driver.get_chromedriver_version()
-    config_driver.compare_versions(chrome_version, chromedriver_version)
