@@ -97,3 +97,28 @@ def handle_error(driver, responses_file, output_file, tittle_file, name, user_id
 
     except Exception as e:
         pass
+
+# Função para verificar se o botão "Gerar novamente" apareceu para interagir com ele
+def gerar_novamente(driver):
+    try:
+        # Espera até que o elemento esteja presente com a classe especificada
+        gerar_texto_novamente = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, 'div.flex.w-full.items-center.justify-center.gap-1.5'))
+        )
+        if gerar_texto_novamente:
+            print("Elemento HTML 'div' encontrado.")
+            
+            # Agora, tenta encontrar o link com o texto 'Gerar novamente'
+            text_gerar_novamente = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.LINK_TEXT, "Gerar novamente"))
+            )
+            if text_gerar_novamente:
+                time.sleep(1)
+                text_gerar_novamente.click()
+                print("Link 'Gerar novamente' encontrado e clicado.")
+                time.sleep(1)
+                return True
+
+        return False
+    except Exception as e:
+        pass
