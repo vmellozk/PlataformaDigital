@@ -275,7 +275,7 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
                 descricao_kiwify = descricao.read()
 
             input_field.click()
-            input_field.send_keys("Reescreva a introdução como uma descrição para usar num site de vendas, NÃO ULTRAPASSANDO 480 caracteres, tem que ser abaixo de 480 caracteres contando com pontuações e espaços. Escrever como se fosse o usuário. Não fornecer mais de 480 caracteres.", descricao_kiwify)
+            input_field.send_keys("Reescreva a introdução como uma descrição para usar num site de vendas, NÃO ULTRAPASSANDO 400 caracteres, tem que ser abaixo de 400 caracteres contando com pontuações e espaços. Escrever como se fosse o usuário. Não ultrapasse 400 caracteres na resposta.", descricao_kiwify)
             time.sleep(1)
             input_field.send_keys(Keys.ENTER)
             break
