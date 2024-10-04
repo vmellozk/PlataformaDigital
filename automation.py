@@ -4,7 +4,7 @@ import psutil
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from handling_error import click_element_if_found, handle_error
+from handling_error import click_element_if_found, handle_error, gerar_novamente
 from send_prompt import send_prompts
 import os
 
@@ -28,6 +28,16 @@ def continuously_check_errors(driver, responses_file, tittle_file, name):
         try:
             handle_error(driver, responses_file, tittle_file, name)
             time.sleep(10)
+        except Exception as e:
+            pass
+        time.sleep(2)
+
+# Função para verificar o botão "Gerar novamente e clicar nele"
+def continuosly_check_gerar_novamente(driver):
+    while True:
+        try:
+            gerar_novamente(driver)
+            time.sleep(7)
         except Exception as e:
             pass
         time.sleep(2)
@@ -93,6 +103,7 @@ def chatgpt_response(driver, user_id, responses_file, output_file, tittle_file, 
         time.sleep(1)
         threading.Thread(target=continuously_check_elements, args=(driver,), daemon=True).start()
         threading.Thread(target=continuously_check_errors, args=(driver, responses_file, tittle_file, name), daemon=True).start()
+        threading.Thread(target=continuosly_check_gerar_novamente, args=(driver,), daemon=True).start()
         
         print("Chamando send_prompts()")
         send_prompts(driver, responses_file, tittle_file, output_file, name, user_id)
