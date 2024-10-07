@@ -18,7 +18,6 @@ mutex = Lock()
 # Flags de controle para encerrar os loops
 arrow_button_clicked = threading.Event()
 keep_generate_clicked = threading.Event()
-gerar_novamente_clicked = threading.Event()
 
 #
 def monitor_arrow_button(driver):
@@ -36,7 +35,6 @@ def monitor_arrow_button(driver):
         except TimeoutException:
             pass
 
-#
 def monitor_keep_generate(driver):
     while not keep_generate_clicked.is_set():
         try:
@@ -48,22 +46,6 @@ def monitor_keep_generate(driver):
                 time.sleep(2)
                 keep_generate.click()
                 keep_generate_clicked.set()  # Sinaliza que o botão foi clicado
-                break
-        except TimeoutException:
-            pass
-
-#
-def monitor_gerar_novamente(driver):
-    while not gerar_novamente_clicked.is_set():
-        try:
-            gerar_novamente = WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div[2]/main/div[1]/div[2]/div/div[1]/div[2]/button/div'))
-            )
-            if gerar_novamente:
-                print("Botão de erro encontrado, gerando o texto novamente")
-                time.sleep(2)
-                gerar_novamente.click()
-                gerar_novamente_clicked.set()
                 break
         except TimeoutException:
             pass
@@ -230,20 +212,32 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
     # Iniciar threads para monitorar os botões
     arrow_button_thread = threading.Thread(target=monitor_arrow_button, args=(driver,))
     keep_generate_thread = threading.Thread(target=monitor_keep_generate, args=(driver,))
-    gerar_novamente_thread = threading.Thread(target=monitor_gerar_novamente, args=(driver,))
 
     arrow_button_thread.start()
     keep_generate_thread.start()
-    gerar_novamente_thread.start()
 
     while True:
+        try:
+            keep_generate = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/main/div[1]/div[2]/div/div[1]/div/form/div/div[1]/div/div/div/div/button'))
+            )
+            if keep_generate:
+                print("keep_generate encontrado")
+                time.sleep(2)
+                keep_generate.click()
+            else:
+                print("keep_generate não encontrado")
+        except TimeoutException:
+            pass
+            time.sleep(2)
+
         try:
             button_copy_4 = WebDriverWait(driver, 120).until(
                 EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span[1]/button'))
             )
             if button_copy_4:
                 print("button_copy_4 encontrado")
-                time.sleep(2)
+                time.sleep(10)
                 copied_text = copy_text(driver, '/html/body/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span[1]/button')
                 with mutex:
                     with open(output_file, "w", encoding="utf-8") as file:
@@ -317,16 +311,16 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
                 print("arrow_botton não encontrado")
         except TimeoutException:
                 pass
-        
+
         try:
             button_copy_5 = WebDriverWait(driver, 120).until(
-                EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[10]/div/div/div[2]/div/div[2]/div/div[2]/span[1]/button'))
+                EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[10]/div/div/div[2]/div/div[2]/div/div[2]/span[1]/button'))
             )
             if button_copy_5:
                 print("button_copy_5 encontrado")
                 
                 # Copia o conteúdo clicando no botão
-                time.sleep(2)
+                time.sleep(1)
                 desc_text = copy_text(driver, '/html/body/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[10]/div/div/div[2]/div/div[2]/div/div[2]/span[1]/button')
                 time.sleep(3)
                 
@@ -359,12 +353,10 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
     # Finalizando as threads
     arrow_button_clicked.set()
     keep_generate_clicked.set()
-    gerar_novamente_clicked.set()
     
     # Espera que as threads terminem antes de continuar
     arrow_button_thread.join()
     keep_generate_thread.join()
-    gerar_novamente_thread.join()
 
 '''
 Variações dos elementos iteráveis:
