@@ -18,6 +18,7 @@ mutex = Lock()
 # Flags de controle para encerrar os loops
 arrow_button_clicked = threading.Event()
 keep_generate_clicked = threading.Event()
+gerar_novamente_clicked = threading.Event()
 
 #
 def monitor_arrow_button(driver):
@@ -35,6 +36,7 @@ def monitor_arrow_button(driver):
         except TimeoutException:
             pass
 
+#
 def monitor_keep_generate(driver):
     while not keep_generate_clicked.is_set():
         try:
@@ -46,6 +48,22 @@ def monitor_keep_generate(driver):
                 time.sleep(2)
                 keep_generate.click()
                 keep_generate_clicked.set()  # Sinaliza que o botão foi clicado
+                break
+        except TimeoutException:
+            pass
+
+#
+def monitor_gerar_novamente(driver):
+    while not gerar_novamente_clicked.is_set():
+        try:
+            gerar_novamente = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div[2]/main/div[1]/div[2]/div/div[1]/div[2]/button/div'))
+            )
+            if gerar_novamente:
+                print("Botão de erro encontrado, gerando o texto novamente")
+                time.sleep(2)
+                gerar_novamente.click()
+                gerar_novamente_clicked.set()
                 break
         except TimeoutException:
             pass
@@ -212,9 +230,11 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
     # Iniciar threads para monitorar os botões
     arrow_button_thread = threading.Thread(target=monitor_arrow_button, args=(driver,))
     keep_generate_thread = threading.Thread(target=monitor_keep_generate, args=(driver,))
+    gerar_novamente_thread = threading.Thread(target=monitor_gerar_novamente, args=(driver,))
 
     arrow_button_thread.start()
     keep_generate_thread.start()
+    gerar_novamente_thread.start()
 
     while True:
         try:
@@ -339,10 +359,12 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
     # Finalizando as threads
     arrow_button_clicked.set()
     keep_generate_clicked.set()
+    gerar_novamente_clicked.set()
     
     # Espera que as threads terminem antes de continuar
     arrow_button_thread.join()
     keep_generate_thread.join()
+    gerar_novamente_thread.join()
 
 '''
 Variações dos elementos iteráveis:
