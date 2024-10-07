@@ -161,16 +161,16 @@ def criar_produto_kw(driver, user_id):
                 time.sleep(2)  # Aguarda 2 segundos após clicar
                 try:
                     # Verifica se o XPath de erro não aparece
-                    WebDriverWait(driver, 2).until(
+                    WebDriverWait(driver, 5).until(
                         EC.presence_of_element_located((By.XPATH, '//*[@id="__layout"]/div/div[1]/div[4]/div[3]/main/div[2]/div[2]/div/header/h3'))
                     )
-                    print("Erro ao continuar a criação do produto, tentando de novo")
-                    continue
-                except:
-                    print("Produto criado com sucesso ou erro não encontrado.")
+                    print("Erro detectado, pode continuar o código")
+                    break  # Encerra o loop se o erro for detectado
 
-                break
+                except:
+                    print("Erro não detectado, tentando novamente...")
+                    continue  # Se não encontrar o erro, volta para o loop e tenta de novo
 
         except Exception as e:
-            print("Aguardando o botão 'criar produto final' antes de clicar...")
+            print("Aguardando o botão 'criar produto final' antes de clicar novamente...")
             time.sleep(2)
