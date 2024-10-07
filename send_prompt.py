@@ -98,13 +98,6 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
     with open(responses_file, 'r', encoding='utf-8') as file:
         responses_text = file.read()
 
-    # Iniciar threads para monitorar os botões
-    arrow_button_thread = threading.Thread(target=monitor_arrow_button, args=(driver,))
-    keep_generate_thread = threading.Thread(target=monitor_keep_generate, args=(driver,))
-
-    arrow_button_thread.start()
-    keep_generate_thread.start()
-
     #
     full_prompt = get_initial_prompt()
     for i in range(0, len(full_prompt), 5000):
@@ -215,6 +208,14 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
     input_field.send_keys(confirmacao)
     time.sleep(1)
     input_field.send_keys(Keys.ENTER)
+
+    # Iniciar threads para monitorar os botões
+    arrow_button_thread = threading.Thread(target=monitor_arrow_button, args=(driver,))
+    keep_generate_thread = threading.Thread(target=monitor_keep_generate, args=(driver,))
+
+    arrow_button_thread.start()
+    keep_generate_thread.start()
+
     while True:
         try:
             button_copy_4 = WebDriverWait(driver, 120).until(
