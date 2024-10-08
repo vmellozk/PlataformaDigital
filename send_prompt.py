@@ -22,6 +22,7 @@ keep_generate_clicked = threading.Event()
 #
 def monitor_arrow_button(driver):
     while not arrow_button_clicked.is_set():
+    #while True:
         try:
             arrow_button = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/main/div[1]/div[1]/div/div/div/div/button'))
@@ -283,15 +284,17 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
 
             else:
                 print("Palavras-chave 'Introdução' e 'Sumário' não encontradas no texto copiado.")
+                pass
 
             #
             with open(description_file_path, "r", encoding="utf-8") as descricao:
                 descricao_kiwify = descricao.read()
 
             input_field.click()
-            input_field.send_keys("Reescreva a introdução como uma descrição para usar num site de vendas, NÃO ULTRAPASSANDO 400 caracteres, tem que ser abaixo de 400 caracteres contando com pontuações e espaços. Escrever como se fosse o usuário. Não ultrapasse 400 caracteres na resposta.", descricao_kiwify)
             time.sleep(1)
-            input_field.send_keys(Keys.ENTER)
+            input_field.send_keys("Reescreva a introdução como uma descrição para usar num site de vendas, NÃO ULTRAPASSANDO 400 caracteres, tem que ser abaixo de 400 caracteres contando com pontuações e espaços. Escrever como se fosse o usuário. Não ultrapasse 400 caracteres na resposta.", descricao_kiwify)
+            time.sleep(5)
+            #input_field.send_keys(Keys.ENTER)
             break
 
         except Exception as e:
@@ -300,7 +303,7 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
     #
     while True:
         try:
-            arrow_botton = WebDriverWait(driver, 60).until(
+            arrow_botton = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/main/div[1]/div[1]/div/div/div/div/button'))
             )
             if arrow_botton:
@@ -310,9 +313,15 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
             else:
                 print("arrow_botton não encontrado")
         except TimeoutException:
-                pass
+            pass
 
         try:
+            # Simular o comportamento de pressionar as teclas Home e End para ajudar a localizar o botão
+            driver.find_element(By.TAG_NAME, "body").send_keys(Keys.HOME)  # Pressiona Home para rolar até o topo
+            time.sleep(2)  # Aguardar para simular o movimento
+            driver.find_element(By.TAG_NAME, "body").send_keys(Keys.END)  # Pressiona End para rolar até o final
+            time.sleep(2)  # Aguardar novamente
+
             button_copy_5 = WebDriverWait(driver, 120).until(
                 EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[10]/div/div/div[2]/div/div[2]/div/div[2]/span[1]/button'))
             )
@@ -322,7 +331,7 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
                 # Copia o conteúdo clicando no botão
                 time.sleep(1)
                 desc_text = copy_text(driver, '/html/body/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[10]/div/div/div[2]/div/div[2]/div/div[2]/span[1]/button')
-                time.sleep(3)
+                time.sleep(5)
                 
                 # Define o arquivo correto para salvar o conteúdo (exemplo: descricao_product.txt)
                 user_folder = os.path.join("users", str(user_id))  # Define o caminho do diretório do usuário
@@ -353,7 +362,7 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
     # Finalizando as threads
     arrow_button_clicked.set()
     keep_generate_clicked.set()
-    
+
     # Espera que as threads terminem antes de continuar
     arrow_button_thread.join()
     keep_generate_thread.join()
