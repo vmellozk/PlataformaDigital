@@ -233,6 +233,9 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
             time.sleep(2)
 
         try:
+            driver.find_element(By.TAG_NAME, "body").send_keys(Keys.END)  # Pressiona End para rolar até o final
+            time.sleep(2)  # Aguardar novamente
+            
             button_copy_4 = WebDriverWait(driver, 120).until(
                 EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[8]/div/div/div[2]/div/div[2]/div/div/span[1]/button'))
             )
@@ -303,6 +306,12 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
     #
     while True:
         try:
+            # Simular o comportamento de pressionar as teclas Home e End para ajudar a localizar o botão
+            driver.find_element(By.TAG_NAME, "body").send_keys(Keys.HOME)  # Pressiona Home para rolar até o topo
+            time.sleep(2)  # Aguardar para simular o movimento
+            driver.find_element(By.TAG_NAME, "body").send_keys(Keys.END)  # Pressiona End para rolar até o final
+            time.sleep(2)  # Aguardar novamente
+
             arrow_botton = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/main/div[1]/div[1]/div/div/div/div/button'))
             )
