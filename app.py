@@ -205,7 +205,7 @@ def submit():
                 
                 def process():
                     with configuracoes.startup_lock:
-                        time.sleep(configuracoes.STARTUP_DELAY)
+                        time.sleep(configuracoes.STARTUP_DELAY + 5)
                     threading.Thread(target=process_user, args=(user_id,)).start()
 
                 threading.Thread(target=process).start()
