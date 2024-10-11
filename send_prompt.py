@@ -89,18 +89,23 @@ def refresh_page(driver, responses_file, tittle_file, output_file, name, user_id
 
 #
 def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id):
-    def get_input_field():
-        return WebDriverWait(driver, 30).until(
-            EC.presence_of_element_located((By.XPATH, '//*[@id="prompt-textarea"]'))
-        )
-    input_field = get_input_field()
-
     #
     with open(responses_file, 'r', encoding='utf-8') as file:
         responses_text = file.read()
 
     #
     full_prompt = get_initial_prompt()
+
+    # Obtendo o campo de entrada para enviar o primeiro prompt
+    try:
+        input_field = WebDriverWait(driver, 30).until(
+            EC.presence_of_element_located((By.XPATH, '//*[@id="prompt-textarea"]'))
+        )
+        input_field.click()
+    except TimeoutException:
+        print("Campo de entrada não encontrado.")
+        return
+
     for i in range(0, len(full_prompt), 5000):
         input_field.send_keys(full_prompt[i:i + 5000])
         time.sleep(1)
@@ -125,11 +130,20 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
             time.sleep(1)
 
     #
+    # Obtendo o campo de entrada para enviar o primeiro prompt
+    try:
+        input_field = WebDriverWait(driver, 30).until(
+            EC.presence_of_element_located((By.XPATH, '//*[@id="prompt-textarea"]'))
+        )
+        input_field.click()
+    except TimeoutException:
+        print("Campo de entrada não encontrado.")
+        return
+    
     responses_prompt = responses(responses_text)
     full_responses = ''.join(responses_prompt)
     full_responses += '\n Ok, passei as respostas, mas não faça nada ainda. Responda apenas OK, nada mais! Aguarde as instruções.\n'
     send_text_with_line_breaks(input_field, full_responses)
-    input_field = get_input_field()
     while True:
         try:
             button_copy_2 = WebDriverWait(driver, 30).until(
@@ -149,13 +163,22 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
             print(f"Erro ao encontrar o button_copy_2: {e}")
             time.sleep(1)
 
+    # Obtendo o campo de entrada para enviar o primeiro prompt
+    try:
+        input_field = WebDriverWait(driver, 30).until(
+            EC.presence_of_element_located((By.XPATH, '//*[@id="prompt-textarea"]'))
+        )
+        input_field.click()
+    except TimeoutException:
+        print("Campo de entrada não encontrado.")
+        return
+    
     # Trecho responsável por enviar o prompt que pega o capa do eBook com o Título e Autor, cortando também o texto para salvar também o título do eBook
     tittle_prompt = tittle(name)
     for i in range(0, len(tittle_prompt), 1000):
         input_field.send_keys(tittle_prompt[i:i + 1000])
         time.sleep(2)
     input_field.send_keys(Keys.ENTER)
-    input_field = get_input_field()
     while True:
         try:
             button_copy_3 = '/html/body/div[1]/div/main/div[1]/div[1]/div/div/div/div/article[6]/div/div/div[2]/div/div[2]/div/div/span[1]/button'
@@ -204,7 +227,16 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
             print(f"Erro ao encontrar o button_copy_3: {e}")
             time.sleep(1)
 
-    #
+    # Obtendo o campo de entrada para enviar o primeiro prompt
+    try:
+        input_field = WebDriverWait(driver, 30).until(
+            EC.presence_of_element_located((By.XPATH, '//*[@id="prompt-textarea"]'))
+        )
+        input_field.click()
+    except TimeoutException:
+        print("Campo de entrada não encontrado.")
+        return
+
     confirmacao = 'OK, agora me forneça o restante do conteúdo. A introdução deve ser feita para ser utilizada como introdução e como descrição do conteúdo/eBook. Faça com que seja algo mais pessoal, abordando as respostas e, em alguns momentos em primeira pessoa, mas mantendo o profissionalismo. Lembrando da hash antes de: ####Introdução, ####Sumário, ####Conteúdo e ####Conclusão. Forneça esses tópicos assim e tudo em um único texto! Lembrando que quanto mais conteúdo foi fornecido de resposta, mais conteúdo será gerado. Apenas responda o que foi pedido, sem "essa foi a resposta, se precisar de mais..." não quero nada disso. Triplique o tamanho do conteúdo do ebook para cada tópico. Ou seja, me dê 3x mais de conteúdo para cada tópico do ebook do que o normal, tornando o ebook completo.'
     input_field.send_keys(confirmacao)
     time.sleep(1)
@@ -293,6 +325,16 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
             with open(description_file_path, "r", encoding="utf-8") as descricao:
                 descricao_kiwify = descricao.read()
 
+            # Obtendo o campo de entrada para enviar o primeiro prompt
+            try:
+                input_field = WebDriverWait(driver, 30).until(
+                    EC.presence_of_element_located((By.XPATH, '//*[@id="prompt-textarea"]'))
+                )
+                input_field.click()
+            except TimeoutException:
+                print("Campo de entrada não encontrado.")
+                return
+    
             input_field.click()
             time.sleep(1)
             input_field.send_keys("Reescreva a introdução como uma descrição para usar num site de vendas, NÃO ULTRAPASSANDO 400 caracteres, tem que ser abaixo de 400 caracteres contando com pontuações e espaços. Escrever como se fosse o usuário. Não ultrapasse 400 caracteres na resposta.", descricao_kiwify)
