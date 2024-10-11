@@ -18,6 +18,7 @@ mutex = Lock()
 # Flags de controle para encerrar os loops
 arrow_button_clicked = threading.Event()
 keep_generate_clicked = threading.Event()
+gerar_novamente_clicked = threading.Event()
 
 #
 def monitor_arrow_button(driver):
@@ -62,6 +63,22 @@ def get_input_field(driver, timeout=30):
     except TimeoutException:
         print("Campo de entrada não encontrado.")
         return None
+
+# Função para monitorar o erro: Gerar novamente, clicando nele para esperar a resposta
+def monitor_gerar_novamente(driver):
+    while not gerar_novamente_clicked.is_set():
+        try:
+            gerar_novamente = WebDriverWait(driver, 30).until(
+                EC.presence_of_element_located((By.XPATH, "/html/body/div[1]/div[2]/main/div[1]/div[2]/div/div[1]/div[2]/button/div"))
+            )
+            print("gerar_novamente encontrado")
+            time.sleep(2)
+            gerar_novamente.click()
+            time.sleep(1)
+            keep_generate_clicked.set()
+            break
+        except TimeoutException:
+            pass
 
 #
 def copy_text(driver, button_xpath):
@@ -236,9 +253,11 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
     # Iniciar threads para monitorar os botões
     arrow_button_thread = threading.Thread(target=monitor_arrow_button, args=(driver,))
     keep_generate_thread = threading.Thread(target=monitor_keep_generate, args=(driver,))
+    gerar_novamente_thread = threading.Thread(target=monitor_gerar_novamente, args=(driver,))
 
     arrow_button_thread.start()
     keep_generate_thread.start()
+    gerar_novamente_thread.start()
 
     while True:
         try:
@@ -398,10 +417,12 @@ def send_prompts(driver, responses_file, tittle_file, output_file, name, user_id
     # Finalizando as threads
     arrow_button_clicked.set()
     keep_generate_clicked.set()
+    gerar_novamente_clicked.set()
 
     # Espera que as threads terminem antes de continuar
     arrow_button_thread.join()
     keep_generate_thread.join()
+    gerar_novamente_thread.join()
 
 '''
 Variações dos elementos iteráveis:
