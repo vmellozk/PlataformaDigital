@@ -75,7 +75,7 @@ def monitor_gerar_novamente(driver):
             time.sleep(2)
             gerar_novamente.click()
             time.sleep(1)
-            keep_generate_clicked.set()
+            gerar_novamente_clicked.set()
             break
         except TimeoutException:
             pass
