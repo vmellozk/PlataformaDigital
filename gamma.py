@@ -20,7 +20,11 @@ configuracoes = ConfiguracoesDriver()
 profile_copy_lock = threading.Lock()
 
 # Função de automação para cada usuário
-def kiwify_automation(driver, user_id):
+def gamma_automation(driver, user_id):
+    # Define a pasta de downloads específica para cada usuário
+    user_folder_downloads = os.path.join("users", str(user_id), "downloads")
+    os.makedirs(user_folder_downloads, exist_ok=True)  # Cria a pasta se não existir
+
     # Define o local do perfil fixo onde a sessão está salva e Cria um diretório temporário para o perfil da sessão de cada thread
     user_profile_path = r"C:\Users\Victor\AppData\Local\Google\Chrome for Testing\User Data\Default"
     profile_dir = tempfile.mkdtemp()
@@ -30,7 +34,7 @@ def kiwify_automation(driver, user_id):
         print(f"Copiando perfil fixo para o diretório temporário para o usuário {user_id}")
         shutil.copytree(user_profile_path, profile_dir, dirs_exist_ok=True)
 
-    # Define as opções, parâmetros e adiciona o perfil temporário de usuário
+    # Define as opções, parâmetros e adiciona o perfil temporário de usuário e Configura o Chrome para salvar os downloads automaticamente na pasta do usuário
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument(f"user-data-dir={profile_dir}")  # Reutiliza a sessão anterior copiada
     chrome_options.add_argument("--disable-infobars")
@@ -38,19 +42,12 @@ def kiwify_automation(driver, user_id):
     chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
     chrome_options.add_experimental_option('useAutomationExtension', False)
     chrome_options.add_argument("--disable-blink-features=AutomationControlled")
-
-    # Define a pasta de downloads específica para cada usuário
-    user_folder_downloads = os.path.join("users", str(user_id), "downloads")
-    os.makedirs(user_folder_downloads, exist_ok=True)  # Cria a pasta se não existir
-
-    # Configura o Chrome para salvar os downloads automaticamente na pasta do usuário
-    prefs = {
+    chrome_options.add_experimental_option("prefs", {
         "download.default_directory": user_folder_downloads,
         "download.prompt_for_download": False,
         "directory_upgrade": True,
         "safebrowsing.enabled": True
-    }
-    chrome_options.add_experimental_option("prefs", prefs)
+    })
 
     # Inicia o Driver com o perfil temporário criado
     service = Service(ChromeDriverManager().install())
