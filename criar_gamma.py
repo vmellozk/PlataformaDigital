@@ -28,7 +28,7 @@ def  criar_gamma(driver, user_id):
             print("Tempo limite esgotado para encontrada o botão de criar_novo_ia")
             time.sleep(1)
         except Exception as e:
-            print(f"Erro ao encontrar o botão de criar_novo_ia")
+            print(f"Erro ao encontrar o botão de criar_novo_ia: {e}")
             time.sleep(1)
 
     # Verifica e interage com o botão de 'Colar no texto'
@@ -49,7 +49,7 @@ def  criar_gamma(driver, user_id):
             print("Tempo limite esgotado para encontrada o botão de colar_texto")
             time.sleep(1)
         except Exception as e:
-            print(f"Erro ao encontrar o botão de colar_texto")
+            print(f"Erro ao encontrar o botão de colar_texto: {e}")
             time.sleep(1)
 
     # Verifica e interage com o input de 'cole_aqui'
@@ -70,7 +70,7 @@ def  criar_gamma(driver, user_id):
             print("Tempo limite esgotado para encontrada o input de cole_aqui")
             time.sleep(1)
         except Exception as e:
-            print(f"Erro ao encontrar o input de cole_aqui")
+            print(f"Erro ao encontrar o input de cole_aqui: {e}")
             time.sleep(1)
 
     # Verifica e interage com a div de 'documento'
@@ -91,7 +91,7 @@ def  criar_gamma(driver, user_id):
             print("Tempo limite esgotado para encontrada a div de documento")
             time.sleep(1)
         except Exception as e:
-            print(f"Erro ao encontrar a div de documento")
+            print(f"Erro ao encontrar a div de documento: {e}")
             time.sleep(1)
 
     # Verifica e interage com o botão de 'continuar'
@@ -112,7 +112,7 @@ def  criar_gamma(driver, user_id):
             print("Tempo limite esgotado para encontrada o botão de continuar")
             time.sleep(1)
         except Exception as e:
-            print(f"Erro ao encontrar o botão de continuar")
+            print(f"Erro ao encontrar o botão de continuar: {e}")
             time.sleep(1)
 
     # Verifica e interage com o input de 'texto_detalhado'
@@ -133,7 +133,7 @@ def  criar_gamma(driver, user_id):
             print("Tempo limite esgotado para encontrada o input de texto_detalhado")
             time.sleep(1)
         except Exception as e:
-            print(f"Erro ao encontrar o input de texto_detalhado")
+            print(f"Erro ao encontrar o input de texto_detalhado: {e}")
             time.sleep(1)
 
     # Verifica e interage com o botão de 'adicionar_cartoes'
@@ -155,7 +155,7 @@ def  criar_gamma(driver, user_id):
             print("Tempo limite esgotado para encontrada o botão de adicionar_cartoes")
             time.sleep(1)
         except Exception as e:
-            print(f"Erro ao encontrar o botão de adicionar_cartoes")
+            print(f"Erro ao encontrar o botão de adicionar_cartoes: {e}")
             time.sleep(1)
 
     # Verifica e interage com o botão de 'continuar_e_gerar'
@@ -176,7 +176,7 @@ def  criar_gamma(driver, user_id):
             print("Tempo limite esgotado para encontrada o botão de continuar_e_gerar")
             time.sleep(1)
         except Exception as e:
-            print(f"Erro ao encontrar o botão de continuar_e_gerar")
+            print(f"Erro ao encontrar o botão de continuar_e_gerar: {e}")
             time.sleep(1)
 
     # Verifica e interage com o botão de 'embaralhar'
@@ -197,7 +197,7 @@ def  criar_gamma(driver, user_id):
             print("Tempo limite esgotado para encontrada o botão de embaralhar")
             time.sleep(1)
         except Exception as e:
-            print(f"Erro ao encontrar o botão de embaralhar")
+            print(f"Erro ao encontrar o botão de embaralhar: {e}")
             time.sleep(1)
 
     # Verifica e interage com o botão de 'gerar'
@@ -218,7 +218,7 @@ def  criar_gamma(driver, user_id):
             print("Tempo limite esgotado para encontrada o botão de gerar")
             time.sleep(1)
         except Exception as e:
-            print(f"Erro ao encontrar o botão de gerar")
+            print(f"Erro ao encontrar o botão de gerar: {e}")
             time.sleep(1)
 
     # Verifica e interage com o botão de 'compartilhar'
@@ -239,7 +239,7 @@ def  criar_gamma(driver, user_id):
             print("Tempo limite esgotado para encontrada o botão de compartilhar")
             time.sleep(1)
         except Exception as e:
-            print(f"Erro ao encontrar o botão de compartilhar")
+            print(f"Erro ao encontrar o botão de compartilhar: {e}")
             time.sleep(1)
 
     # Verifica e interage com o botão de 'exportar'
@@ -260,7 +260,7 @@ def  criar_gamma(driver, user_id):
             print("Tempo limite esgotado para encontrada o botão de exportar")
             time.sleep(1)
         except Exception as e:
-            print(f"Erro ao encontrar o botão de exportar")
+            print(f"Erro ao encontrar o botão de exportar: {e}")
             time.sleep(1)
 
     # Verifica e interage com o botão de 'exportar_pdf'
@@ -281,7 +281,7 @@ def  criar_gamma(driver, user_id):
             print("Tempo limite esgotado para encontrada o botão de exportar_pdf")
             time.sleep(1)
         except Exception as e:
-            print(f"Erro ao encontrar o botão de exportar_pdf")
+            print(f"Erro ao encontrar o botão de exportar_pdf: {e}")
             time.sleep(1)'''
 
     #
