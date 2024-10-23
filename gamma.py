@@ -20,7 +20,7 @@ configuracoes = ConfiguracoesDriver()
 profile_copy_lock = threading.Lock()
 
 # Função de automação para cada usuário
-def gamma_automation(driver, user_id):
+def gamma_automation(user_id):
     # Define a pasta de downloads específica para cada usuário
     user_folder_downloads = os.path.join("users", str(user_id), "downloads")
     os.makedirs(user_folder_downloads, exist_ok=True)  # Cria a pasta se não existir
@@ -76,7 +76,7 @@ def gamma_automation(driver, user_id):
 
         # Condição que vai verificar se precisa fazer o login
         if WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located(By.XPATH, '//*[@id="main"]/div/div[2]/div[1]/div[1]/div/div/div')
+            EC.presence_of_element_located((By.XPATH, '//*[@id="main"]/div/div[2]/div[1]/div[1]/div/div/div'))
         ):
             login_gamma(driver)
 
@@ -90,3 +90,6 @@ def gamma_automation(driver, user_id):
         shutil.rmtree(profile_dir, ignore_errors=True)
         configuracoes.release_position(free_position)
         print(f"Automação do Kiwify concluída para o usuário {user_id}.")
+
+if __name__ == "__main__":
+    gamma_automation(user_id=1)
