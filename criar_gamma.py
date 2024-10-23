@@ -3,8 +3,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+import os
 
-def  criar_gamma(driver):
+def  criar_gamma(driver, user_id):
+    # Define a pasta de downloads específica para cada usuário
+    user_folder_downloads = os.path.join("users", str(user_id), "downloads")
+    os.makedirs(user_folder_downloads, exist_ok=True)  # Cria a pasta se não existir
+
     # Verifica e interage com o botão de 'Criar Novo'
     while True:
         try:
@@ -278,3 +283,26 @@ def  criar_gamma(driver):
         except Exception as e:
             print(f"Erro ao encontrar o botão de exportar_pdf")
             time.sleep(1)
+
+    #
+    while True:
+        try:
+            # Localiza o botão 'Exportar para PDF' e clica para iniciar o download
+            exportar_botao = WebDriverWait(driver, 20).until(
+                EC.element_to_be_clickable((By.CSS_SELECTOR, 'button.css-104fw47'))
+            )
+            exportar_botao.click()
+            print(f"Iniciando download do PDF para o user_id {user_id}")
+
+            # Aguarda alguns segundos para o download ser concluído
+            time.sleep(10)
+
+            # Verifica se algum arquivo foi baixado na pasta
+            arquivos_baixados = os.listdir(user_folder_downloads)
+            if arquivos_baixados:
+                print(f"Download concluído: {arquivos_baixados[0]}")
+            else:
+                print(f"Nenhum arquivo encontrado para o user_id {user_id}")
+
+        except Exception as e:
+            print(f"Erro ao baixar PDF: {e}")
