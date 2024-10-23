@@ -264,7 +264,7 @@ def  criar_gamma(driver, user_id):
             time.sleep(1)
 
     # Verifica e interage com o botão de 'exportar_pdf'
-    while True:
+    '''while True:
         try:
             exportar_pdf = WebDriverWait(driver, 30).until(
                 EC.presence_of_element_located((By.XPATH, '//*[@id="chakra-modal--body-:r3d3:"]/div[2]/div[1]/button[1]'))
@@ -282,7 +282,7 @@ def  criar_gamma(driver, user_id):
             time.sleep(1)
         except Exception as e:
             print(f"Erro ao encontrar o botão de exportar_pdf")
-            time.sleep(1)
+            time.sleep(1)'''
 
     #
     while True:
@@ -291,11 +291,14 @@ def  criar_gamma(driver, user_id):
             exportar_botao = WebDriverWait(driver, 20).until(
                 EC.element_to_be_clickable((By.CSS_SELECTOR, 'button.css-104fw47'))
             )
-            exportar_botao.click()
-            print(f"Iniciando download do PDF para o user_id {user_id}")
-
-            # Aguarda alguns segundos para o download ser concluído
-            time.sleep(10)
+            if exportar_botao:
+                print("exportar_botao encontrado")
+                time.sleep(2)
+                exportar_botao.click()
+                time.sleep(10)
+                break
+            else:
+                print("exportar_botao não encontrado")
 
             # Verifica se algum arquivo foi baixado na pasta
             arquivos_baixados = os.listdir(user_folder_downloads)
