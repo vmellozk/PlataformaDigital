@@ -116,7 +116,7 @@ def  criar_gamma(driver, user_id):
     user_folder_downloads = os.path.join("users", str(user_id), "downloads")
     os.makedirs(user_folder_downloads, exist_ok=True)  # Cria a pasta se não existir
 
-    # Verifica e interage com o botão de 'Criar Novo'
+    # Verifica e interage com o botão de 'criar_novo_ia'
     while True:
         try:
             criar_novo_ia = WebDriverWait(driver, 30).until(
@@ -131,13 +131,13 @@ def  criar_gamma(driver, user_id):
             else:
                 print("criar_novo_ia não encontrado")
         except TimeoutException:
-            print("Tempo limite esgotado para encontrada o botão de criar_novo_ia")
+            print("Tempo limite esgotado para encontrar o botão de criar_novo_ia")
             time.sleep(1)
         except Exception as e:
             print(f"Erro ao encontrar o botão de criar_novo_ia: {e}")
             time.sleep(1)
 
-    # Verifica e interage com o botão de 'Colar no texto'
+    # Verifica e interage com o botão de 'colar_texto'
     while True:
         try:
             colar_texto = WebDriverWait(driver, 30).until(
@@ -152,7 +152,7 @@ def  criar_gamma(driver, user_id):
             else:
                 print("colar_texto não encontrado")
         except TimeoutException:
-            print("Tempo limite esgotado para encontrada o botão de colar_texto")
+            print("Tempo limite esgotado para encontrar o botão de colar_texto")
             time.sleep(1)
         except Exception as e:
             print(f"Erro ao encontrar o botão de colar_texto: {e}")
@@ -178,7 +178,7 @@ def  criar_gamma(driver, user_id):
             else:
                 print("cole_aqui não encontrado")
         except TimeoutException:
-            print("Tempo limite esgotado para encontrada o input de cole_aqui")
+            print("Tempo limite esgotado para encontrar o input de cole_aqui")
             time.sleep(1)
         except Exception as e:
             print(f"Erro ao encontrar o input de cole_aqui: {e}")
@@ -199,7 +199,7 @@ def  criar_gamma(driver, user_id):
             else:
                 print("documento não encontrado")
         except TimeoutException:
-            print("Tempo limite esgotado para encontrada a div de documento")
+            print("Tempo limite esgotado para encontrar a div de documento")
             time.sleep(1)
         except Exception as e:
             print(f"Erro ao encontrar a div de documento: {e}")
@@ -220,17 +220,38 @@ def  criar_gamma(driver, user_id):
             else:
                 print("continuar não encontrado")
         except TimeoutException:
-            print("Tempo limite esgotado para encontrada o botão de continuar")
+            print("Tempo limite esgotado para encontrar o botão de continuar")
             time.sleep(1)
         except Exception as e:
             print(f"Erro ao encontrar o botão de continuar: {e}")
+            time.sleep(1)
+
+    # Verifica e interage com o input de 'gerar'
+    while True:
+        try:
+            gerar = WebDriverWait(driver, 30).until(
+                EC.presence_of_element_located((By.XPATH, '//*[@id="accordion-panel-:r35:"]/div/div[1]/div/button[1]'))
+            )
+            if gerar:
+                print("gerar encontrado")
+                time.sleep(2)
+                gerar.click()
+                time.sleep(1)
+                break
+            else:
+                print("gerar não encontrado")
+        except TimeoutException:
+            print("Tempo limite esgotado para encontrar o input de gerar")
+            time.sleep(1)
+        except Exception as e:
+            print(f"Erro ao encontrar o input de gerar: {e}")
             time.sleep(1)
 
     # Verifica e interage com o input de 'texto_detalhado'
     while True:
         try:
             texto_detalhado = WebDriverWait(driver, 30).until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id="accordion-panel-:rd3:"]/div/div[2]/div/button[3]'))
+                EC.presence_of_element_located((By.XPATH, '//*[@id="accordion-panel-:r35:"]/div/div[2]/div/button[3]'))
             )
             if texto_detalhado:
                 print("texto_detalhado encontrado")
@@ -241,11 +262,87 @@ def  criar_gamma(driver, user_id):
             else:
                 print("texto_detalhado não encontrado")
         except TimeoutException:
-            print("Tempo limite esgotado para encontrada o input de texto_detalhado")
+            print("Tempo limite esgotado para encontrar o input de texto_detalhado")
             time.sleep(1)
         except Exception as e:
             print(f"Erro ao encontrar o input de texto_detalhado: {e}")
             time.sleep(1)
+
+    # Verifica e interage com a div de 'formato_documento'
+    while True:
+        try:
+            formato_documento = WebDriverWait(driver, 30).until(
+                EC.presence_of_element_located((By.XPATH, '//*[@id="main"]/div/div[2]/div[2]/div[2]/div/div[2]/div[3]'))
+            )
+            if formato_documento:
+                print("formato_documento encontrado")
+                time.sleep(2)
+                formato_documento.click()
+                time.sleep(1)
+                break
+            else:
+                print("formato_documento não encontrado")
+        except TimeoutException:
+            print("Tempo limite esgotado para encontrar o botão de formato_documento")
+        except Exception as e:
+            print(f"Erro ao encontrar o botão de formato_documento: {e}")
+
+    # Verifica e interage com o botão da 'altura_documento'
+    while True:
+        try:
+            altura_cartao = WebDriverWait(driver, 30).until(
+                EC.presence_of_element_located((By.XPATH, '//*[@id="menu-button-:r6i:"]'))
+            )
+            if altura_cartao:
+                print("altura_cartao encontrado")
+                time.sleep(2)
+                altura_cartao.click()
+                time.sleep(1)
+                break
+            else:
+                print("altura_cartao não encontrado")
+        except TimeoutException:
+            print("Tempo limite esgotado para encontrar o botão de altura_cartao")
+        except Exception as e:
+            print(f"Erro ao encontrar o botão de altura_cartao: {e}")
+
+    # Verifica e interage com o botão de 'formato_a4'
+    while True:
+        try:
+            formato_a4 = WebDriverWait(driver, 30).until(
+                EC.presence_of_element_located((By.XPATH, '//*[@id="menu-list-:r6i:-menuitem-:reh:"]'))
+            )
+            if formato_a4:
+                print("formato_a4 encontrado")
+                time.sleep(2)
+                formato_a4.click()
+                time.sleep(1)
+                break
+            else:
+                print("formato_a4 não encontrado")
+        except TimeoutException:
+            print("Tempo limite esgotado para encontrar o botão de formato_a4")
+        except Exception as e:
+            print(f"Erro ao encontrar o botão de formato_a4")
+
+    # Verifica e interage com a div de 'modo_retrato'
+    while True:
+        try:
+            modo_retrato = WebDriverWait(driver, 30).until(
+                EC.presence_of_element_located((By.XPATH, '//*[@id="accordion-panel-:r66:"]/div/div[2]/div/div/div/div[2]/label[2]'))
+            )
+            if modo_retrato:
+                print("modo_retrato encontrado")
+                time.sleep(2)
+                modo_retrato.click()
+                time.sleep(1)
+                break
+            else:
+                print("modo_retrato não encontrado")
+        except TimeoutException:
+            print("Tempo limite esgotado para encontrar a div de modo_retrato")
+        except Exception as e:
+            print(f"Erro ao encontrar o botão de modo_retrato")
 
     # Verifica e interage com o botão de 'adicionar_cartoes'
     while True:
@@ -259,11 +356,12 @@ def  criar_gamma(driver, user_id):
                 adicionar_cartoes.click()
                 time.sleep(1)
                 adicionar_cartoes.click()
+                time.sleep(1)
                 break
             else:
                 print("adicionar_cartoes não encontrado")
         except TimeoutException:
-            print("Tempo limite esgotado para encontrada o botão de adicionar_cartoes")
+            print("Tempo limite esgotado para encontrar o botão de adicionar_cartoes")
             time.sleep(1)
         except Exception as e:
             print(f"Erro ao encontrar o botão de adicionar_cartoes: {e}")
@@ -284,7 +382,7 @@ def  criar_gamma(driver, user_id):
             else:
                 print("continuar_e_gerar não encontrado")
         except TimeoutException:
-            print("Tempo limite esgotado para encontrada o botão de continuar_e_gerar")
+            print("Tempo limite esgotado para encontrar o botão de continuar_e_gerar")
             time.sleep(1)
         except Exception as e:
             print(f"Erro ao encontrar o botão de continuar_e_gerar: {e}")
@@ -305,7 +403,7 @@ def  criar_gamma(driver, user_id):
             else:
                 print("embaralhar não encontrado")
         except TimeoutException:
-            print("Tempo limite esgotado para encontrada o botão de embaralhar")
+            print("Tempo limite esgotado para encontrar o botão de embaralhar")
             time.sleep(1)
         except Exception as e:
             print(f"Erro ao encontrar o botão de embaralhar: {e}")
@@ -326,7 +424,7 @@ def  criar_gamma(driver, user_id):
             else:
                 print("gerar não encontrado")
         except TimeoutException:
-            print("Tempo limite esgotado para encontrada o botão de gerar")
+            print("Tempo limite esgotado para encontrar o botão de gerar")
             time.sleep(1)
         except Exception as e:
             print(f"Erro ao encontrar o botão de gerar: {e}")
@@ -347,7 +445,7 @@ def  criar_gamma(driver, user_id):
             else:
                 print("compartilhar não encontrado")
         except TimeoutException:
-            print("Tempo limite esgotado para encontrada o botão de compartilhar")
+            print("Tempo limite esgotado para encontrar o botão de compartilhar")
             time.sleep(1)
         except Exception as e:
             print(f"Erro ao encontrar o botão de compartilhar: {e}")
@@ -368,7 +466,7 @@ def  criar_gamma(driver, user_id):
             else:
                 print("exportar não encontrado")
         except TimeoutException:
-            print("Tempo limite esgotado para encontrada o botão de exportar")
+            print("Tempo limite esgotado para encontrar o botão de exportar")
             time.sleep(1)
         except Exception as e:
             print(f"Erro ao encontrar o botão de exportar: {e}")
@@ -389,16 +487,15 @@ def  criar_gamma(driver, user_id):
             else:
                 print("exportar_pdf não encontrado")
         except TimeoutException:
-            print("Tempo limite esgotado para encontrada o botão de exportar_pdf")
+            print("Tempo limite esgotado para encontrar o botão de exportar_pdf")
             time.sleep(1)
         except Exception as e:
             print(f"Erro ao encontrar o botão de exportar_pdf: {e}")
             time.sleep(1)'''
 
-    #
+    # Verifica e interage com o botão de 'exportar_botão'
     while True:
         try:
-            # Localiza o botão 'Exportar para PDF' e clica para iniciar o download
             exportar_botao = WebDriverWait(driver, 20).until(
                 EC.element_to_be_clickable((By.CSS_SELECTOR, 'button.css-104fw47'))
             )
