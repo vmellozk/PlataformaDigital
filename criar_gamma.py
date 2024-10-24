@@ -4,6 +4,112 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 import os
+from selenium.webdriver.common.keys import Keys
+
+resposta = '''Explorando Novos Horizontes
+Victor Hugo de Souza Mello
+Prática Sênior
+Introdução
+Neste eBook, convido você a embarcar em uma jornada de descobertas e reflexões sobre temas
+que, embora possam parecer simples à primeira vista, são fundamentais para nosso crescimento
+pessoal e profissional. Ao longo dos capítulos, exploraremos conceitos que nos ajudam a entender
+melhor nosso papel no mundo, a importância de cada escolha que fazemos e como podemos, de
+fato, moldar nosso próprio destino. Acredito que cada um de nós tem o potencial de transformar
+sua realidade, e este material foi criado com o intuito de inspirar e motivar essa transformação.
+Você encontrará, nas próximas páginas, uma série de tópicos que foram cuidadosamente
+selecionados com base em reflexões e experiências que muitos de nós compartilhamos. Cada
+seção é uma oportunidade para se aprofundar em ideias e práticas que podem ser aplicadas em
+nossa vida cotidiana. Estou animado para compartilhar esses insights e espero que eles ressoem
+com você, assim como ressoaram em minha própria jornada.
+Prática Sênior
+Sumário
+1. A Importância do Autoconhecimento
+2. Como Definir Objetivos Claros
+3. Estratégias para Gerenciamento do Tempo
+4. O Papel das Relações Interpessoais
+5. Superando Desafios e Adversidades
+6. A Influência do Pensamento Positivo
+7. O Valor da Resiliência
+8. Aprendendo com o Fracasso
+9. Práticas de BemEstar e Saúde Mental
+Prática Sênior
+Conteúdo
+1. A Importância do Autoconhecimento
+O autoconhecimento é a base de qualquer transformação pessoal. Sem entender quem somos, é
+difícil tomar decisões que reflitam nossos verdadeiros desejos e valores. Ao longo deste capítulo,
+abordaremos técnicas para se conhecer melhor, como a prática da autoreflexão e a importância de
+feedbacks honestos de pessoas próximas. Aprender a ouvir nossas próprias emoções e reconhecer
+nossas habilidades e fraquezas pode ser um divisor de águas. Por exemplo, ao me aprofundar em
+minhas próprias motivações, percebi padrões que antes me escapavam, permitindome fazer
+escolhas mais alinhadas com meu verdadeiro eu.
+2. Como Definir Objetivos Claros
+Definir objetivos claros é essencial para direcionar nossos esforços. Neste tópico, discutiremos a
+importância de estabelecer metas SMART (específicas, mensuráveis, atingíveis, relevantes e
+temporais). Compartilharei algumas de minhas experiências na formulação de objetivos e como o
+fato de ter clareza sobre o que quero me ajudou a traçar um caminho mais eficaz. Além disso,
+veremos como a visualização e o acompanhamento do progresso são ferramentas poderosas para
+Prática Sênior
+manter a motivação.
+3. Estratégias para Gerenciamento do Tempo
+Gerenciar o tempo é um desafio que muitos enfrentam, e é fundamental para alcançar nossos
+objetivos. Aqui, exploraremos diversas técnicas, como a matriz de Eisenhower e a técnica
+Pomodoro. Vou compartilhar algumas das estratégias que adotei ao longo dos anos e como elas
+me ajudaram a aumentar minha produtividade sem comprometer meu bemestar. O gerenciamento
+do tempo não é apenas sobre eficiência; é também sobre priorizar o que realmente importa em
+nossas vidas.
+4. O Papel das Relações Interpessoais
+Nossas relações interpessoais moldam nossas experiências e nos ajudam a crescer. Neste
+capítulo, discutiremos a importância de construir uma rede de apoio e como as interações humanas
+podem influenciar nosso estado emocional e sucesso. Através de histórias pessoais e exemplos
+práticos, veremos como cultivar relacionamentos saudáveis pode enriquecer nossas vidas e
+Prática Sênior
+oferecer suporte em momentos difíceis.
+5. Superando Desafios e Adversidades
+Desafios são inevitáveis, mas como respondemos a eles pode fazer toda a diferença. Aqui,
+abordaremos estratégias para enfrentar dificuldades e transformar obstáculos em oportunidades de
+aprendizado. Compartilharei momentos em que enfrentei adversidades e como esses episódios me
+ensinaram lições valiosas sobre perseverança e adaptabilidade. O foco será em desenvolver uma
+mentalidade que veja os desafios como parte do processo de crescimento.
+6. A Influência do Pensamento Positivo
+O pensamento positivo pode parecer um conceito simples, mas sua influência em nossa vida é
+profunda. Neste capítulo, exploraremos como cultivar uma mentalidade positiva pode impactar
+nossa saúde mental e nossas interações. Discutiremos práticas como a gratidão e a visualização
+positiva, que têm me ajudado a manter uma perspectiva otimista, mesmo diante de dificuldades.
+Prática Sênior
+7. O Valor da Resiliência
+A resiliência é a capacidade de se recuperar rapidamente de desafios. Discutiremos a importância
+de desenvolver essa habilidade e como ela nos permite enfrentar as adversidades com coragem e
+determinação. Compartilharei histórias de pessoas que admiramos por sua resiliência e o que
+podemos aprender com elas. Aprender a se adaptar e continuar avançando é fundamental em um
+mundo em constante mudança.
+8. Aprendendo com o Fracasso
+O fracasso é frequentemente visto como algo negativo, mas é, na verdade, uma oportunidade de
+aprendizado. Neste tópico, vamos explorar como podemos reconfigurar nossa visão sobre o
+fracasso e utilizálo como uma ferramenta de crescimento. Contarei experiências pessoais em que
+fracassei, mas que resultaram em lições valiosas que moldaram meu caminho.
+Prática Sênior
+9. Práticas de BemEstar e Saúde Mental
+A saúde mental é um componente essencial de nossa qualidade de vida. Aqui, discutiremos
+práticas que podem ajudar a manter um estado mental saudável, como meditação, exercícios
+físicos e cuidados com a alimentação. Compartilharei minha própria rotina de bemestar e como
+pequenas mudanças podem ter um grande impacto em nossa vida diária.
+Prática Sênior
+Conclusão
+Ao encerrarmos este eBook, é essencial recapitular os principais pontos discutidos. O
+autoconhecimento, a definição de objetivos claros, o gerenciamento do tempo e as relações
+interpessoais são todos fundamentais para nosso desenvolvimento. Cada um de nós tem o
+potencial de enfrentar desafios e se transformar em versões melhores de si mesmos. Espero que
+este material tenha oferecido insights valiosos e que você se sinta inspirado a aplicar esses
+conceitos em sua vida. O caminho à frente é cheio de oportunidades, e estou animado para ver
+como você pode transformar suas experiências em aprendizados significativos.
+Neste eBook, cobrimos uma variedade de temas que estão interligados e que podem enriquecer
+nossa jornada pessoal e profissional. Desde a importância do autoconhecimento até as práticas
+que promovem o bemestar, cada um desses tópicos é uma peça fundamental do quebracabeça
+que é a vida. Espero que você tenha encontrado valor nas reflexões e que elas o inspirem a
+continuar em sua própria jornada de crescimento. Lembrese, o caminho pode ser desafiador, mas é
+também repleto de oportunidades. Ao aplicar o que discutimos, você estará um passo mais perto de
+alcançar seus objetivos e viver uma vida plena e significativa.
+Prática Sênior'''
 
 def  criar_gamma(driver, user_id):
     # Define a pasta de downloads específica para cada usuário
@@ -52,7 +158,7 @@ def  criar_gamma(driver, user_id):
             print(f"Erro ao encontrar o botão de colar_texto: {e}")
             time.sleep(1)
 
-    # Verifica e interage com o input de 'cole_aqui'
+    # Verifica e interage com o input de 'cole_aqui' e Envia o texto com quebras de linha
     while True:
         try:
             cole_aqui = WebDriverWait(driver, 30).until(
@@ -63,6 +169,11 @@ def  criar_gamma(driver, user_id):
                 time.sleep(2)
                 cole_aqui.click()
                 time.sleep(1)
+                for chunk in resposta.split('\n'):
+                    cole_aqui.send_keys(chunk)
+                    cole_aqui.send_keys(Keys.SHIFT + Keys.ENTER)
+                cole_aqui.send_keys(Keys.ENTER)
+                time.sleep(3)
                 break
             else:
                 print("cole_aqui não encontrado")
