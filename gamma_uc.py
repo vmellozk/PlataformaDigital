@@ -13,6 +13,8 @@ from login_gamma import login_gamma
 from criar_gamma import criar_gamma
 import os
 import undetected_chromedriver as uc
+import pickle
+from selenium.common.exceptions import TimeoutException
 
 # Instanciando as configurações
 configuracoes = ConfiguracoesDriver()
@@ -20,14 +22,31 @@ configuracoes = ConfiguracoesDriver()
 # Lock para sincronizar o acesso ao perfil fixo
 profile_copy_lock = threading.Lock()
 
+# Define o local do perfil fixo onde a sessão está salva e Cria um diretório temporário para o perfil da sessão de cada thread
+user_profile_path = r"C:\Users\Victor\AppData\Local\Google\Chrome for Testing\User Data\Default"
+
+# Função para salvar cookies
+def save_cookies(driver, user_id):
+    cookies_path = f"users/{user_id}/cookies.pkl"
+    with open(cookies_path, "wb") as file:
+        pickle.dump(driver.get_cookies(), file)
+
+# Função para carregar cookies
+def load_cookies(driver, user_id):
+    cookies_path = f"users/{user_id}/cookies.pkl"
+    if os.path.exists(cookies_path):
+        with open(cookies_path, "rb") as file:
+            cookies = pickle.load(file)
+            for cookie in cookies:
+                driver.add_cookie(cookie)
+
 # Função de automação para cada usuário
 def gamma_automation(user_id):
     # Define a pasta de downloads específica para cada usuário
     user_folder_downloads = os.path.join("users", str(user_id), "downloads")
     os.makedirs(user_folder_downloads, exist_ok=True)  # Cria a pasta se não existir
 
-    # Define o local do perfil fixo onde a sessão está salva e Cria um diretório temporário para o perfil da sessão de cada thread
-    user_profile_path = r"C:\Users\Victor\AppData\Local\Google\Chrome for Testing\User Data\Default"
+    # Cria um diretório temporário para o perfil da sessão de cada thread
     profile_dir = tempfile.mkdtemp()
 
     # Sincroniza a cópia do perfil para evitar concorrência entre threads
@@ -71,15 +90,22 @@ def gamma_automation(user_id):
                 driver.quit()
                 return
 
-        # Abre o site do Kiwify
+        # Abre o site do Kiwify, carrega os cookies e Recarrega para aplicar
         driver.get('https://gamma.app')
+        load_cookies(driver, user_id)
+        driver.refresh()
+        driver.execute_script("document.body.style.zoom='85%'")
         print(f"Abrindo o site Kiwify para o usuário {user_id}")
 
-        # Condição que vai verificar se precisa fazer o login
-        if WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, '//*[@id="main"]/div/div[2]/div[1]/div[1]/div/div/div'))
-        ):
-            login_gamma(driver)
+        # Condição que vai verificar se precisa fazer o login e Salva cookies após o login
+        try:
+            if WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, '//*[@id="main"]/div/div[2]/div[1]/div[1]/div/div/div'))
+            ):
+                login_gamma(driver)
+                save_cookies(driver, user_id)
+        except TimeoutException:
+            pass
 
         criar_gamma(driver, user_id)
 
